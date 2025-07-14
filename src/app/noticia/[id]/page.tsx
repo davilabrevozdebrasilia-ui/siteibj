@@ -2,10 +2,10 @@ import AdSliderFull from "@/components/anuncios/adSliderFull";
 import AdCard400 from "@/components/anuncios/adCard400";
 
 interface NoticiaPageProps {
-  params: { id: string };
+    params: { id: string };
 }
 
-export default async function NoticiaPage({ params }: NoticiaPageProps) {
+export default async function NoticiaPage({params}: {params: { id: string };}) {
     const id = params.id;
 
     const noticiaRes = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/api/noticias/${id}`, {
