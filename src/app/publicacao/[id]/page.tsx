@@ -4,16 +4,13 @@ export const dynamic = "force-dynamic";
 import AdSliderFull from "@/components/anuncios/adSliderFull";
 import AdCard400 from "@/components/anuncios/adCard400";
 import { prisma } from "@/lib/prisma";
-interface PageProps {
-    params: {
-        id: string;
-    };
-}
+   interface PageProps {
+        params: Promise<{ id: string }>;
+    }
 
 export default async function NoticiaPage({ params }: PageProps) {
 
-    console.log("Rendering NoticiaPage with params:", params.id);
-    const id = Number(params.id);
+    const id = Number((await params).id);
 
     const noticiaDb = await prisma.noticia.findUnique({
         where: { id },
