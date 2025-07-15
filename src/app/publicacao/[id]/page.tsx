@@ -17,7 +17,7 @@ export default async function NoticiaPage({ params }: PageProps) {
     });
 
     if (!noticiaDb) {
-        return <div className="p-6 text-center">Notícia não encontrada.</div>;
+        return <div className="p-6 text-center">Notícia não encontrada</div>;
     }
 
     const anunciosDb = await prisma.anuncio.findMany({
