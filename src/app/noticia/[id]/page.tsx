@@ -4,8 +4,14 @@ export const dynamic = "force-dynamic";
 import AdSliderFull from "@/components/anuncios/adSliderFull";
 import AdCard400 from "@/components/anuncios/adCard400";
 import { prisma } from "@/lib/prisma";
+interface PageProps {
+    params: {
+        id: string;
+    };
+}
 
-export default async function NoticiaPage({ params }: { params: { id: string } }) {
+export default async function NoticiaPage({ params }: PageProps) {
+
     console.log("Rendering NoticiaPage with params:", params.id);
     const id = Number(params.id);
 
@@ -52,13 +58,13 @@ export default async function NoticiaPage({ params }: { params: { id: string } }
                     alt={noticia.titulo}
                     className="w-full h-100 object-cover rounded-lg mb-6"
                 />
-                
-                    <div className="flex flex-col gap-4">
-                        <h1 className="text-3xl font-bold text-green-800 mb-4 text-center">{noticia.titulo}</h1>
-                        <p className="text-sm text-gray-500 mb-4">Publicado em {noticia.data}</p>
-                        <p className="text-gray-700 mb-4">{noticia.resumo}</p>
 
-                    </div>
+                <div className="flex flex-col gap-4">
+                    <h1 className="text-3xl font-bold text-green-800 mb-4 text-center">{noticia.titulo}</h1>
+                    <p className="text-sm text-gray-500 mb-4">Publicado em {noticia.data}</p>
+                    <p className="text-gray-700 mb-4">{noticia.resumo}</p>
+
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                     <div className="flex flex-col gap-10">
                         {anuncios.length > 1 && (
