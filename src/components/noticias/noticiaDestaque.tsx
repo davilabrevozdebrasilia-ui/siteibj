@@ -3,7 +3,7 @@ import { NoticiaCardProps } from "@/types/noticias";
 export default function NoticiaDestaque({ noticiaCardProps }: { noticiaCardProps: NoticiaCardProps }) {
     return (
         <div
-            className="bg-white rounded-lg shadow border border-green-100 overflow-hidden flex flex-col"
+            className="bg-white rounded-lg shadow border border-slate-100 overflow-hidden flex flex-col"
         >
             <div className="flex-1 relative h-full" >
                 <img

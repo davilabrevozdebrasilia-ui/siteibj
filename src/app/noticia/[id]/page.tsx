@@ -1,65 +1,82 @@
+// app/noticias/[id]/page.tsx
+export const dynamic = "force-dynamic";
+
 import AdSliderFull from "@/components/anuncios/adSliderFull";
 import AdCard400 from "@/components/anuncios/adCard400";
+import { prisma } from "@/lib/prisma";
 
-interface NoticiaPageProps {
-    params: { id: string };
-}
+export default async function NoticiaPage({ params }: { params: { id: string } }) {
+    console.log("Rendering NoticiaPage with params:", params.id);
+    const id = Number(params.id);
 
-export default async function NoticiaPage({params}: {params: { id: string };}) {
-    const id = params.id;
-
-    const noticiaRes = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/api/noticias/${id}`, {
-        cache: "no-store",
+    const noticiaDb = await prisma.noticia.findUnique({
+        where: { id },
     });
 
-    if (!noticiaRes.ok) {
+    if (!noticiaDb) {
         return <div className="p-6 text-center">Notícia não encontrada.</div>;
     }
 
-    const noticia = await noticiaRes.json();
-
-    const anunciosRes = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/api/anuncios`, {
-        cache: "no-store",
+    const anunciosDb = await prisma.anuncio.findMany({
+        take: 8,
     });
 
-    const anuncios = anunciosRes.ok ? await anunciosRes.json() : [];
+    const noticia = {
+        id: noticiaDb.id,
+        titulo: noticiaDb.titulo,
+        resumo: noticiaDb.resumo,
+        imagem: noticiaDb.imagem,
+        data: new Date(noticiaDb.data).toLocaleDateString("pt-BR"),
+        tags: noticiaDb.tags,
+        href: noticiaDb.href,
+    };
+
+    const anuncios = anunciosDb.map((a) => ({
+        anuncio: {
+            id: a.id,
+            titulo: a.titulo,
+            imagem: a.imagem,
+            href: a.href,
+        },
+    }));
 
     return (
-        <div className="max-w-7xl mx-auto px-4 py-8">
-            <div className="mb-8">
-                <AdSliderFull anuncioCardProps={anuncios.map((a: any) => ({ anuncio: a }))} />
-            </div>
+        <div className="space-y-8">
+            {anuncios.length > 0 && (
+                <AdSliderFull anuncioCardProps={anuncios} />
+            )}
 
-            <div className="flex gap-6">
-                <div className="hidden lg:block w-48 sticky top-20">
-                    {anuncios.slice(0, 2).map((a: any) => (
-                        <AdCard400 key={a.id} anuncioCardProps={{ anuncio: a }} />
-                    ))}
+            <section>
+                <img
+                    src={noticia.imagem}
+                    alt={noticia.titulo}
+                    className="w-full h-100 object-cover rounded-lg mb-6"
+                />
+                
+                    <div className="flex flex-col gap-4">
+                        <h1 className="text-3xl font-bold text-green-800 mb-4 text-center">{noticia.titulo}</h1>
+                        <p className="text-sm text-gray-500 mb-4">Publicado em {noticia.data}</p>
+                        <p className="text-gray-700 mb-4">{noticia.resumo}</p>
+
+                    </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <div className="flex flex-col gap-10">
+                        {anuncios.length > 1 && (
+                            <AdCard400 anuncioCardProps={anuncios[1]} />
+                        )}
+                    </div>
+                    <div className="flex flex-col gap-10">
+                        {anuncios.length > 2 && (
+                            <AdCard400 anuncioCardProps={anuncios[2]} />
+                        )}
+                    </div>
+                    <div className="flex flex-col gap-10">
+                        {anuncios.length > 3 && (
+                            <AdCard400 anuncioCardProps={anuncios[3]} />
+                        )}
+                    </div>
                 </div>
-
-                <main className="flex-1">
-                    <h1 className="text-4xl font-bold mb-4 text-green-800">{noticia.titulo}</h1>
-                    <p className="text-sm text-gray-600 mb-6">
-                        {new Date(noticia.data).toLocaleDateString("pt-BR")}
-                    </p>
-
-                    <img
-                        src={noticia.imagem}
-                        alt={noticia.titulo}
-                        className="w-full h-64 object-cover rounded-lg mb-6"
-                    />
-
-                    <article className="prose max-w-none">
-                        <p>{noticia.resumo}</p>
-                    </article>
-                </main>
-
-                <div className="hidden lg:block w-48 sticky top-20">
-                    {anuncios.slice(2, 5).map((a: any) => (
-                        <AdCard400 key={a.id} anuncioCardProps={{ anuncio: a }} />
-                    ))}
-                </div>
-            </div>
+            </section>
         </div>
     );
 }

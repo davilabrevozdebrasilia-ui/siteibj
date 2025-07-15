@@ -12,13 +12,13 @@ import { Button } from "@/components/ui/button";
 
 const links = [
     { label: "Início", href: "/" },
-    { label: "Política", href: "/noticias/politica" },
-    { label: "Esportes", href: "/noticias/esportes" },
-    { label: "Economia", href: "/noticias/entretenimento" },
-    { label: "Tecnologia", href: "/noticias/tecnologia" },
-    { label: "Meio ambiente", href: "/noticias/servicos" },
-    { label: "Saúde", href: "/contato" },
-    { label: "Notícias do Riella", href: "/noticias/riella" },
+    { label: "Política", href: "/noticias/Politica" },
+    { label: "Esportes", href: "/noticias/Esportes" },
+    { label: "Economia", href: "/noticias/Economia" },
+    { label: "Tecnologia", href: "/noticias/Tecnologia" },
+    { label: "Meio ambiente", href: "/noticias/Servicos" },
+    { label: "Saúde", href: "/Contato" },
+    { label: "Notícias do Riella", href: "/noticias/Riella" },
 ];
 
 export default function Navbar() {

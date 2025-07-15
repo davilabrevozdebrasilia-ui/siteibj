@@ -37,9 +37,22 @@ export default async function HomePage() {
             href: a.href,
         },
     }));
+    const usadas = new Set<number>();
 
-    const noticiaDestaqueCardProps = noticias.slice(0, 8);
-    const noticiaMinorCardProps = noticias.slice(8, 16);
+    // 🔪 Função auxiliar para filtrar sem repetir
+    const pegarNaoUsadas = (lista: NoticiaCardProps[], quantidade: number) => {
+        const resultado: NoticiaCardProps[] = [];
+        for (const n of lista) {
+            if (!usadas.has(n.noticia.id)) {
+                resultado.push(n);
+                usadas.add(n.noticia.id);
+            }
+            if (resultado.length >= quantidade) break;
+        }
+        return resultado;
+    };
+    const noticiaDestaqueCardProps = noticias.slice(0, 10);
+    const noticiaMinorCardProps = noticias.slice(10, 11);
     const noticiaComumCardProps = noticias.slice(10, 18);
     const anuncioCardProps = anuncios;
 
@@ -53,18 +66,18 @@ export default async function HomePage() {
                 <section>
                     <h1 className="text-3xl font-bold text-green-800 mb-4">Últimas notícias</h1>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-                        <div>
+                        <div className="flex flex-col gap-10">
                             {noticiaDestaqueCardProps[0] && (
                                 <NoticiaCard noticiaCardProps={noticiaDestaqueCardProps[0]} />
                             )}
                         </div>
                         <div className="flex flex-col gap-10">
-                            {noticiaMinorCardProps.slice(0, 2).map((n) => (
+                            {noticiaDestaqueCardProps.slice(0, 2).map((n) => (
                                 <NoticiaCard key={n.noticia.id} noticiaCardProps={n} />
                             ))}
                         </div>
                         <div className="flex flex-col gap-10">
-                            {noticiaMinorCardProps.slice(2, 4).map((n) => (
+                            {noticiaDestaqueCardProps.slice(2, 4).map((n) => (
                                 <NoticiaCard key={n.noticia.id} noticiaCardProps={n} />
                             ))}
                         </div>
@@ -79,7 +92,7 @@ export default async function HomePage() {
 
             {noticiaDestaqueCardProps.length > 0 && (
                 <section>
-                    <NoticiaGrid noticiaCardProps={noticiaDestaqueCardProps.slice(0, 6)} />
+                    <NoticiaGrid noticiaCardProps={noticiaDestaqueCardProps.slice(4, 10)} />
                 </section>
             )}
 
@@ -89,18 +102,37 @@ export default async function HomePage() {
 
             {noticiaComumCardProps.length > 0 && (
                 <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {["Economia", "Saúde", "Tecnologia", "Meio ambiente", "Brasil", "Brasília"]
-                        .slice(0, 3)
-                        .map((titulo, i) => (
-                            <div key={i}>
-                                <h2 className="text-2xl font-semibold text-green-700 mb-4">
-                                    {titulo}
-                                </h2>
-                                <NoticiaLista noticiaCardProps={noticiaComumCardProps} />
-                            </div>
-                        ))}
+                    {(() => {
+                        const tags = ["Economia", "Saúde", "Tecnologia", "Meio ambiente", "Brasil", "Brasília"].slice(0, 6);
+                        const usadas = new Set<number>(); 
+                        return tags.map((tag, i) => {
+                            const noticia = noticiaComumCardProps.find((n) => {
+                                const contemTag = n.noticia.tags?.some(
+                                    (t) => t.toLowerCase() === tag.toLowerCase()
+                                );
+                                const aindaNaoUsada = !usadas.has(n.noticia.id);
+                                return contemTag && aindaNaoUsada;
+                            });
+
+                            if (noticia) usadas.add(noticia.noticia.id);
+
+                            return (
+                                <div key={i}>
+                                    <h2 className="text-2xl font-semibold text-green-700 mb-4">
+                                        {tag}
+                                    </h2>
+                                    {noticia ? (
+                                        <NoticiaLista noticiaCardProps={[noticia]} />
+                                    ) : (
+                                        <p className="text-gray-500">Nenhuma notícia disponível.</p>
+                                    )}
+                                </div>
+                            );
+                        });
+                    })()}
                 </section>
             )}
+
 
             {anuncioCardProps.length > 0 && (
                 <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

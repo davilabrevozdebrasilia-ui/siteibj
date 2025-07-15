@@ -18,7 +18,7 @@ export default function AdBarCarousel({ anuncioCardProps }: {anuncioCardProps: A
     const anuncioAtual = anuncioCardProps[index];
 
     return (
-        <div className="rounded-lg w-full h-[120px] bg-white border-t border-b border-green-100 shadow-md overflow-hidden">
+        <div className="rounded-lg w-full h-[120px] bg-white border-t border-b border-slate-100 shadow-md overflow-hidden">
             <a
                 href={anuncioAtual.anuncio.href}
                 target="_blank"

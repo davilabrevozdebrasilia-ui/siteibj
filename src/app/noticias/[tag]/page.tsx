@@ -1,11 +1,13 @@
-import { prisma } from "@/lib/prisma";
+// app/noticias/[tag]/page.tsx
+import AdCard400 from "@/components/anuncios/adCard400";
 import AdSliderFull from "@/components/anuncios/adSliderFull";
 import NoticiaCard from "@/components/noticias/noticiaCard";
-import { NoticiaCardProps } from "@/types/noticias";
+import { prisma } from "@/lib/prisma";
 import { AnuncioCardProps } from "@/types/anuncios";
+import { NoticiaCardProps } from "@/types/noticias";
 
 interface PageProps {
-  params: { tag: string };
+    params: { tag: string };
 }
 
 export default async function NoticiasPorTagPage({ params }: PageProps) {
@@ -18,7 +20,6 @@ export default async function NoticiasPorTagPage({ params }: PageProps) {
             },
         },
         orderBy: { data: "desc" },
-        take: 20,
     });
 
     const anunciosDb = await prisma.anuncio.findMany({
@@ -47,38 +48,54 @@ export default async function NoticiasPorTagPage({ params }: PageProps) {
     }));
 
     return (
-        <div className="space-y-12">
+        <div className="space-y-8">
             {anuncios.length > 0 && (
                 <AdSliderFull anuncioCardProps={anuncios} />
             )}
 
             <section>
-                <h1 className="text-3xl font-bold text-green-800 mb-4">
-                    Notícias sobre "{tag}"
-                </h1>
-
-                {noticias.length === 0 ? (
-                    <p className="text-center text-gray-500">Nenhuma notícia encontrada para esta tag.</p>
-                ) : (
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <h1 className="text-3xl font-bold text-green-800 mb-4">{tag}</h1>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+                    <div className="flex flex-col gap-10">
                         {noticias[0] && (
                             <NoticiaCard noticiaCardProps={noticias[0]} />
                         )}
-
-                        <div className="flex flex-col gap-10">
-                            {noticias.slice(1, 3).map((n) => (
-                                <NoticiaCard key={n.noticia.id} noticiaCardProps={n} />
-                            ))}
-                        </div>
-
-                        <div className="flex flex-col gap-10">
-                            {noticias.slice(3, 6).map((n) => (
-                                <NoticiaCard key={n.noticia.id} noticiaCardProps={n} />
-                            ))}
-                        </div>
                     </div>
-                )}
+                    <div className="flex flex-col gap-10">
+                        {noticias.slice(0, 2).map((n) => (
+                            <NoticiaCard key={n.noticia.id} noticiaCardProps={n} />
+                        ))}
+                    </div>
+                    <div className="flex flex-col gap-10">
+                        {noticias.slice(2, 4).map((n) => (
+                            <NoticiaCard key={n.noticia.id} noticiaCardProps={n} />
+                        ))}
+                    </div>
+                    <div className="flex flex-col gap-10">
+                        {noticias[0] && (
+                            <AdCard400 anuncioCardProps={anuncios[0]} />
+                        )}
+                    </div>
+                </div>
             </section>
+            {noticias.length > 5 && (
+                <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {noticias.slice(4, noticias.length - 1).map((n) => (
+                        <div key={n.noticia.id} className="flex flex-col gap-10">
+                            <NoticiaCard key={n.noticia.id} noticiaCardProps={n} />
+                        </div>
+                    ))}
+                </section>
+            )}
+            {anuncios.length > 0 && (
+                <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {anuncios.slice(0, 3).map((a) => (
+                        <div key={a.anuncio.id}>
+                            <AdCard400 anuncioCardProps={a} />
+                        </div>
+                    ))}
+                </section>
+            )}
         </div>
     );
 }

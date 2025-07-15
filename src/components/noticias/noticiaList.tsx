@@ -7,7 +7,7 @@ export default function NoticiaLista({ noticiaCardProps }: { noticiaCardProps: N
             {noticiaCardProps.map((noticia) => (
                 <li
                     key={noticia.noticia.id}
-                    className="border-b border-green-100 pb-4 "
+                    className="border-b border-slate-100 pb-4 "
                 >
                     <a
                         href={noticia.noticia.href}>
