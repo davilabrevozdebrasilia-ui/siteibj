@@ -7,11 +7,11 @@ import { AnuncioCardProps } from "@/types/anuncios";
 import { NoticiaCardProps } from "@/types/noticias";
 
 interface PageProps {
-    params: { tag: string };
+    params: Promise<{ tag: string }>;
 }
 
 export default async function NoticiasPorTagPage({ params }: PageProps) {
-    const tag = params.tag;
+    const tag = (await params).tag;
 
     const noticiasDb = await prisma.noticia.findMany({
         where: {
