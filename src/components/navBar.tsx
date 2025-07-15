@@ -29,8 +29,8 @@ export default function Navbar() {
             <div className="container mx-auto flex items-center justify-between px-4 ">
                 <Link href="/" className="flex items-center gap-2">
                     <img
-                        src="/logo.png"
-                        alt="Logo Voz de Brasília"
+                        src="/logo.jpg"
+                        alt="Lobo Instituto Brasil Just"
                         className="h-full w-auto max-w-[130px] object-contain"
                     />
                 </Link>
@@ -41,8 +41,8 @@ export default function Navbar() {
                             key={link.href}
                             href={link.href}
                             className={`text-sm px-2 py-1 whitespace-nowrap rounded-md hover:underline transition ${pathname === link.href
-                                    ? "text-green-900 font-bold"
-                                    : "text-green-700"
+                                    ? "text-blue-900 font-bold"
+                                    : "text-blue-700"
                                 }`}
                         >
                             {link.label}
@@ -55,18 +55,18 @@ export default function Navbar() {
                     <Sheet>
                         <SheetTrigger asChild>
                             <Button variant="ghost" size="icon">
-                                <Menu className="w-6 h-6 text-green-900" />
+                                <Menu className="w-6 h-6 text-blue-900" />
                             </Button>
                         </SheetTrigger>
-                        <SheetContent side="right" className="w-64 p-4 bg-green-50">
+                        <SheetContent side="right" className="w-64 p-4 bg-blue-50">
                             <div className="flex flex-col space-y-3 mt-6">
                                 {links.map((link) => (
                                     <Link
                                         key={link.href}
                                         href={link.href}
                                         className={`text-base font-medium py-1 px-2 rounded hover:underline ${pathname === link.href
-                                                ? "text-green-900 font-bold"
-                                                : "text-green-700"
+                                                ? "text-blue-900 font-bold"
+                                                : "text-blue-700"
                                             }`}
                                     >
                                         {link.label}

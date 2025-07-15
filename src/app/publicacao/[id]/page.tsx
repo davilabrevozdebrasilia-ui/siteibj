@@ -57,7 +57,7 @@ export default async function NoticiaPage({ params }: PageProps) {
                 />
 
                 <div className="flex flex-col gap-4">
-                    <h1 className="text-3xl font-bold text-green-800 mb-4 text-center">{noticia.titulo}</h1>
+                    <h1 className="text-3xl font-bold text-blue-800 mb-4 text-center">{noticia.titulo}</h1>
                     <p className="text-sm text-gray-500 mb-4">Publicado em {noticia.data}</p>
                     <p className="text-gray-700 mb-4">{noticia.resumo}</p>
 

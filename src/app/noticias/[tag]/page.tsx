@@ -54,7 +54,7 @@ export default async function NoticiasPorTagPage({ params }: PageProps) {
             )}
 
             <section>
-                <h1 className="text-3xl font-bold text-green-800 mb-4">{tag}</h1>
+                <h1 className="text-3xl font-bold text-blue-800 mb-4">{tag}</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
                     <div className="flex flex-col gap-10">
                         {noticias[0] && (

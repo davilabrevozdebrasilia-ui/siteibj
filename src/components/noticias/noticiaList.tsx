@@ -19,7 +19,7 @@ export default function NoticiaLista({ noticiaCardProps }: { noticiaCardProps: N
                             />
 
                             <div className="flex flex-col">
-                                <h3 className="text-lg font-semibold text-green-800">
+                                <h3 className="text-lg font-semibold text-blue-800">
                                     {noticia.noticia.titulo}
                                 </h3>
                                 <p className="text-sm text-gray-500">

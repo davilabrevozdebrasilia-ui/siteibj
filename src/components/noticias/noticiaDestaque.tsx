@@ -15,7 +15,7 @@ export default function NoticiaDestaque({ noticiaCardProps }: { noticiaCardProps
             </div>
 
             <div className="h-25 p-4 overflow-hidden bg-white z-10">
-                <h3 className="text-xl font-semibold text-green-900 truncate">
+                <h3 className="text-xl font-semibold text-blue-900 truncate">
                     {noticiaCardProps.noticia.titulo}
                 </h3>
                 <p className="text-gray-700 line-clamp-2">
