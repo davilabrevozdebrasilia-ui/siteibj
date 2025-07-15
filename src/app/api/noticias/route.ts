@@ -33,12 +33,12 @@ export async function POST(req: NextRequest) {
                 imagem: data.imagem || "",
                 data: dataFormatada,
                 tags: data.tags,
-                href: "/noticia/pendente",  // href provisório obrigatório
+                href: "/publicacao/pendente",  // href provisório obrigatório
             },
         });
 
         // Gera o href correto
-        const hrefCorreto = `/noticia/${noticiaCriada.id}`;
+        const hrefCorreto = `/publicacao/${noticiaCriada.id}`;
 
         // Atualiza a notícia com o href correto
         const noticiaAtualizada = await prisma.noticia.update({
