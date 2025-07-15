@@ -124,7 +124,7 @@ export default async function HomePage() {
                                     {noticia ? (
                                         <NoticiaLista noticiaCardProps={[noticia]} />
                                     ) : (
-                                        <p className="text-gray-500">Nenhuma notícia disponível.</p>
+                                        <p className="text-gray-500">Nenhuma notícia disponível</p>
                                     )}
                                 </div>
                             );
