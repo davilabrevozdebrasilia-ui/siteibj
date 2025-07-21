@@ -31,7 +31,7 @@ export default function Navbar() {
                     <img
                         src="/logo.jpg"
                         alt="Lobo Instituto Brasil Just"
-                        className="h-full w-auto max-w-[130px] object-contain"
+                        className="h-full w-auto max-w-[80px] object-contain"
                     />
                 </Link>
 
