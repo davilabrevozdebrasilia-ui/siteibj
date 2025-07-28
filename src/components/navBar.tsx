@@ -12,13 +12,13 @@ import { Button } from "@/components/ui/button";
 
 const links = [
     { label: "Início", href: "/" },
-    { label: "Política", href: "/noticias/Politica" },
-    { label: "Esportes", href: "/noticias/Esportes" },
-    { label: "Economia", href: "/noticias/Economia" },
-    { label: "Tecnologia", href: "/noticias/Tecnologia" },
-    { label: "Meio ambiente", href: "/noticias/Servicos" },
-    { label: "Saúde", href: "/Contato" },
-    { label: "Notícias do Riella", href: "/noticias/Riella" },
+    { label: "Projeto Mulheres Belas", href: "/noticias/mulheres-belas" },
+    { label: "Projeto Visao para Todos", href: "/noticias/visao-para-todos" },
+    { label: "TEA", href: "/noticias/tea" },
+    { label: "Lacos de Inclusao", href: "/noticias/lacos-de-inclusao" },
+    { label: "Quem Somos", href: "/noticias/quem-somos" },
+    { label: "Projeto Meninas Luz", href: "/noticias/meninas-luz" },
+    { label: "Faca sua Doacao", href: "/noticias/doacao" },
 ];
 
 export default function Navbar() {
@@ -30,19 +30,22 @@ export default function Navbar() {
                 <Link href="/" className="flex items-center gap-2">
                     <img
                         src="/logo.jpg"
-                        alt="Lobo Instituto Brasil Just"
+                        alt="Instituto Brazil Just"
                         className="h-full w-auto max-w-[80px] object-contain"
                     />
+                    <span className="text-xl font-bold text-blue-900">
+                        Instituto Brazil Just
+                    </span>
                 </Link>
 
-                <nav className="hidden md:flex gap-4 flex-wrap justify-end">
+                <nav className="hidden lg:flex gap-4 flex-wrap justify-end">
                     {links.map((link) => (
                         <Link
                             key={link.href}
                             href={link.href}
                             className={`text-sm px-2 py-1 whitespace-nowrap rounded-md hover:underline transition ${pathname === link.href
-                                    ? "text-blue-900 font-bold"
-                                    : "text-blue-700"
+                                ? "text-blue-900 font-bold"
+                                : "text-blue-700"
                                 }`}
                         >
                             {link.label}
@@ -51,7 +54,7 @@ export default function Navbar() {
                 </nav>
 
                 {/* Mobile Menu Button */}
-                <div className="md:hidden">
+                <div className="lg:hidden">
                     <Sheet>
                         <SheetTrigger asChild>
                             <Button variant="ghost" size="icon">
@@ -65,8 +68,8 @@ export default function Navbar() {
                                         key={link.href}
                                         href={link.href}
                                         className={`text-base font-medium py-1 px-2 rounded hover:underline ${pathname === link.href
-                                                ? "text-blue-900 font-bold"
-                                                : "text-blue-700"
+                                            ? "text-blue-900 font-bold"
+                                            : "text-blue-700"
                                             }`}
                                     >
                                         {link.label}

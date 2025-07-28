@@ -2,7 +2,7 @@
 export const dynamic = "force-dynamic";
 
 import AdSliderFull from "@/components/anuncios/adSliderFull";
-import AdCard400 from "@/components/anuncios/adCard400";
+import AdCard from "@/components/anuncios/adCard";
 import { prisma } from "@/lib/prisma";
    interface PageProps {
         params: Promise<{ id: string }>;
@@ -17,7 +17,7 @@ export default async function NoticiaPage({ params }: PageProps) {
     });
 
     if (!noticiaDb) {
-        return <div className="p-6 text-center">Notícia não encontrada</div>;
+        return <div className="p-6 text-center">Notícia não encontrada.</div>;
     }
 
     const anunciosDb = await prisma.anuncio.findMany({
@@ -65,17 +65,17 @@ export default async function NoticiaPage({ params }: PageProps) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                     <div className="flex flex-col gap-10">
                         {anuncios.length > 1 && (
-                            <AdCard400 anuncioCardProps={anuncios[1]} />
+                            <AdCard anuncioCardProps={anuncios[1]} />
                         )}
                     </div>
                     <div className="flex flex-col gap-10">
                         {anuncios.length > 2 && (
-                            <AdCard400 anuncioCardProps={anuncios[2]} />
+                            <AdCard anuncioCardProps={anuncios[2]} />
                         )}
                     </div>
                     <div className="flex flex-col gap-10">
                         {anuncios.length > 3 && (
-                            <AdCard400 anuncioCardProps={anuncios[3]} />
+                            <AdCard anuncioCardProps={anuncios[3]} />
                         )}
                     </div>
                 </div>
