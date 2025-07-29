@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Instagram, Facebook, Youtube} from "lucide-react";
+import { Instagram, Facebook, Youtube } from "lucide-react";
 
 const redes = [
     {
@@ -21,35 +21,16 @@ const redes = [
             youtube: "https://www.youtube.com/@VozdebrasiliaTV",
         },
     },
-    
 ];
 
 export default function ContatoPage() {
     const [titulo, setTitulo] = useState("");
     const [mensagem, setMensagem] = useState("");
-    const [status, setStatus] = useState<"idle" | "loading" | "enviado" | "erro">("idle");
 
-    const enviarEmail = async () => {
-        setStatus("loading");
-        try {
-            const res = await fetch("/api/send-email", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ titulo, mensagem }),
-            });
-
-            if (res.ok) {
-                setStatus("enviado");
-                setTitulo("");
-                setMensagem("");
-            } else {
-                setStatus("erro");
-            }
-        } catch (error) {
-            setStatus("erro");
-        }
+    const gerarMailTo = () => {
+        const assunto = encodeURIComponent(titulo);
+        const corpo = encodeURIComponent(mensagem);
+        return `mailto:institutobraziljust@gmail.com?subject=${assunto}&body=${corpo}`;
     };
 
     return (
@@ -82,16 +63,12 @@ export default function ContatoPage() {
                         />
                     </label>
 
-                    <button
-                        onClick={enviarEmail}
-                        disabled={status === "loading"}
-                        className="bg-blue-900 text-white px-6 py-2 rounded hover:bg-blue-800 transition disabled:opacity-50"
+                    <a
+                        href={gerarMailTo()}
+                        className="inline-block bg-blue-900 text-white px-6 py-2 rounded hover:bg-blue-800 transition"
                     >
-                        {status === "loading" ? "Enviando..." : "Enviar Mensagem"}
-                    </button>
-
-                    {status === "enviado" && <p className="text-green-600">Email enviado com sucesso!</p>}
-                    {status === "erro" && <p className="text-red-600">Erro ao enviar. Tente novamente.</p>}
+                        Enviar Mensagem
+                    </a>
                 </div>
 
                 <div className="bg-white rounded-lg shadow border border-slate-100 p-6 space-y-8">
