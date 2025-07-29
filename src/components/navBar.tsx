@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Calendar } from "lucide-react";
+import { Menu, Calendar, ChevronDown } from "lucide-react";
 import {
     Sheet,
     SheetContent,
@@ -10,40 +10,58 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
-const links = [
-    { label: "Início", href: "/" },
+const projetosSubmenu = [
     { label: "Mulheres Belas", href: "/noticias/mulheres-belas" },
     { label: "Visão para Todos", href: "/noticias/visao-para-todos" },
     { label: "TEA", href: "/noticias/tea" },
     { label: "Laços de Inclusao", href: "/noticias/lacos-de-inclusao" },
-    { label: "Quem Somos", href: "/noticias/quem-somos" },
     { label: "Meninas Luz", href: "/noticias/meninas-luz" },
-    { label: "Contato", href: "/contato" },
+];
+
+const links = [
+    { label: "Início", href: "/" },
+    { label: "Quem Somos", href: "/noticias/quem-somos" },
+    { label: "Visão", href: "/noticias/visao" },
+    { label: "Projetos", href: "#" }, // sem href real para abrir o submenu
     { label: "Videos", href: "/videos" },
-    { label: "Imagens", href: "/imagens" },
+    { label: "Fotos", href: "/imagens" },
+    { label: "Contato", href: "/contato" },
 ];
 
 export default function Navbar() {
     const pathname = usePathname();
-    const [horaAtual, setHoraAtual] = useState<string>("");
+    const [horaAtual, setHoraAtual] = useState<string>(() => {
+        const agora = new Date();
+        const hora = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        const data = agora.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        return `${data} - ${hora}`;
+    });
 
+    const [projetosAberto, setProjetosAberto] = useState(false);
+    const [projetosMobileAberto, setProjetosMobileAberto] = useState(false);
+    const projetosRef = useRef<HTMLDivElement>(null);
+
+    // Fecha o submenu de projetos se clicar fora
     useEffect(() => {
-        const atualizarHora = () => {
-            const agora = new Date();
-            const hora = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-            const data = agora.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-            setHoraAtual(`${data} - ${hora}`);
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                projetosRef.current &&
+                !projetosRef.current.contains(event.target as Node)
+            ) {
+                setProjetosAberto(false);
+            }
         };
 
-        atualizarHora();
-        const intervalo = setInterval(atualizarHora, 60000);
-        return () => clearInterval(intervalo);
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
     }, []);
 
     return (
-        <header className="sticky top-0 z-50 bg-white border-b  ">
+        <header className="sticky top-0 z-50 bg-white border-b">
             <div className="flex justify-between items-center px-4 py-2 z-50">
                 <Link href="/" className="flex items-center gap-2">
                     <img
@@ -62,23 +80,56 @@ export default function Navbar() {
                 </div>
             </div>
 
-            <div className="h-12 flex items-center justify-between px-4 bg-blue-500 drop-shadow-slate-400 drop-shadow-md ">
-                <nav className="hidden xl:flex gap-4 flex-wrap justify-end">
-                    {links.map((link) => (
-                        <Link
-                            key={link.href}
-                            href={link.href}
-                            className={`text-md px-2 py-3 whitespace-nowrap h-full hover:bg-blue-400  transition ${pathname === link.href
-                                ? "text-slate-100 font-bold"
-                                : "text-slate-100"
+            <div className="h-12 flex items-center md:justify-center justify-between px-4 bg-blue-500 drop-shadow-slate-400 drop-shadow-md ">
+                <nav className="hidden md:flex gap-4 flex-wrap justify-end relative">
+                    {links.map((link) => {
+                        if (link.label === "Projetos") {
+                            return (
+                                <div
+                                    key="projetos"
+                                    className="relative"
+                                    ref={projetosRef}
+                                >
+                                    <button
+                                        onClick={() => setProjetosAberto((prev) => !prev)}
+                                        className="cursor-pointer text-md px-2 py-3 h-full text-slate-100 hover:bg-blue-400 flex items-center gap-1"
+                                    >
+                                        Projetos <ChevronDown className="w-4 h-4" />
+                                    </button>
+                                    {projetosAberto && (
+                                        <div className="absolute top-full left-0 bg-white shadow-lg rounded text-blue-900 z-50">
+                                            {projetosSubmenu.map((proj) => (
+                                                <Link
+                                                    key={proj.href}
+                                                    href={proj.href}
+                                                    className="block px-4 py-2 hover:bg-blue-100 whitespace-nowrap"
+                                                >
+                                                    {proj.label}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        }
+
+                        return (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                className={`text-md px-2 py-3 whitespace-nowrap h-full hover:bg-blue-400 transition ${
+                                    pathname === link.href
+                                        ? "text-slate-100 font-bold"
+                                        : "text-slate-100"
                                 }`}
-                        >
-                            {link.label}
-                        </Link>
-                    ))}
+                            >
+                                {link.label}
+                            </Link>
+                        );
+                    })}
                 </nav>
 
-                <div className="xl:hidden">
+                <div className="md:hidden">
                     <Sheet>
                         <SheetTrigger asChild>
                             <Button variant="ghost" size="icon">
@@ -90,18 +141,50 @@ export default function Navbar() {
                                 <h2 className="text-lg font-bold mb-4 text-blue-900">Menu</h2>
                             </DialogTitle>
                             <div className="flex flex-col space-y-3 mt-6">
-                                {links.map((link) => (
-                                    <Link
-                                        key={link.href}
-                                        href={link.href}
-                                        className={`text-base font-medium py-1 px-2 rounded hover:underline ${pathname === link.href
-                                            ? "text-blue-900 font-bold"
-                                            : "text-blue-700"
+                                {links.map((link) => {
+                                    if (link.label === "Projetos") {
+                                        return (
+                                            <div key="projetos-mobile">
+                                                <button
+                                                    onClick={() =>
+                                                        setProjetosMobileAberto((prev) => !prev)
+                                                    }
+                                                    className="text-left w-full text-base font-medium py-1 px-2 rounded hover:underline text-blue-700"
+                                                >
+                                                    Projetos{" "}
+                                                    <ChevronDown className="inline w-4 h-4 ml-1" />
+                                                </button>
+                                                {projetosMobileAberto && (
+                                                    <div className="pl-4 mt-1">
+                                                        {projetosSubmenu.map((proj) => (
+                                                            <Link
+                                                                key={proj.href}
+                                                                href={proj.href}
+                                                                className="block text-sm py-1 px-2 text-blue-700 hover:underline"
+                                                            >
+                                                                {proj.label}
+                                                            </Link>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    }
+
+                                    return (
+                                        <Link
+                                            key={link.href}
+                                            href={link.href}
+                                            className={`text-base font-medium py-1 px-2 rounded hover:underline ${
+                                                pathname === link.href
+                                                    ? "text-blue-900 font-bold"
+                                                    : "text-blue-700"
                                             }`}
-                                    >
-                                        {link.label}
-                                    </Link>
-                                ))}
+                                        >
+                                            {link.label}
+                                        </Link>
+                                    );
+                                })}
                             </div>
                         </SheetContent>
                     </Sheet>
