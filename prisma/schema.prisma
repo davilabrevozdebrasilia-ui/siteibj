@@ -10,8 +10,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model Noticia {
@@ -29,4 +29,22 @@ model Anuncio {
     titulo String
     imagem String
     href   String
+}
+
+model Imagem {
+    id          Int      @id @default(autoincrement())
+    titulo      String
+    descricao   String?
+    url         String
+    dataCriacao DateTime @default(now())
+    tags        String[]
+}
+
+model Video {
+    id          Int      @id @default(autoincrement())
+    titulo      String
+    descricao   String?
+    url         String
+    dataCriacao DateTime @default(now())
+    tags        String[]
 }

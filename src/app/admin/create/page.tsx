@@ -1,275 +1,365 @@
 "use client";
 
 import Editor from "@/components/textEditor/editor";
-import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 
 type NoticiaForm = {
-  titulo: string;
-  resumo: string;
-  imagem: string;
-  tags: string;
+    titulo: string;
+    resumo: string;
+    imagem: string;
+    tags: string;
 };
 
 type AnuncioForm = {
-  titulo: string;
-  imagem: string;
-  href: string;
+    titulo: string;
+    imagem: string;
+    href: string;
+};
+
+type ImagemForm = {
+    titulo: string;
+    descricao: string;
+    url: string;
+    tags: string;
+};
+
+type VideoForm = {
+    titulo: string;
+    descricao: string;
+    url: string;
+    tags: string;
 };
 
 export default function AdminCreate() {
-  const [token, setToken] = useState<string | null>(null);
-  const [aba, setAba] = useState<"noticia" | "anuncio">("noticia");
-  const [noticiaForm, setNoticiaForm] = useState<NoticiaForm>({
-    titulo: "",
-    resumo: "",
-    imagem: "",
-    tags: "",
-  });
-  const [anuncioForm, setAnuncioForm] = useState<AnuncioForm>({
-    titulo: "",
-    imagem: "",
-    href: "",
-  });
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+    const [token, setToken] = useState<string | null>(null);
+    const [aba, setAba] = useState<"noticia" | "anuncio" | "imagem" | "video">("noticia");
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    if (storedToken) {
-      setToken(storedToken);
-    } else {
-      setError("Acesso negado. Faça login para continuar.");
-    }
-  }, []);
-
-  function handleImageChange(
-    e: React.ChangeEvent<HTMLInputElement>,
-    isNoticia: boolean
-  ) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      const base64 = reader.result as string;
-      if (isNoticia) {
-        setNoticiaForm((f) => ({ ...f, imagem: base64 }));
-      } else {
-        setAnuncioForm((f) => ({ ...f, imagem: base64 }));
-      }
-    };
-    reader.readAsDataURL(file);
-  }
-
-  async function handleSubmitNoticia() {
-    setError("");
-    setSuccess("");
-
-    if (!token) {
-      setError("Você precisa estar logado para cadastrar notícias.");
-      return;
-    }
-
-    const tagsArray = noticiaForm.tags.split(",").map((t) => t.trim());
-
-    const res = await fetch("/api/noticias", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ ...noticiaForm, tags: tagsArray }),
-    });
-
-    if (res.ok) {
-      setSuccess("Notícia cadastrada com sucesso!");
-      setNoticiaForm({
+    const [noticiaForm, setNoticiaForm] = useState<NoticiaForm>({
         titulo: "",
         resumo: "",
         imagem: "",
         tags: "",
-      });
-    } else {
-      const data = await res.json();
-      setError(data.error || "Erro ao cadastrar notícia");
-    }
-  }
-
-  async function handleSubmitAnuncio() {
-    setError("");
-    setSuccess("");
-
-    if (!token) {
-      setError("Você precisa estar logado para cadastrar anúncios.");
-      return;
-    }
-
-    const res = await fetch("/api/anuncios", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(anuncioForm),
     });
 
-    if (res.ok) {
-      setSuccess("Anúncio cadastrado com sucesso!");
-      setAnuncioForm({
+    const [anuncioForm, setAnuncioForm] = useState<AnuncioForm>({
         titulo: "",
         imagem: "",
         href: "",
-      });
-    } else {
-      const data = await res.json();
-      setError(data.error || "Erro ao cadastrar anúncio");
+    });
+
+    const [imagemForm, setImagemForm] = useState<ImagemForm>({
+        titulo: "",
+        descricao: "",
+        url: "",
+        tags: "",
+    });
+
+    const [videoForm, setVideoForm] = useState<VideoForm>({
+        titulo: "",
+        descricao: "",
+        url: "",
+        tags: "",
+    });
+
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem("token");
+        if (storedToken) {
+            setToken(storedToken);
+        } else {
+            setError("Acesso negado. Faça login para continuar.");
+        }
+    }, []);
+const [batchFiles, setBatchFiles] = useState<{ tipo: "imagem" | "video"; files: File[] }>({
+  tipo: "imagem",
+  files: [],
+});
+
+function handleMultipleUpload(tipo: "imagem" | "video") {
+  return (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      setBatchFiles({ tipo, files: Array.from(files) });
     }
-  }
+  };
+}
 
-  if (!token) {
-    return (
-      <div className="max-w-md mx-auto mt-10 p-6 border rounded text-center">
-        <p className="text-red-600 font-semibold mb-4">
-          {error || "Acesso negado. Faça login para continuar."}
-        </p>
-        <button
-          onClick={() => (window.location.href = "/admin")}
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-blue-500 transition"
-        >
-          Ir para Login
-        </button>
-      </div>
-    );
-  }
+function submitBatch(tipo: "imagem" | "video") {
+  return async () => {
+    if (!batchFiles.files.length) return setError("Nenhum arquivo selecionado.");
 
-  return (
-    <div className="max-w-lg mx-auto mt-10 p-6 border rounded space-y-6">
-      <div className="flex gap-4">
-        <button
-          className={`flex-1 p-2 rounded ${
-            aba === "noticia" ? "bg-green-700 text-white" : "bg-gray-200"
-          }`}
-          onClick={() => {
-            setError("");
-            setSuccess("");
-            setAba("noticia");
-          }}
-        >
-          Criar Notícia
-        </button>
-        <button
-          className={`flex-1 p-2 rounded ${
-            aba === "anuncio" ? "bg-green-700 text-white" : "bg-gray-200"
-          }`}
-          onClick={() => {
-            setError("");
-            setSuccess("");
-            setAba("anuncio");
-          }}
-        >
-          Criar Anúncio
-        </button>
-      </div>
+    for (const file of batchFiles.files) {
+      const base64 = await readFileAsBase64(file);
+      const data = {
+        titulo: tipo,
+        descricao: "",
+        url: base64,
+        tags: [tipo],
+      };
 
-      {aba === "noticia" && (
-        <form
-          className="flex flex-col gap-4"
-          onClick={(e) => {
-            // Evita submit ao clicar em botões que não sejam submit (aqui só tem um tipo: submit removido)
-            const target = e.target as HTMLElement;
-            if (
-              target.tagName === "BUTTON" &&
-              (target as HTMLButtonElement).type !== "button"
-            ) {
-              e.preventDefault();
+      await submit(data, `/api/${tipo === "imagem" ? "imagens" : "videos"}`, () => { });
+    }
+
+    setSuccess(`${batchFiles.files.length} ${tipo}s cadastrados com sucesso.`);
+    setBatchFiles({ tipo, files: [] });
+  };
+}
+
+function readFileAsBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+    function handleFileChange(e: React.ChangeEvent<HTMLInputElement>, tipo: string) {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            const base64 = reader.result as string;
+            switch (tipo) {
+                case "noticia":
+                    setNoticiaForm((f) => ({ ...f, imagem: base64 }));
+                    break;
+                case "anuncio":
+                    setAnuncioForm((f) => ({ ...f, imagem: base64 }));
+                    break;
+                case "imagem":
+                    setImagemForm((f) => ({ ...f, url: base64 }));
+                    break;
+                case "video":
+                    setVideoForm((f) => ({ ...f, url: base64 }));
+                    break;
             }
-          }}
-        >
-          <input
-            type="text"
-            placeholder="Título"
-            value={noticiaForm.titulo}
-            onChange={(e) => setNoticiaForm({ ...noticiaForm, titulo: e.target.value })}
-            required
-            className="border p-2 rounded"
-          />
-          <Editor
-            value={noticiaForm.resumo}
-            onChange={(html) => setNoticiaForm({ ...noticiaForm, resumo: html })}
-          />
-          <input
-            type="text"
-            placeholder="Tags (separadas por vírgula)"
-            value={noticiaForm.tags}
-            onChange={(e) => setNoticiaForm({ ...noticiaForm, tags: e.target.value })}
-            required
-            className="border p-2 rounded"
-          />
-          <input
-            required
-            type="file"
-            accept="image/*"
-            onChange={(e) => handleImageChange(e, true)}
-            className="border p-2 rounded"
-          />
-          {noticiaForm.imagem && (
-            <img src={noticiaForm.imagem} alt="Preview" className="mt-2 max-h-40 object-contain" />
-          )}
-          <button
-            type="button"
-            onClick={handleSubmitNoticia}
-            className="bg-green-700 text-white p-2 rounded hover:bg-green-800"
-          >
-            Cadastrar Notícia
-          </button>
-        </form>
-      )}
+        };
+        reader.readAsDataURL(file);
+    }
 
-      {aba === "anuncio" && (
-        <form className="flex flex-col gap-4">
-          <input
-            type="text"
-            placeholder="Título"
-            value={anuncioForm.titulo}
-            onChange={(e) => setAnuncioForm({ ...anuncioForm, titulo: e.target.value })}
-            required
-            className="border p-2 rounded"
-          />
-          <input
-            type="text"
-            placeholder="Link do anúncio (href)"
-            value={anuncioForm.href}
-            onChange={(e) => setAnuncioForm({ ...anuncioForm, href: e.target.value })}
-            required
-            className="border p-2 rounded"
-          />
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => handleImageChange(e, false)}
-            className="border p-2 rounded"
-            required
-          />
-          {anuncioForm.imagem && (
-            <img src={anuncioForm.imagem} alt="Preview" className="mt-2 max-h-40 object-contain" />
-          )}
-          <button
-            type="button"
-            onClick={handleSubmitAnuncio}
-            className="bg-green-700 text-white p-2 rounded hover:bg-green-800"
-          >
-            Cadastrar Anúncio
-          </button>
-        </form>
-      )}
+    async function submit(formData: any, endpoint: string, clearFn: () => void) {
+        setError("");
+        setSuccess("");
+        if (!token) {
+            setError("Você precisa estar logado para cadastrar.");
+            return;
+        }
 
-      {(error || success) && (
-        <p className={`${error ? "text-red-600" : "text-green-600"} mt-4`}>
-          {error || success}
-        </p>
-      )}
-    </div>
-  );
+        try {
+            const res = await fetch(endpoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (res.ok) {
+                setSuccess("Cadastro realizado com sucesso!");
+                clearFn();
+            } else {
+                const data = await res.json();
+                setError(data.error || "Erro ao cadastrar.");
+            }
+        } catch {
+            setError("Erro ao cadastrar.");
+        }
+    }
+
+    async function handleSubmitNoticia() {
+        const tags = noticiaForm.tags.split(",").map((t) => t.trim());
+        await submit({ ...noticiaForm, tags }, "/api/noticias", () =>
+            setNoticiaForm({ titulo: "", resumo: "", imagem: "", tags: "" })
+        );
+    }
+
+    async function handleSubmitAnuncio() {
+        await submit(anuncioForm, "/api/anuncios", () =>
+            setAnuncioForm({ titulo: "", imagem: "", href: "" })
+        );
+    }
+
+    async function handleSubmitImagem() {
+        const tags = imagemForm.tags.split(",").map((t) => t.trim());
+        await submit({ ...imagemForm, tags }, "/api/imagens", () =>
+            setImagemForm({ titulo: "", descricao: "", url: "", tags: "" })
+        );
+    }
+
+    async function handleSubmitVideo() {
+        const tags = videoForm.tags.split(",").map((t) => t.trim());
+        await submit({ ...videoForm, tags }, "/api/videos", () =>
+            setVideoForm({ titulo: "", descricao: "", url: "", tags: "" })
+        );
+    }
+
+    if (!token) {
+        return (
+            <div className="max-w-md mx-auto mt-10 p-6 border rounded text-center">
+                <p className="text-red-600 font-semibold mb-4">
+                    {error || "Acesso negado. Faça login para continuar."}
+                </p>
+                <button
+                    onClick={() => (window.location.href = "/admin")}
+                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-blue-500 transition"
+                >
+                    Ir para Login
+                </button>
+            </div>
+        );
+    }
+
+    return (
+        <div className="max-w-lg mx-auto mt-10 p-6 border rounded space-y-6">
+            {/* Abas */}
+            <div className="flex flex-wrap gap-2 justify-center">
+                {["noticia", "anuncio", "imagem", "video"].map((tab) => (
+                    <button
+                        key={tab}
+                        className={`px-4 py-2 rounded ${aba === tab ? "bg-green-700 text-white" : "bg-gray-200"
+                            }`}
+                        onClick={() => {
+                            setError("");
+                            setSuccess("");
+                            setAba(tab as any);
+                        }}
+                    >
+                        {tab[0].toUpperCase() + tab.slice(1)}
+                    </button>
+                ))}
+            </div>
+
+            {/* Formulário por aba */}
+            {aba === "noticia" && (
+                <form className="flex flex-col gap-4">
+                    <input
+                        type="text"
+                        placeholder="Título"
+                        value={noticiaForm.titulo}
+                        onChange={(e) => setNoticiaForm({ ...noticiaForm, titulo: e.target.value })}
+                        className="border p-2 rounded"
+                    />
+                    <Editor
+                        value={noticiaForm.resumo}
+                        onChange={(html) => setNoticiaForm({ ...noticiaForm, resumo: html })}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Tags (separadas por vírgula)"
+                        value={noticiaForm.tags}
+                        onChange={(e) => setNoticiaForm({ ...noticiaForm, tags: e.target.value })}
+                        className="border p-2 rounded"
+                    />
+                    <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, "noticia")} />
+                    {noticiaForm.imagem && (
+                        <img src={noticiaForm.imagem} className="max-h-40 object-contain" alt="Preview" />
+                    )}
+                    <button type="button" onClick={handleSubmitNoticia} className="btn-green">
+                        Cadastrar Notícia
+                    </button>
+                </form>
+            )}
+
+            {aba === "anuncio" && (
+                <form className="flex flex-col gap-4">
+                    <input
+                        type="text"
+                        placeholder="Título"
+                        value={anuncioForm.titulo}
+                        onChange={(e) => setAnuncioForm({ ...anuncioForm, titulo: e.target.value })}
+                        className="border p-2 rounded"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Link (href)"
+                        value={anuncioForm.href}
+                        onChange={(e) => setAnuncioForm({ ...anuncioForm, href: e.target.value })}
+                        className="border p-2 rounded"
+                    />
+                    <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, "anuncio")} />
+                    {anuncioForm.imagem && (
+                        <img src={anuncioForm.imagem} className="max-h-40 object-contain" alt="Preview" />
+                    )}
+                    <button type="button" onClick={handleSubmitAnuncio} className="btn-green">
+                        Cadastrar Anúncio
+                    </button>
+                </form>
+            )}
+
+            {aba === "imagem" && (
+                <form className="flex flex-col gap-4">
+                    <input
+                        type="text"
+                        placeholder="Título"
+                        value={imagemForm.titulo}
+                        onChange={(e) => setImagemForm({ ...imagemForm, titulo: e.target.value })}
+                        className="border p-2 rounded"
+                    />
+                    <textarea
+                        placeholder="Descrição"
+                        value={imagemForm.descricao}
+                        onChange={(e) => setImagemForm({ ...imagemForm, descricao: e.target.value })}
+                        className="border p-2 rounded"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Tags"
+                        value={imagemForm.tags}
+                        onChange={(e) => setImagemForm({ ...imagemForm, tags: e.target.value })}
+                        className="border p-2 rounded"
+                    />
+                    <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, "imagem")} />
+                    {imagemForm.url && (
+                        <img src={imagemForm.url} className="max-h-40 object-contain" alt="Preview" />
+                    )}
+                    <button type="button" onClick={handleSubmitImagem} className="btn-green">
+                        Cadastrar Imagem
+                    </button>
+                </form>
+            )}
+
+            {aba === "video" && (
+                <form className="flex flex-col gap-4">
+                    <input
+                        type="text"
+                        placeholder="Título"
+                        value={videoForm.titulo}
+                        onChange={(e) => setVideoForm({ ...videoForm, titulo: e.target.value })}
+                        className="border p-2 rounded"
+                    />
+                    <textarea
+                        placeholder="Descrição"
+                        value={videoForm.descricao}
+                        onChange={(e) => setVideoForm({ ...videoForm, descricao: e.target.value })}
+                        className="border p-2 rounded"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Tags"
+                        value={videoForm.tags}
+                        onChange={(e) => setVideoForm({ ...videoForm, tags: e.target.value })}
+                        className="border p-2 rounded"
+                    />
+                    <input type="file" accept="video/*" onChange={(e) => handleFileChange(e, "video")} />
+                    {videoForm.url && (
+                        <video src={videoForm.url} controls className="max-h-40 object-contain" />
+                    )}
+                    <button type="button" onClick={handleSubmitVideo} className="btn-green">
+                        Cadastrar Vídeo
+                    </button>
+                </form>
+            )}
+
+            {(error || success) && (
+                <p className={`${error ? "text-red-600" : "text-green-600"} mt-4`}>
+                    {error || success}
+                </p>
+            )}
+        </div>
+    );
 }

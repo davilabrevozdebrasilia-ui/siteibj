@@ -30,14 +30,16 @@ const anuncios: AnuncioCardProps[] = anunciosDb.map((a) => ({
         href: a.href,
     },
 }));
+
 export default function RootLayout({ children }: { children: ReactNode }) {
     return (
         <html lang="pt-BR">
             <body >
-                <div className="bg-slate-50 text-gray-900 suppressHydrationWarning">
+                <div className={`${poppins.className}bg-slate-50 text-gray-900 suppressHydrationWarning`}>
                     <Navbar />
-                    <main className={`${poppins.className} antialiased min-h-[100vh] px-4 py-8 mb-[80] container mx-auto `}>{children}
+                    <main className={` antialiased min-h-[100vh] px-4 py-8 mb-[80] container mx-auto `}>{children}
                     </main>
+                    <Footer/>
                     <AdFooter anuncioCardProps={anuncios} />
                 </div>
             </body>

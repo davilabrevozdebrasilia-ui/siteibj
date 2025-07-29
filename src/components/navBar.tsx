@@ -9,24 +9,43 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { DialogTitle } from "@radix-ui/react-dialog";
+import { useEffect, useState } from "react";
 
 const links = [
     { label: "Início", href: "/" },
     { label: "Projeto Mulheres Belas", href: "/noticias/mulheres-belas" },
-    { label: "Projeto Visao para Todos", href: "/noticias/visao-para-todos" },
+    { label: "Projeto Visão para Todos", href: "/noticias/visao-para-todos" },
     { label: "TEA", href: "/noticias/tea" },
-    { label: "Lacos de Inclusao", href: "/noticias/lacos-de-inclusao" },
+    { label: "Laços de Inclusao", href: "/noticias/lacos-de-inclusao" },
     { label: "Quem Somos", href: "/noticias/quem-somos" },
     { label: "Projeto Meninas Luz", href: "/noticias/meninas-luz" },
-    { label: "Faca sua Doacao", href: "/noticias/doacao" },
+    { label: "Contato", href: "/contato" },
+    { label: "Videos", href: "/videos" },
+    { label: "Imagens", href: "/imagens" },
 ];
 
 export default function Navbar() {
     const pathname = usePathname();
+    const [horaAtual, setHoraAtual] = useState<string>("");
+
+    useEffect(() => {
+        const atualizarHora = () => {
+            const agora = new Date();
+            const hora = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            const data = agora.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            setHoraAtual(`${data} - ${hora}`);
+        };
+
+        atualizarHora(); // chama imediatamente
+        const intervalo = setInterval(atualizarHora, 60000); // atualiza a cada 1min
+
+        return () => clearInterval(intervalo);
+    }, []);
 
     return (
         <header className="sticky top-0 z-50 bg-white border-b drop-shadow-black">
-            <div className="container mx-auto flex items-center justify-between px-4 ">
+            <div className="flex justify-between items-center px-4 py-2">
                 <Link href="/" className="flex items-center gap-2">
                     <img
                         src="/logo.jpg"
@@ -38,14 +57,21 @@ export default function Navbar() {
                     </span>
                 </Link>
 
-                <nav className="hidden lg:flex gap-4 flex-wrap justify-end">
+                {/* Data e hora */}
+                <div className="text-md text-blue-900 font-mono bg-slate-100 px-1 py-1 rounded shadow-sm font-bold">
+                    {horaAtual}
+                </div>
+            </div>
+
+            <div className="h-12 flex items-center justify-between px-4 bg-blue-500">
+                <nav className="hidden  xl:flex gap-4 flex-wrap justify-end">
                     {links.map((link) => (
                         <Link
                             key={link.href}
                             href={link.href}
-                            className={`text-sm px-2 py-1 whitespace-nowrap rounded-md hover:underline transition ${pathname === link.href
-                                ? "text-blue-900 font-bold"
-                                : "text-blue-700"
+                            className={`text-md px-2 py-3 whitespace-nowrap h-full hover:bg-blue-400 transition ${pathname === link.href
+                                ? "text-slate-100 font-bold"
+                                : "text-slate-100"
                                 }`}
                         >
                             {link.label}
@@ -53,8 +79,7 @@ export default function Navbar() {
                     ))}
                 </nav>
 
-                {/* Mobile Menu Button */}
-                <div className="lg:hidden">
+                <div className="xl:hidden">
                     <Sheet>
                         <SheetTrigger asChild>
                             <Button variant="ghost" size="icon">
@@ -62,6 +87,9 @@ export default function Navbar() {
                             </Button>
                         </SheetTrigger>
                         <SheetContent side="right" className="w-64 p-4 bg-blue-50">
+                            <DialogTitle>
+                                <h2 className="text-lg font-bold mb-4 text-blue-900">Menu</h2>
+                            </DialogTitle>
                             <div className="flex flex-col space-y-3 mt-6">
                                 {links.map((link) => (
                                     <Link
