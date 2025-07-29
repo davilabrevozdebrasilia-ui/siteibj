@@ -22,12 +22,13 @@ const projetosSubmenu = [
 
 const links = [
     { label: "Início", href: "/" },
-    { label: "Quem Somos", href: "/noticias/quem-somos" },
-    { label: "Visão", href: "/noticias/visao" },
-    { label: "Projetos", href: "#" }, // sem href real para abrir o submenu
+    { label: "Quem Somos", href: "/quem-somos" },
+    { label: "Visão", href: "/visao" },
+    { label: "Projetos", href: "#" },
     { label: "Videos", href: "/videos" },
     { label: "Fotos", href: "/imagens" },
     { label: "Contato", href: "/contato" },
+    { label: "Transparência", href: "/transparencia" },
 ];
 
 export default function Navbar() {
@@ -87,28 +88,24 @@ export default function Navbar() {
                             return (
                                 <div
                                     key="projetos"
-                                    className="relative"
-                                    ref={projetosRef}
+                                    className="relative group"
                                 >
-                                    <button
-                                        onClick={() => setProjetosAberto((prev) => !prev)}
+                                    <span
                                         className="cursor-pointer text-md px-2 py-3 h-full text-slate-100 hover:bg-blue-400 flex items-center gap-1"
                                     >
                                         Projetos <ChevronDown className="w-4 h-4" />
-                                    </button>
-                                    {projetosAberto && (
-                                        <div className="absolute top-full left-0 bg-white shadow-lg rounded text-blue-900 z-50">
-                                            {projetosSubmenu.map((proj) => (
-                                                <Link
-                                                    key={proj.href}
-                                                    href={proj.href}
-                                                    className="block px-4 py-2 hover:bg-blue-100 whitespace-nowrap"
-                                                >
-                                                    {proj.label}
-                                                </Link>
-                                            ))}
-                                        </div>
-                                    )}
+                                    </span>
+                                    <div className="absolute top-full left-0 bg-white shadow-lg rounded text-blue-900 z-50 hidden group-hover:block">
+                                        {projetosSubmenu.map((proj) => (
+                                            <Link
+                                                key={proj.href}
+                                                href={proj.href}
+                                                className="block px-4 py-2 hover:bg-blue-100 whitespace-nowrap"
+                                            >
+                                                {proj.label}
+                                            </Link>
+                                        ))}
+                                    </div>
                                 </div>
                             );
                         }
@@ -117,16 +114,16 @@ export default function Navbar() {
                             <Link
                                 key={link.href}
                                 href={link.href}
-                                className={`text-md px-2 py-3 whitespace-nowrap h-full hover:bg-blue-400 transition ${
-                                    pathname === link.href
+                                className={`text-md px-2 py-3 whitespace-nowrap h-full hover:bg-blue-400 transition ${pathname === link.href
                                         ? "text-slate-100 font-bold"
                                         : "text-slate-100"
-                                }`}
+                                    }`}
                             >
                                 {link.label}
                             </Link>
                         );
                     })}
+
                 </nav>
 
                 <div className="md:hidden">
@@ -175,11 +172,10 @@ export default function Navbar() {
                                         <Link
                                             key={link.href}
                                             href={link.href}
-                                            className={`text-base font-medium py-1 px-2 rounded hover:underline ${
-                                                pathname === link.href
+                                            className={`text-base font-medium py-1 px-2 rounded hover:underline ${pathname === link.href
                                                     ? "text-blue-900 font-bold"
                                                     : "text-blue-700"
-                                            }`}
+                                                }`}
                                         >
                                             {link.label}
                                         </Link>
