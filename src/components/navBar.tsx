@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
+import { Menu, Calendar } from "lucide-react";
 import {
     Sheet,
     SheetContent,
@@ -14,12 +14,12 @@ import { useEffect, useState } from "react";
 
 const links = [
     { label: "Início", href: "/" },
-    { label: "Projeto Mulheres Belas", href: "/noticias/mulheres-belas" },
-    { label: "Projeto Visão para Todos", href: "/noticias/visao-para-todos" },
+    { label: "Mulheres Belas", href: "/noticias/mulheres-belas" },
+    { label: "Visão para Todos", href: "/noticias/visao-para-todos" },
     { label: "TEA", href: "/noticias/tea" },
     { label: "Laços de Inclusao", href: "/noticias/lacos-de-inclusao" },
     { label: "Quem Somos", href: "/noticias/quem-somos" },
-    { label: "Projeto Meninas Luz", href: "/noticias/meninas-luz" },
+    { label: "Meninas Luz", href: "/noticias/meninas-luz" },
     { label: "Contato", href: "/contato" },
     { label: "Videos", href: "/videos" },
     { label: "Imagens", href: "/imagens" },
@@ -37,15 +37,14 @@ export default function Navbar() {
             setHoraAtual(`${data} - ${hora}`);
         };
 
-        atualizarHora(); // chama imediatamente
-        const intervalo = setInterval(atualizarHora, 60000); // atualiza a cada 1min
-
+        atualizarHora();
+        const intervalo = setInterval(atualizarHora, 60000);
         return () => clearInterval(intervalo);
     }, []);
 
     return (
-        <header className="sticky top-0 z-50 bg-white border-b drop-shadow-black">
-            <div className="flex justify-between items-center px-4 py-2">
+        <header className="sticky top-0 z-50 bg-white border-b  ">
+            <div className="flex justify-between items-center px-4 py-2 z-50">
                 <Link href="/" className="flex items-center gap-2">
                     <img
                         src="/logo.jpg"
@@ -57,19 +56,19 @@ export default function Navbar() {
                     </span>
                 </Link>
 
-                {/* Data e hora */}
-                <div className="text-md text-blue-900 font-mono bg-slate-100 px-1 py-1 rounded shadow-sm font-bold">
+                <div className="sm:text-lg text-md text-blue-900 font-mono bg-slate-100 px-2 py-1 rounded shadow-sm font-bold flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-blue-900" />
                     {horaAtual}
                 </div>
             </div>
 
-            <div className="h-12 flex items-center justify-between px-4 bg-blue-500">
-                <nav className="hidden  xl:flex gap-4 flex-wrap justify-end">
+            <div className="h-12 flex items-center justify-between px-4 bg-blue-500 drop-shadow-slate-400 drop-shadow-md ">
+                <nav className="hidden xl:flex gap-4 flex-wrap justify-end">
                     {links.map((link) => (
                         <Link
                             key={link.href}
                             href={link.href}
-                            className={`text-md px-2 py-3 whitespace-nowrap h-full hover:bg-blue-400 transition ${pathname === link.href
+                            className={`text-md px-2 py-3 whitespace-nowrap h-full hover:bg-blue-400  transition ${pathname === link.href
                                 ? "text-slate-100 font-bold"
                                 : "text-slate-100"
                                 }`}

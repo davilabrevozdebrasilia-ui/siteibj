@@ -1,6 +1,5 @@
 import AdCard from "@/components/anuncios/adCard";
 import AdSliderFull from "@/components/anuncios/adSliderFull";
-import AdFooter from "@/components/footerAdesivo";
 import NoticiaCard from "@/components/noticias/noticiaCard";
 import NoticiaCarouselPrime from "@/components/noticias/noticiaCarroussel";
 import NoticiaGrid from "@/components/noticias/noticiaGrid";
@@ -12,7 +11,7 @@ import { NoticiaCardProps } from "@/types/noticias";
 export default async function HomePage() {
     const noticiasDb = await prisma.noticia.findMany({
         orderBy: { id: "desc" },
-        take: 20,
+        take: 31,
     });
 
     const anunciosDb = await prisma.anuncio.findMany({
@@ -40,7 +39,6 @@ export default async function HomePage() {
             href: a.href,
         },
     }));
-
     const usadas = new Set<number>();
     const pegarNaoUsadas = (lista: NoticiaCardProps[], quantidade: number) => {
         const resultado: NoticiaCardProps[] = [];

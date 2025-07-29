@@ -54,13 +54,13 @@ export default function PaginaVideos() {
                             </video>
                         </div>
 
-                        {/* <a
+                        { <a
                             href={vid.link}
                             className="mt-2 text-blue-600 text-sm font-medium text-center hover:underline"
                             target="_blank"
                         >
                             {vid.titulo}
-                        </a> */}
+                        </a> }
                     </div>
                 ))}
             </div>

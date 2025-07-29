@@ -46,6 +46,7 @@ export default function PaginaImagens() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {imagens.map((img) => (
+                    
                     <div
                         key={`img-${img.id}`} // <-- prefixo img- para evitar conflito
                         className="rounded shadow bg-slate-100 p-2 flex flex-col items-center cursor-pointer"
@@ -58,6 +59,11 @@ export default function PaginaImagens() {
                                 alt={img.titulo}
                                 className="max-w-full max-h-full object-contain"
                             />
+                        </div>
+                        <div>
+                            <p className="mt-2 text-blue-600 text-sm font-medium text-center">
+                                {img.titulo}
+                            </p>
                         </div>
                     </div>
                 ))}
