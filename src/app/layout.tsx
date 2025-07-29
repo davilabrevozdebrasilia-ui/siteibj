@@ -22,14 +22,18 @@ const anunciosDb = await prisma.anuncio.findMany({
     take: 8,
 });
 
-const anuncios: AnuncioCardProps[] = anunciosDb.map((a) => ({
-    anuncio: {
-        id: a.id,
-        titulo: a.titulo,
-        imagem: a.imagem,
-        href: a.href,
-    },
-}));
+const anuncios: AnuncioCardProps[] = anunciosDb?.length
+    ? anunciosDb.map((a) => ({
+        anuncio: {
+            id: a.id,
+            titulo: a.titulo,
+            imagem: a.imagem,
+            href: a.href,
+        },
+    }))
+    : [];
+
+
 
 export default function RootLayout({ children }: { children: ReactNode }) {
     return (
@@ -39,7 +43,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                     <Navbar />
                     <main className={` antialiased min-h-[100vh] px-4 py-8 mb-[80] container mx-auto `}>{children}
                     </main>
-                    <Footer/>
+                    <Footer />
                     <AdFooter anuncioCardProps={anuncios} />
                 </div>
             </body>
