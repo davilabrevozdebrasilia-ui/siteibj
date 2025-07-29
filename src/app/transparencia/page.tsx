@@ -17,7 +17,7 @@ export default function Transparencia() {
                 </section>
 
                 <section>
-                    <h2 className="text-xl font-semibold mb-2">Estatuto Social</h2>
+                    <h2 className="text-xl font-semibold mb-2">Termo de fomento 2023-04</h2>
                     <iframe
                         src="/docs/SEI_MDHC.pdf"
                         width="100%"
@@ -27,7 +27,7 @@ export default function Transparencia() {
                 </section>
 
                 <section>
-                    <h2 className="text-xl font-semibold mb-2">Termo de fomento</h2>
+                    <h2 className="text-xl font-semibold mb-2">Termo de fomento 2023-08</h2>
                     <iframe
                         src="/docs/TermoDeFomento.pdf"
                         width="100%"
