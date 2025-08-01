@@ -3,27 +3,35 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
-  const tag = url.searchParams.get("tag");
+  const tagsParam = url.searchParams.get("tags");
 
-  if (!tag) {
-    return NextResponse.json({ error: "Tag é obrigatória" }, { status: 400 });
+  if (!tagsParam) {
+    return NextResponse.json({ error: "Tags são obrigatórias" }, { status: 400 });
   }
 
-  try {
-    const noticias = await prisma.noticia.findMany({
-      where: {
-        tags: {
-          has: tag,
-        },
-      },
-      orderBy: {
-        data: "desc",
-      },
-    });
+  const tags = tagsParam.split(",").map(tag => tag.trim()).filter(Boolean);
 
-    return NextResponse.json(noticias);
+  try {
+    const noticias = await Promise.all(
+      tags.map(async (tag) => {
+        const noticia = await prisma.noticia.findFirst({
+          where: {
+            tags: {
+              has: tag,
+            },
+          },
+          orderBy: { data: "desc" },
+        });
+
+        return noticia ? { tag, noticia } : null;
+      })
+    );
+
+    const noticiasFiltradas = noticias.filter(Boolean); // remove nulls
+
+    return NextResponse.json(noticiasFiltradas);
   } catch (error) {
     console.error("Erro ao buscar notícias por tag:", error);
-    return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 });
+    return NextResponse.json({ error: "Erro interno no servidor" }, { status: 500 });
   }
 }

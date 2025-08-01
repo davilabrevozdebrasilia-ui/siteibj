@@ -1,6 +1,7 @@
 "use client";
 
 import Editor from "@/components/textEditor/editor";
+import { Upload } from "lucide-react";
 import { useState, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 
@@ -73,49 +74,49 @@ export default function AdminCreate() {
             setError("Acesso negado. Faça login para continuar.");
         }
     }, []);
-const [batchFiles, setBatchFiles] = useState<{ tipo: "imagem" | "video"; files: File[] }>({
-  tipo: "imagem",
-  files: [],
-});
+    const [batchFiles, setBatchFiles] = useState<{ tipo: "imagem" | "video"; files: File[] }>({
+        tipo: "imagem",
+        files: [],
+    });
 
-function handleMultipleUpload(tipo: "imagem" | "video") {
-  return (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files && files.length > 0) {
-      setBatchFiles({ tipo, files: Array.from(files) });
-    }
-  };
-}
-
-function submitBatch(tipo: "imagem" | "video") {
-  return async () => {
-    if (!batchFiles.files.length) return setError("Nenhum arquivo selecionado.");
-
-    for (const file of batchFiles.files) {
-      const base64 = await readFileAsBase64(file);
-      const data = {
-        titulo: tipo,
-        descricao: "",
-        url: base64,
-        tags: [tipo],
-      };
-
-      await submit(data, `/api/${tipo === "imagem" ? "imagens" : "videos"}`, () => { });
+    function handleMultipleUpload(tipo: "imagem" | "video") {
+        return (e: React.ChangeEvent<HTMLInputElement>) => {
+            const files = e.target.files;
+            if (files && files.length > 0) {
+                setBatchFiles({ tipo, files: Array.from(files) });
+            }
+        };
     }
 
-    setSuccess(`${batchFiles.files.length} ${tipo}s cadastrados com sucesso.`);
-    setBatchFiles({ tipo, files: [] });
-  };
-}
+    function submitBatch(tipo: "imagem" | "video") {
+        return async () => {
+            if (!batchFiles.files.length) return setError("Nenhum arquivo selecionado.");
 
-function readFileAsBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
+            for (const file of batchFiles.files) {
+                const base64 = await readFileAsBase64(file);
+                const data = {
+                    titulo: tipo,
+                    descricao: "",
+                    url: base64,
+                    tags: [tipo],
+                };
+
+                await submit(data, `/api/${tipo === "imagem" ? "imagens" : "videos"}`, () => { });
+            }
+
+            setSuccess(`${batchFiles.files.length} ${tipo}s cadastrados com sucesso.`);
+            setBatchFiles({ tipo, files: [] });
+        };
+    }
+
+    function readFileAsBase64(file: File): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
     function handleFileChange(e: React.ChangeEvent<HTMLInputElement>, tipo: string) {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -215,13 +216,12 @@ function readFileAsBase64(file: File): Promise<string> {
     }
 
     return (
-        <div className="max-w-lg mx-auto mt-10 p-6 border rounded space-y-6">
-            {/* Abas */}
+        <div className="max-w-lg mx-auto mt-10 p-6 border rounded space-y-6 bg-slate-100">
             <div className="flex flex-wrap gap-2 justify-center">
                 {["noticia", "anuncio", "imagem", "video"].map((tab) => (
                     <button
                         key={tab}
-                        className={`px-4 py-2 rounded ${aba === tab ? "bg-green-700 text-white" : "bg-gray-200"
+                        className={`hover:bg-green-500 drop-shadow-slate-900 drop-shadow-sm cursor-pointer px-4 py-2 rounded ${aba === tab ? "bg-green-700 text-white" : "bg-gray-200 "
                             }`}
                         onClick={() => {
                             setError("");
@@ -234,7 +234,6 @@ function readFileAsBase64(file: File): Promise<string> {
                 ))}
             </div>
 
-            {/* Formulário por aba */}
             {aba === "noticia" && (
                 <form className="flex flex-col gap-4">
                     <input
@@ -242,7 +241,7 @@ function readFileAsBase64(file: File): Promise<string> {
                         placeholder="Título"
                         value={noticiaForm.titulo}
                         onChange={(e) => setNoticiaForm({ ...noticiaForm, titulo: e.target.value })}
-                        className="border p-2 rounded"
+                        className="border p-2 rounded bg-white"
                     />
                     <Editor
                         value={noticiaForm.resumo}
@@ -253,13 +252,22 @@ function readFileAsBase64(file: File): Promise<string> {
                         placeholder="Tags (separadas por vírgula)"
                         value={noticiaForm.tags}
                         onChange={(e) => setNoticiaForm({ ...noticiaForm, tags: e.target.value })}
-                        className="border p-2 rounded"
+                        className="border p-2 rounded bg-white"
                     />
-                    <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, "noticia")} />
+                    <label className="bg-slate-400 rounded-md px-4 font-bold h-10 cursor-pointer flex items-center gap-2 text-white hover:bg-slate-500 drop-shadow-sm drop-shadow-slate-900">
+                        <Upload size={18} />
+                        Enviar Imagem
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleFileChange(e, "noticia")}
+                            className="hidden"
+                        />
+                    </label>
                     {noticiaForm.imagem && (
                         <img src={noticiaForm.imagem} className="max-h-40 object-contain" alt="Preview" />
                     )}
-                    <button type="button" onClick={handleSubmitNoticia} className="btn-green">
+                    <button type="button" onClick={handleSubmitNoticia} className="bg-green-600 rounded-md text-white px-4 text-bold h-10 hover:bg-green-500 drop-shadow-slate-900 drop-shadow-sm cursor-pointer font-bold">
                         Cadastrar Notícia
                     </button>
                 </form>
@@ -272,20 +280,29 @@ function readFileAsBase64(file: File): Promise<string> {
                         placeholder="Título"
                         value={anuncioForm.titulo}
                         onChange={(e) => setAnuncioForm({ ...anuncioForm, titulo: e.target.value })}
-                        className="border p-2 rounded"
+                        className="border p-2 rounded bg-white"
                     />
                     <input
                         type="text"
                         placeholder="Link (href)"
                         value={anuncioForm.href}
                         onChange={(e) => setAnuncioForm({ ...anuncioForm, href: e.target.value })}
-                        className="border p-2 rounded"
+                        className="border p-2 rounded bg-white"
                     />
-                    <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, "anuncio")} />
+                    <label className="bg-slate-400 rounded-md px-4 font-bold h-10 cursor-pointer flex items-center gap-2 text-white hover:bg-slate-500 drop-shadow-sm drop-shadow-slate-900">
+                        <Upload size={18} />
+                        Enviar Imagem
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleFileChange(e, "anuncio")}
+                            className="hidden "
+                        />
+                    </label>
                     {anuncioForm.imagem && (
                         <img src={anuncioForm.imagem} className="max-h-40 object-contain" alt="Preview" />
                     )}
-                    <button type="button" onClick={handleSubmitAnuncio} className="btn-green">
+                    <button type="button" onClick={handleSubmitAnuncio} className="bg-green-600 rounded-md text-white px-4 text-bold h-10 hover:bg-green-500 drop-shadow-slate-900 drop-shadow-sm cursor-pointer font-bold">
                         Cadastrar Anúncio
                     </button>
                 </form>
@@ -298,26 +315,34 @@ function readFileAsBase64(file: File): Promise<string> {
                         placeholder="Título"
                         value={imagemForm.titulo}
                         onChange={(e) => setImagemForm({ ...imagemForm, titulo: e.target.value })}
-                        className="border p-2 rounded"
+                        className="border p-2 rounded bg-white"
                     />
                     <textarea
                         placeholder="Descrição"
                         value={imagemForm.descricao}
                         onChange={(e) => setImagemForm({ ...imagemForm, descricao: e.target.value })}
-                        className="border p-2 rounded"
+                        className="border p-2 rounded bg-white"
                     />
                     <input
                         type="text"
                         placeholder="Tags"
                         value={imagemForm.tags}
                         onChange={(e) => setImagemForm({ ...imagemForm, tags: e.target.value })}
-                        className="border p-2 rounded"
+                        className="border p-2 rounded bg-white"
                     />
-                    <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, "imagem")} />
-                    {imagemForm.url && (
-                        <img src={imagemForm.url} className="max-h-40 object-contain" alt="Preview" />
+                    <label className="bg-slate-400 rounded-md px-4 font-bold h-10 cursor-pointer flex items-center gap-2 text-white hover:bg-slate-500 drop-shadow-sm drop-shadow-slate-900">
+                        <Upload size={18} />
+                        Enviar Imagem
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleFileChange(e, "imagem")}
+                            className="hidden"
+                        />
+                    </label>{imagemForm.url && (
+                        <img src={imagemForm.url} className="max-h-40 object-contain " alt="Preview" />
                     )}
-                    <button type="button" onClick={handleSubmitImagem} className="btn-green">
+                    <button type="button" onClick={handleSubmitImagem} className="bg-green-600 rounded-md text-white px-4 text-bold h-10 hover:bg-green-500 drop-shadow-slate-900 drop-shadow-sm cursor-pointer font-bold">
                         Cadastrar Imagem
                     </button>
                 </form>
@@ -330,26 +355,36 @@ function readFileAsBase64(file: File): Promise<string> {
                         placeholder="Título"
                         value={videoForm.titulo}
                         onChange={(e) => setVideoForm({ ...videoForm, titulo: e.target.value })}
-                        className="border p-2 rounded"
+                        className="border p-2 rounded bg-white"
                     />
                     <textarea
                         placeholder="Descrição"
                         value={videoForm.descricao}
                         onChange={(e) => setVideoForm({ ...videoForm, descricao: e.target.value })}
-                        className="border p-2 rounded"
+                        className="border p-2 rounded bg-white"
                     />
                     <input
                         type="text"
                         placeholder="Tags"
                         value={videoForm.tags}
                         onChange={(e) => setVideoForm({ ...videoForm, tags: e.target.value })}
-                        className="border p-2 rounded"
+                        className="border p-2 rounded bg-white"
                     />
-                    <input type="file" accept="video/*" onChange={(e) => handleFileChange(e, "video")} />
+                    <label className="bg-slate-400 rounded-md px-4 font-bold h-10 cursor-pointer flex items-center gap-2 text-white hover:bg-slate-500 drop-shadow-sm drop-shadow-slate-900">
+                        <Upload size={18} />
+                        Enviar Vídeo
+                        <input
+                            type="file"
+                            accept="video/*"
+                            onChange={(e) => handleFileChange(e, "video")}
+                            className="hidden"
+                        />
+                    </label>
                     {videoForm.url && (
                         <video src={videoForm.url} controls className="max-h-40 object-contain" />
                     )}
-                    <button type="button" onClick={handleSubmitVideo} className="btn-green">
+
+                    <button type="button" onClick={handleSubmitVideo} className="bg-green-600 rounded-md text-white px-4 text-bold h-10 hover:bg-green-500 drop-shadow-slate-900 drop-shadow-sm cursor-pointer font-bold">
                         Cadastrar Vídeo
                     </button>
                 </form>

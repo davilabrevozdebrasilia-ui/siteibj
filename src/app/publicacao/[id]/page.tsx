@@ -53,7 +53,7 @@ export default async function NoticiaPage({ params }: PageProps) {
                 <img
                     src={noticia.imagem}
                     alt={noticia.titulo}
-                    className="w-full h-100 object-cover rounded-lg mb-6"
+                    className="w-full h-120 object-contain bg-slate-100 rounded-lg mb-6"
                 />
 
                 <div className="flex flex-col gap-4">

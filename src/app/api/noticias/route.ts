@@ -9,6 +9,7 @@ function checkAuth(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+    
     if (!checkAuth(req)) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -16,16 +17,13 @@ export async function POST(req: NextRequest) {
     try {
         const data = await req.json();
 
-        // Validação básica (sem data)
         if (!data.titulo || !data.resumo || !data.tags) {
             return NextResponse.json({ error: "Campos obrigatórios faltando" }, { status: 400 });
         }
 
-        // Gera a data do servidor com dia/mês/ano zerados
         const hoje = new Date();
         const dataFormatada = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
 
-        // Cria a notícia com href provisório
         const noticiaCriada = await prisma.noticia.create({
             data: {
                 titulo: data.titulo,
@@ -33,14 +31,12 @@ export async function POST(req: NextRequest) {
                 imagem: data.imagem || "",
                 data: dataFormatada,
                 tags: data.tags,
-                href: "/publicacao/pendente",  // href provisório obrigatório
+                href: "/publicacao/pendente",
             },
         });
 
-        // Gera o href correto
         const hrefCorreto = `/publicacao/${noticiaCriada.id}`;
 
-        // Atualiza a notícia com o href correto
         const noticiaAtualizada = await prisma.noticia.update({
             where: { id: noticiaCriada.id },
             data: { href: hrefCorreto },

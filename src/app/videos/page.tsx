@@ -1,81 +1,173 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-interface Anuncio {
+interface Video {
     id: number;
     titulo: string;
     url: string;
-    link: string;
-    site: string;
+    descricao?: string | null;
+}
+
+function LazyVideo({ src, titulo }: { src: string; titulo: string }) {
+    const [visible, setVisible] = useState(false);
+    const videoRef = useRef<HTMLVideoElement | null>(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setVisible(true);
+                        observer.disconnect();
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        if (videoRef.current) {
+            observer.observe(videoRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <video
+            ref={videoRef}
+            src={visible ? src : undefined}
+            controls
+            preload="metadata"
+            className={`max-w-full max-h-full object-contain rounded transition-opacity duration-700 ${visible ? "opacity-100" : "opacity-0"
+                }`}
+            aria-label={titulo}
+        />
+    );
 }
 
 export default function PaginaVideos() {
-    const [videos, setVideos] = useState<Anuncio[]>([]);
-    const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
+    const ITEMS_PER_PAGE = 12;
+
+    const [videos, setVideos] = useState<Video[]>([]);
+    const [page, setPage] = useState(1); // Página lógica (1-based)
     const [loading, setLoading] = useState(false);
+    const [hasMore, setHasMore] = useState(true);
+    const [modalVideo, setModalVideo] = useState<Video | null>(null);
 
-    useEffect(() => {
-        const fetchVideos = async () => {
-            setLoading(true);
-            const res = await fetch(`/api/videos?page=${page}&limit=6`);
+    // Carrega 1 vídeo
+    const fetchSingleVideo = async (index: number) => {
+        try {
+            const res = await fetch(`/api/videos?page=${index}&limit=1`);
             const json = await res.json();
+            const novoVideo = json.data[0];
+            return novoVideo || null;
+        } catch {
+            return null;
+        }
+    };
 
-            const novosVideos = json.data ?? [];
+    // Carrega 12 vídeos sequencialmente
+    const fetchBatch = async (startingIndex: number) => {
+        setLoading(true);
+        for (let i = 0; i < ITEMS_PER_PAGE; i++) {
+            const video = await fetchSingleVideo(startingIndex + i);
+            if (video) {
+                setVideos((prev) => [...prev, video]);
+            } else {
+                setHasMore(false);
+                break;
+            }
+        }
+        setLoading(false);
+    };
 
-            setVideos((prev) => [...prev, ...novosVideos]);
-            if (novosVideos.length < 6) setHasMore(false);
-            setLoading(false);
-        };
+    // Carrega os primeiros 12 vídeos automaticamente ao montar
+    useEffect(() => {
+        fetchBatch(1);
+    }, []);
 
-        fetchVideos();
-    }, [page]);
+    // Clique no botão para carregar mais
+    const handleCarregarMais = () => {
+        if (loading || !hasMore) return;
+        const nextIndex = page * ITEMS_PER_PAGE + 1; // próxima página
+        setPage((prev) => prev + 1);
+        fetchBatch(nextIndex);
+    };
 
+    // Preenche espaços no grid se faltar para completar a linha
+    const emptySlots = hasMore
+        ? 0
+        : ITEMS_PER_PAGE - (videos.length % ITEMS_PER_PAGE || ITEMS_PER_PAGE);
+
+    const closeModal = () => setModalVideo(null);
 
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold mb-4 text-blue-900">Vídeos</h1>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {videos.map((vid) => (
+                {videos.map((video) => (
                     <div
-                        key={vid.id}
-                        className="rounded shadow bg-slate-100 p-2 flex flex-col items-center"
+                        key={`video-${video.id}`}
+                        className="rounded shadow bg-slate-100 p-2 flex flex-col items-center cursor-pointer"
+                        onClick={() => setModalVideo(video)}
+                        title={video.titulo}
                     >
-                        <div className="w-full h-40 overflow-hidden rounded">
-                            <video
-                                controls
-                                className="w-full h-full object-full"
-                                preload="metadata"
-                            >
-                                <source src={vid.url} type="video/mp4" />
-                                Seu navegador não suporta vídeo.
-                            </video>
+                        <div className="w-full h-40 overflow-hidden rounded bg-gray-200 flex items-center justify-center">
+                            <LazyVideo src={video.url} titulo={video.titulo} />
                         </div>
-
-                        { <a
-                            href={vid.link}
-                            className="mt-2 text-blue-600 text-sm font-medium text-center hover:underline"
-                            target="_blank"
-                        >
-                            {vid.titulo}
-                        </a> }
+                        <p className="mt-2 text-blue-600 text-sm font-medium text-center">{video.titulo}</p>
                     </div>
+                ))}
+
+                {Array.from({ length: emptySlots }).map((_, i) => (
+                    <div
+                        key={`empty-${i}`}
+                        className="rounded shadow bg-slate-100 p-2 flex items-center justify-center h-40"
+                    />
                 ))}
             </div>
 
-
-            {hasMore && !loading && (
+            {hasMore && (
                 <button
-                    className="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                    onClick={() => setPage((prev) => prev + 1)}
+                    className="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+                    onClick={handleCarregarMais}
+                    disabled={loading}
                 >
-                    Carregar mais
+                    {loading ? "Carregando..." : "Carregar mais"}
                 </button>
             )}
 
-            {loading && <p className="mt-4 text-gray-500">Carregando...</p>}
+            {modalVideo && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+                    onClick={closeModal}
+                >
+                    <div
+                        className="relative bg-white rounded p-4 max-w-3xl max-h-[90vh] overflow-auto"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <button
+                            className="absolute top-2 right-2 text-gray-700 hover:text-gray-900 text-2xl font-bold"
+                            onClick={closeModal}
+                            aria-label="Fechar modal"
+                        >
+                            &times;
+                        </button>
+                        <video
+                            src={modalVideo.url}
+                            controls
+                            autoPlay
+                            className="max-w-full max-h-[80vh] object-contain rounded"
+                        />
+                        <p className="mt-2 text-center font-semibold">{modalVideo.titulo}</p>
+                        {modalVideo.descricao && (
+                            <p className="mt-1 text-center text-gray-600">{modalVideo.descricao}</p>
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
