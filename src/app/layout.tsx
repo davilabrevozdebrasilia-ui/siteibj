@@ -14,8 +14,11 @@ const poppins = Poppins({
 
 
 export const metadata = {
-    title: 'Portal de Notícias',
+    title: 'Instituo Brazil Just',
     description: 'Fique por dentro das últimas notícias',
+    icons: {
+        icon: "/favicon.ico",
+    },
 };
 
 const anunciosDb = await prisma.anuncio.findMany({

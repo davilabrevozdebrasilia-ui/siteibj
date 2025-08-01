@@ -50,12 +50,11 @@ export default function PaginaVideos() {
     const ITEMS_PER_PAGE = 12;
 
     const [videos, setVideos] = useState<Video[]>([]);
-    const [page, setPage] = useState(1); // Página lógica (1-based)
+    const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [modalVideo, setModalVideo] = useState<Video | null>(null);
 
-    // Carrega 1 vídeo
     const fetchSingleVideo = async (index: number) => {
         try {
             const res = await fetch(`/api/videos?page=${index}&limit=1`);
@@ -67,7 +66,6 @@ export default function PaginaVideos() {
         }
     };
 
-    // Carrega 12 vídeos sequencialmente
     const fetchBatch = async (startingIndex: number) => {
         setLoading(true);
         for (let i = 0; i < ITEMS_PER_PAGE; i++) {
@@ -82,20 +80,17 @@ export default function PaginaVideos() {
         setLoading(false);
     };
 
-    // Carrega os primeiros 12 vídeos automaticamente ao montar
     useEffect(() => {
         fetchBatch(1);
     }, []);
 
-    // Clique no botão para carregar mais
     const handleCarregarMais = () => {
         if (loading || !hasMore) return;
-        const nextIndex = page * ITEMS_PER_PAGE + 1; // próxima página
+        const nextIndex = page * ITEMS_PER_PAGE + 1;
         setPage((prev) => prev + 1);
         fetchBatch(nextIndex);
     };
 
-    // Preenche espaços no grid se faltar para completar a linha
     const emptySlots = hasMore
         ? 0
         : ITEMS_PER_PAGE - (videos.length % ITEMS_PER_PAGE || ITEMS_PER_PAGE);

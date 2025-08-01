@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   try {
     const ultimasNoticias = await prisma.noticia.findMany({
       orderBy: { data: "desc" },
-      take: 23,
+      take: 20,
     });
 
     console.log("🔎 Retornando notícias:", ultimasNoticias.length);
