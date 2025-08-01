@@ -6,7 +6,7 @@ import { Instagram, Facebook, Youtube } from "lucide-react";
 const redes = [
     {
         nome: "Instituto Brazil Just",
-        logo: "/logo1.png",
+        logo: "/logo1.jpg",
         links: {
             instagram: "https://www.instagram.com/ibraziljust/",
             facebook: "https://www.facebook.com/ibraziljust/",
