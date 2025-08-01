@@ -22,9 +22,9 @@ export default function HomePage() {
     const [offset, setOffset] = useState(0);
     const [hasMore, setHasMore] = useState(true);
     const loaderRef = useRef(null);
-    const batchSize = 6;
+    const batchSize = 3; // <-- aqui: tamanho do pacote menor
     const noticiaKeyCounter = useRef(0);
-    const maxNoticias = 20;
+    const maxNoticias = 21; // máximo de notícias na página
 
     useEffect(() => {
         const tags = ["Economia", "Saúde", "Tecnologia", "Meio ambiente", "Brasil", "Brasília"];
