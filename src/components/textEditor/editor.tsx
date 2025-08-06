@@ -106,7 +106,7 @@ export default function EditorComponent({ value, onChange }: Props) {
     }, [onChange]);
 
     return (
-        <div className="border rounded bg-white p-2">
+        <div className="border rounded-md bg-white p-2">
             <Slate editor={editor} initialValue={content} onChange={handleChange}>
                 <div className="flex items-center mb-2 space-x-2">
                     <MarkButton format="bold" icon="B" />

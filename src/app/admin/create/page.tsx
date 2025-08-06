@@ -1,5 +1,6 @@
 "use client";
 
+import ProjetoDropdown from "@/components/projetos/dropdown";
 import Editor from "@/components/textEditor/editor";
 import { Upload } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -31,6 +32,13 @@ type VideoForm = {
     url: string;
     projetos: string;
 };
+const projetosDisponiveis = [
+    "Mulheres-Belas",
+    "Visao-Para-Todos",
+    "TEA",
+    "Lacos-de-Inclusao",
+    "Meninas-Luz",
+];
 
 export default function AdminCreate() {
     const [token, setToken] = useState<string | null>(null);
@@ -241,7 +249,7 @@ export default function AdminCreate() {
                         placeholder="Título"
                         value={noticiaForm.titulo}
                         onChange={(e) => setNoticiaForm({ ...noticiaForm, titulo: e.target.value })}
-                        className="border p-2 rounded bg-white"
+                        className="border p-2 rounded-md bg-white"
                     />
                     <Editor
                         value={noticiaForm.resumo}
@@ -252,7 +260,7 @@ export default function AdminCreate() {
                         placeholder="Tags (separadas por vírgula)"
                         value={noticiaForm.tags}
                         onChange={(e) => setNoticiaForm({ ...noticiaForm, tags: e.target.value })}
-                        className="border p-2 rounded bg-white"
+                        className="border p-2 rounded-md bg-white"
                     />
                     <label className="bg-slate-400 rounded-md px-4 font-bold h-10 cursor-pointer flex items-center gap-2 text-white hover:bg-slate-500 drop-shadow-sm drop-shadow-slate-900">
                         <Upload size={18} />
@@ -280,14 +288,14 @@ export default function AdminCreate() {
                         placeholder="Título"
                         value={anuncioForm.titulo}
                         onChange={(e) => setAnuncioForm({ ...anuncioForm, titulo: e.target.value })}
-                        className="border p-2 rounded bg-white"
+                        className="border p-2 rounded-md bg-white"
                     />
                     <input
                         type="text"
                         placeholder="Link (href)"
                         value={anuncioForm.href}
                         onChange={(e) => setAnuncioForm({ ...anuncioForm, href: e.target.value })}
-                        className="border p-2 rounded bg-white"
+                        className="border p-2 rounded-md bg-white "
                     />
                     <label className="bg-slate-400 rounded-md px-4 font-bold h-10 cursor-pointer flex items-center gap-2 text-white hover:bg-slate-500 drop-shadow-sm drop-shadow-slate-900">
                         <Upload size={18} />
@@ -302,7 +310,7 @@ export default function AdminCreate() {
                     {anuncioForm.imagem && (
                         <img src={anuncioForm.imagem} className="max-h-40 object-contain" alt="Preview" />
                     )}
-                    <button type="button" onClick={handleSubmitAnuncio} className="bg-green-600 rounded-md text-white px-4 text-bold h-10 hover:bg-green-500 drop-shadow-slate-900 drop-shadow-sm cursor-pointer font-bold">
+                    <button type="button" onClick={handleSubmitAnuncio} className="bg-green-600 rounded-md-md text-white px-4 text-bold h-10 hover:bg-green-500 drop-shadow-slate-900 drop-shadow-sm cursor-pointer font-bold">
                         Cadastrar Anúncio
                     </button>
                 </form>
@@ -315,21 +323,20 @@ export default function AdminCreate() {
                         placeholder="Título"
                         value={imagemForm.titulo}
                         onChange={(e) => setImagemForm({ ...imagemForm, titulo: e.target.value })}
-                        className="border p-2 rounded bg-white"
+                        className="border p-2 rounded-md bg-white"
                     />
                     <textarea
                         placeholder="Descrição"
                         value={imagemForm.descricao}
                         onChange={(e) => setImagemForm({ ...imagemForm, descricao: e.target.value })}
-                        className="border p-2 rounded bg-white"
+                        className="border p-2 rounded-md bg-white"
                     />
-                    <input
-                        type="text"
-                        placeholder="Projetos"
+                    <ProjetoDropdown
                         value={imagemForm.projetos}
-                        onChange={(e) => setImagemForm({ ...imagemForm, projetos: e.target.value })}
-                        className="border p-2 rounded bg-white"
+                        onChange={(val) => setImagemForm({ ...imagemForm, projetos: val })}
                     />
+
+
                     <label className="bg-slate-400 rounded-md px-4 font-bold h-10 cursor-pointer flex items-center gap-2 text-white hover:bg-slate-500 drop-shadow-sm drop-shadow-slate-900">
                         <Upload size={18} />
                         Enviar Imagem
@@ -355,21 +362,20 @@ export default function AdminCreate() {
                         placeholder="Título"
                         value={videoForm.titulo}
                         onChange={(e) => setVideoForm({ ...videoForm, titulo: e.target.value })}
-                        className="border p-2 rounded bg-white"
+                        className="border p-2 rounded-md bg-white"
                     />
                     <textarea
                         placeholder="Descrição"
                         value={videoForm.descricao}
                         onChange={(e) => setVideoForm({ ...videoForm, descricao: e.target.value })}
-                        className="border p-2 rounded bg-white"
+                        className="border p-2 rounded-md bg-white"
                     />
-                    <input
-                        type="text"
-                        placeholder="Projetos"
-                        value={videoForm.projetos}
-                        onChange={(e) => setVideoForm({ ...videoForm, projetos: e.target.value })}
-                        className="border p-2 rounded bg-white"
+                    <ProjetoDropdown
+                        value={imagemForm.projetos}
+                        onChange={(val) => setImagemForm({ ...imagemForm, projetos: val })}
                     />
+
+
                     <label className="bg-slate-400 rounded-md px-4 font-bold h-10 cursor-pointer flex items-center gap-2 text-white hover:bg-slate-500 drop-shadow-sm drop-shadow-slate-900">
                         <Upload size={18} />
                         Enviar Vídeo
