@@ -1,8 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, context: { params: { titulo: string } }) {
-    const { titulo } = context.params;
+export async function GET(req: NextRequest, { params }: { params: { titulo: string } }) {
+    const { titulo } = params;
     const url = new URL(req.url);
     const countOnly = url.searchParams.get("count") === "true";
 
