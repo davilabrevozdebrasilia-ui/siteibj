@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
                 titulo: data.titulo,
                 descricao: data.descricao || null,
                 url: data.url,
-                tags,
+                projetos: data.projetos
             },
         });
 
@@ -64,7 +64,7 @@ export async function GET(req: NextRequest) {
                     descricao: true,
                     url: true,
                     dataCriacao: true,
-                    tags: true,
+                    projetos: true
                 },
             }),
             prisma.imagem.count(),

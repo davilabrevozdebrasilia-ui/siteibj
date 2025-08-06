@@ -58,9 +58,9 @@ export default function AdminPage() {
 
     if (!token) {
         return (
-            <div className="max-w-md mx-auto mt-10 p-6 border rounded">
+            <div className="w-[60%] mx-auto  py-12 mb-[200] justify-self-center p-6 gap-4">
                 <h1 className="text-2xl font-bold mb-4">Login</h1>
-                <form onSubmit={handleLogin} className="flex flex-col gap-4">
+                <form onSubmit={handleLogin} className="flex flex-col gap-4 border-1  drop-shadow-slate-900 shadow-md p-6 rounded">
                     <input
                         type="text"
                         placeholder="Usuário"
@@ -92,9 +92,9 @@ export default function AdminPage() {
     }
 
     return (
-        <div className="max-w-md mx-auto mt-10 p-6 border rounded">
+            <div className="w-[60%] mx-auto  py-12 mb-[200] justify-self-center p-6 gap-4">
             <h1 className="text-2xl font-bold mb-4">Logado com sucesso!</h1>
-            <div className="flex gap-10">
+            <div className="flex flex-col gap-4 border-1  drop-shadow-slate-900 shadow-md p-6 rounded">
                 <button
                     onClick={handleLogout}
                     className="w-full bg-red-600 text-white p-2 rounded hover:bg-red-700"

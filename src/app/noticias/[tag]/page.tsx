@@ -1,7 +1,7 @@
 // app/noticias/[tag]/page.tsx
 import AdCard from "@/components/anuncios/adCard";
 import AdSliderFull from "@/components/anuncios/adSliderFull";
-import NoticiaCardVertical from "@/components/noticias/noticiaCard";
+import NoticiaCard from "@/components/noticias/noticiaCard";
 import { prisma } from "@/lib/prisma";
 import { AnuncioCardProps } from "@/types/anuncios";
 import { NoticiaCardProps } from "@/types/noticias";
@@ -56,23 +56,23 @@ export default async function NoticiasPorTagPage({ params }: PageProps) {
     }));
 
     return (
-        <div className="space-y-8">
+        <div className="max-w-7xl mx-auto  py-12 mb-[80] justify-self-center items-center gap-4">
             {anuncios.length > 0 && <AdSliderFull anuncioCardProps={anuncios} />}
 
             <section>
                 <h1 className="text-3xl font-bold text-blue-800 mb-4">{formattedTag}</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
                     <div className="flex flex-col gap-10">
-                        {noticias[0] && <NoticiaCardVertical noticiaCardProps={noticias[0]} />}
+                        {noticias[0] && <NoticiaCard noticiaCardProps={noticias[0]} />}
                     </div>
                     <div className="flex flex-col gap-10">
                         {noticias.slice(0, 2).map((n) => (
-                            <NoticiaCardVertical key={n.noticia.id} noticiaCardProps={n} />
+                            <NoticiaCard key={n.noticia.id} noticiaCardProps={n} />
                         ))}
                     </div>
                     <div className="flex flex-col gap-10">
                         {noticias.slice(2, 4).map((n) => (
-                            <NoticiaCardVertical key={n.noticia.id} noticiaCardProps={n} />
+                            <NoticiaCard key={n.noticia.id} noticiaCardProps={n} />
                         ))}
                     </div>
                     <div className="flex flex-col gap-10">
@@ -85,7 +85,7 @@ export default async function NoticiasPorTagPage({ params }: PageProps) {
                 <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {noticias.slice(4, noticias.length - 1).map((n) => (
                         <div key={n.noticia.id} className="flex flex-col gap-10">
-                            <NoticiaCardVertical key={n.noticia.id} noticiaCardProps={n} />
+                            <NoticiaCard key={n.noticia.id} noticiaCardProps={n} />
                         </div>
                     ))}
                 </section>

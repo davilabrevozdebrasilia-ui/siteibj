@@ -37,7 +37,7 @@ model Imagem {
     descricao   String?
     url         String
     dataCriacao DateTime @default(now())
-    tags        String[]
+    projetos    String[]
 }
 
 model Video {
@@ -46,5 +46,5 @@ model Video {
     descricao   String?
     url         String
     dataCriacao DateTime @default(now())
-    tags        String[]
+    projetos    String[]
 }

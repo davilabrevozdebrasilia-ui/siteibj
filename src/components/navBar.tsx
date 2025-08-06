@@ -13,11 +13,11 @@ import { DialogTitle } from "@radix-ui/react-dialog";
 import { useEffect, useState, useRef } from "react";
 
 const projetosSubmenu = [
-    { label: "Mulheres Belas", href: "/noticias/mulheres-belas" },
-    { label: "Visão para Todos", href: "/noticias/visao-para-todos" },
-    { label: "TEA", href: "/noticias/tea" },
-    { label: "Laços de Inclusao", href: "/noticias/lacos-de-inclusao" },
-    { label: "Meninas Luz", href: "/noticias/meninas-luz" },
+    { label: "Mulheres Belas", href: "/projetos/mulheres-belas" },
+    { label: "Visão para Todos", href: "/projetos/visao-para-todos" },
+    { label: "TEA", href: "/projetos/tea" },
+    { label: "Laços de Inclusao", href: "/projetos/lacos-de-inclusao" },
+    { label: "Meninas Luz", href: "/projetos/meninas-luz" },
 ];
 
 const links = [

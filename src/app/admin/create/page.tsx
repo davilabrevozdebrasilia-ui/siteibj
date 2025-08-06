@@ -22,14 +22,14 @@ type ImagemForm = {
     titulo: string;
     descricao: string;
     url: string;
-    tags: string;
+    projetos: string;
 };
 
 type VideoForm = {
     titulo: string;
     descricao: string;
     url: string;
-    tags: string;
+    projetos: string;
 };
 
 export default function AdminCreate() {
@@ -53,14 +53,14 @@ export default function AdminCreate() {
         titulo: "",
         descricao: "",
         url: "",
-        tags: "",
+        projetos: "",
     });
 
     const [videoForm, setVideoForm] = useState<VideoForm>({
         titulo: "",
         descricao: "",
         url: "",
-        tags: "",
+        projetos: "",
     });
 
     const [error, setError] = useState("");
@@ -186,16 +186,16 @@ export default function AdminCreate() {
     }
 
     async function handleSubmitImagem() {
-        const tags = imagemForm.tags.split(",").map((t) => t.trim());
-        await submit({ ...imagemForm, tags }, "/api/imagens", () =>
-            setImagemForm({ titulo: "", descricao: "", url: "", tags: "" })
+        const projetos = imagemForm.projetos.split(",").map((t) => t.trim());
+        await submit({ ...imagemForm, projetos }, "/api/imagens", () =>
+            setImagemForm({ titulo: "", descricao: "", url: "", projetos: "" })
         );
     }
 
     async function handleSubmitVideo() {
-        const tags = videoForm.tags.split(",").map((t) => t.trim());
-        await submit({ ...videoForm, tags }, "/api/videos", () =>
-            setVideoForm({ titulo: "", descricao: "", url: "", tags: "" })
+        const projetos = videoForm.projetos.split(",").map((t) => t.trim());
+        await submit({ ...videoForm, projetos }, "/api/videos", () =>
+            setVideoForm({ titulo: "", descricao: "", url: "", projetos: "" })
         );
     }
 
@@ -216,7 +216,7 @@ export default function AdminCreate() {
     }
 
     return (
-        <div className="max-w-lg mx-auto mt-10 p-6 border rounded space-y-6 bg-slate-100">
+        <div className="w-[60%] mx-auto mt-20  py-12 mb-[200] justify-self-center p-6 gap-4 bg-slate-100 rounded drop-shadow-slate-900 shadow-lg space-y-8">
             <div className="flex flex-wrap gap-2 justify-center">
                 {["noticia", "anuncio", "imagem", "video"].map((tab) => (
                     <button
@@ -325,9 +325,9 @@ export default function AdminCreate() {
                     />
                     <input
                         type="text"
-                        placeholder="Tags"
-                        value={imagemForm.tags}
-                        onChange={(e) => setImagemForm({ ...imagemForm, tags: e.target.value })}
+                        placeholder="Projetos"
+                        value={imagemForm.projetos}
+                        onChange={(e) => setImagemForm({ ...imagemForm, projetos: e.target.value })}
                         className="border p-2 rounded bg-white"
                     />
                     <label className="bg-slate-400 rounded-md px-4 font-bold h-10 cursor-pointer flex items-center gap-2 text-white hover:bg-slate-500 drop-shadow-sm drop-shadow-slate-900">
@@ -365,9 +365,9 @@ export default function AdminCreate() {
                     />
                     <input
                         type="text"
-                        placeholder="Tags"
-                        value={videoForm.tags}
-                        onChange={(e) => setVideoForm({ ...videoForm, tags: e.target.value })}
+                        placeholder="Projetos"
+                        value={videoForm.projetos}
+                        onChange={(e) => setVideoForm({ ...videoForm, projetos: e.target.value })}
                         className="border p-2 rounded bg-white"
                     />
                     <label className="bg-slate-400 rounded-md px-4 font-bold h-10 cursor-pointer flex items-center gap-2 text-white hover:bg-slate-500 drop-shadow-sm drop-shadow-slate-900">

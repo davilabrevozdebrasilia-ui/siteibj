@@ -2,7 +2,7 @@
 
 export default function Transparencia() {
     return (
-        <main className="min-h-screen my-8  max-w-7xl mx-auto text-blue-900">
+        <main className="min-h-screen  max-w-7xl mx-auto  py-12 mb-[80]  text-blue-900">
             <h1 className="text-3xl font-bold mb-6">Transparência</h1>
 
             <div className="space-y-12">

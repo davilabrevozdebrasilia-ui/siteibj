@@ -70,7 +70,6 @@ export default function ContatoPage() {
                         Enviar Mensagem
                     </a>
                 </div>
-
                 <div className="bg-white rounded-lg shadow border border-slate-100 p-6 space-y-8">
                     <h2 className="text-2xl font-semibold text-blue-900">Nossas Redes</h2>
 

@@ -118,7 +118,7 @@ export default function HomePage() {
     }, [loadMoreNoticias]);
 
     return (
-        <div className="space-y-12">
+    <div className="w-[90%]   py-12 mb-[80] justify-self-center items-center gap-4 space-y-12">
             {anuncios.length > 0 && <AdSliderFull anuncioCardProps={anuncios} />}
 
             <section>

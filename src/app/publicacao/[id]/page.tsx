@@ -44,7 +44,7 @@ export default async function NoticiaPage({ params }: PageProps) {
     }));
 
     return (
-        <div className="space-y-8">
+        <div className="max-w-7xl mx-auto  py-12 mb-[80] justify-self-center items-center space-y-8">
             {anuncios.length > 0 && (
                 <AdSliderFull anuncioCardProps={anuncios} />
             )}
@@ -59,7 +59,7 @@ export default async function NoticiaPage({ params }: PageProps) {
                 <div className="flex flex-col gap-4">
                     <h1 className="text-3xl font-bold text-blue-800 mb-4 text-center">{noticia.titulo}</h1>
                     <p className="text-sm text-gray-500 mb-4">Publicado em {noticia.data}</p>
-                    <p className="text-gray-700 mb-4">{noticia.resumo}</p>
+                    <p className="text-gray-700 mb-4 text-justify">{noticia.resumo}</p>
 
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">

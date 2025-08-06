@@ -14,13 +14,14 @@ export async function GET(req: NextRequest) {
   try {
     const noticias = await Promise.all(
       tags.map(async (tag) => {
-        const noticia = await prisma.noticia.findFirst({
+        const noticia = await prisma.noticia.findMany({
           where: {
             tags: {
               has: tag,
             },
           },
           orderBy: { data: "desc" },
+          take: 2
         });
 
         return noticia ? { tag, noticia } : null;

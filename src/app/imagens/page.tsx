@@ -75,7 +75,7 @@ export default function PaginaImagens() {
   const closeModal = () => setModalImg(null);
 
   return (
-    <div className="p-6">
+    <div className="w-[95%] mx-auto  py-12 mb-[80] justify-self-center items-center gap-4">
       <h1 className="text-2xl font-bold mb-4 text-blue-900">Imagens</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
