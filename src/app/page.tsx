@@ -10,6 +10,8 @@ import { NoticiaCardTextRight } from "@/components/noticias/noticiaCardTextRight
 import { NoticiaCardOverlay } from "@/components/noticias/NoticiaCardOverlay";
 import NoticiaCarouselPrime from "@/components/noticias/noticiaCarroussel";
 import NoticiaCard from "@/components/noticias/noticiaCard";
+import { ProjetoCardProps } from "@/types/projetos";
+import ProjetoCarouselPrime from "@/components/projetos/projetosCarroussel";
 
 type NoticiaWithKey = NoticiaCardProps & { _key: string };
 
@@ -22,16 +24,58 @@ export default function HomePage() {
     const [offset, setOffset] = useState(0);
     const [hasMore, setHasMore] = useState(true);
     const loaderRef = useRef(null);
-    const batchSize = 3; // <-- aqui: tamanho do pacote menor
+    const batchSize = 3;
     const noticiaKeyCounter = useRef(0);
-    const maxNoticias = 21; // máximo de notícias na página
+    const maxNoticias = 21;
+    const projetos: ProjetoCardProps[] = [
+        {
+            projeto: {
+                titulo: "Meninas Luz",
+                descricao: "Protagonistas da Própria Vida",
+                href: "/projetos/meninas-luz",
+                imagem: "/projetos/meninas_luz.jpg"
+            }
+        },
+        {
+            projeto: {
+                titulo: "Mulheres Belas",
+                descricao: "Mulheres Fortes, Futuros Brilhantes",
+                href: "/projetos/mulheres-belas",
+                imagem: "/projetos/mulheres_belas.jpg"
+            }
+        },
+        {
+            projeto: {
+                titulo: "TEA Laços de Inclusão",
+                descricao: "Respeito à Neurodiversidade, Amor à Inclusão",
+                href: "/projetos/tea-lacos-de-inclusao",
+                imagem: "/projetos/tea_lacos_de_inclusao.jpg"
+            }
+        },
+        {
+            projeto: {
+                titulo: "Esporte é Vida",
+                descricao: "Transformando vidas através do esporte",
+                href: "/projetos/esporte-e-vida",
+                imagem: "/projetos/esporte_e_vida.jpg"
+            }
+        },
+        {
+            projeto: {
+                titulo: "Visão para Todos",
+                descricao: "Devolvendo Olhares, Renovando Esperanças",
+                href: "/projetos/visao-para-todos",
+                imagem: "/projetos/visao_para_todos.png"
+            }
+        },
+    ]
 
     useEffect(() => {
-        const tags = ["Economia", "Saúde", "Tecnologia", "Meio ambiente", "Brasil", "Brasília"];
+        const tags = ["mulheres-belas", "visao-para-todos", "tea-lacos-de-inclusao", "lacos-de-inclusao", "meninas-luz"];
 
         async function fetchNoticiasPorTag() {
             try {
-                const resTag = await fetch(`/api/noticias/por-tag?tags=${encodeURIComponent(tags.join(","))}`);
+                const resTag = await fetch(`/api/projetos/por-tag?tags=${encodeURIComponent(tags.join(","))}`);
                 if (resTag.ok) {
                     const noticiasPorTagRaw = await resTag.json();
                     setNoticiasPorTag(noticiasPorTagRaw);
@@ -118,17 +162,11 @@ export default function HomePage() {
     }, [loadMoreNoticias]);
 
     return (
-    <div className="w-[90%]   py-12 mb-[80] justify-self-center items-center gap-4 space-y-12">
+        <div className="w-[90%]   py-12 mb-[80] justify-self-center items-center gap-4 space-y-12">
             {anuncios.length > 0 && <AdSliderFull anuncioCardProps={anuncios} />}
 
             <section>
-                <NoticiaCarouselPrime
-                    noticias={noticiasPorTag
-                        .filter(({ noticia }) => noticia?.id)
-                        .map(({ noticia }) => ({ noticia }))}
-                    numVisible={6}
-                    numScroll={1}
-                />
+                <ProjetoCarouselPrime projetos={projetos}/>
             </section>
 
             <section>
@@ -172,3 +210,7 @@ export default function HomePage() {
         </div>
     );
 }
+function setTotalPaginas(total: any): any {
+    throw new Error("Function not implemented.");
+}
+

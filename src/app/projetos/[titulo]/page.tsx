@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { useParams } from "next/navigation";
 import HTMLFlipBook from "react-pageflip";
 import { Maximize, X } from "lucide-react";
-
 
 type Imagem = {
     id: number;
@@ -21,6 +20,9 @@ export default function ProjetoPage() {
     const [paginaAtual, setPaginaAtual] = useState(0);
     const [fullscreenAtivo, setFullscreenAtivo] = useState(false);
 
+    const [descricao, setDescricao] = useState("Descrição do projeto");
+    const [tituloCorrigido, setTituloCorrigido] = useState("Título corrigido");
+    const [bannerUrl, setBannerUrl] = useState("/logo.jpg");
     useEffect(() => {
         fetch(`/api/projetos/${titulo}?count=true`)
             .then((res) => res.json())
@@ -57,6 +59,43 @@ export default function ProjetoPage() {
             flipBookRef.current.pageFlip().flip(index);
         }
     };
+
+    const tituloMap = {
+        "tea-lacos-de-inclusao": {
+            descricao: "Respeito à Neurodiversidade, Amor à Inclusão",
+            tituloCorrigido: "TEA Laços de Inclusão",
+            bannerUrl: "/projetos/tea_lacos_de_inclusao.jpg",
+        },
+        "mulheres-belas": {
+            descricao: "Mulheres Fortes, Futuros Brilhantes",
+            tituloCorrigido: "MULHERES BELAS",
+            bannerUrl: "/projetos/mulheres_belas.jpg",
+        },
+        "visao-para-todos": {
+            descricao: "Devolvendo Olhares, Renovando Esperanças",
+            tituloCorrigido: "VISÃO PARA TODOS",
+            bannerUrl: "/projetos/visao_para_todos.png",
+        },
+        "meninas-luz": {
+            descricao: "Protagonistas da Própria Vida",
+            tituloCorrigido: "MENINAS LUZ",
+            bannerUrl: "/projetos/meninas_luz.jpg",
+        },
+        "esporte-e-vida": {
+            descricao: "Transformando vidas através do esporte",
+            tituloCorrigido: "ESPORTE É VIDA",
+            bannerUrl: "/projetos/esporte_e_vida.jpg",
+        },
+    };
+
+    useEffect(() => {
+        const projeto = tituloMap[titulo  as string];
+        if (!projeto) return;
+
+        setDescricao((prev) => (prev !== projeto.descricao ? projeto.descricao : prev));
+        setTituloCorrigido((prev) => (prev !== projeto.tituloCorrigido ? projeto.tituloCorrigido : prev));
+        setBannerUrl((prev) => (prev !== projeto.bannerUrl ? projeto.bannerUrl : prev));
+    }, [titulo]);
 
     const renderFlipBook = () => (
         <HTMLFlipBook
@@ -97,15 +136,15 @@ export default function ProjetoPage() {
         <div className="flex flex-col gap-4 mb-[80] ">
             <div className="text-center">
                 <img
-                    src="/logo.jpg"
+                    src={bannerUrl}
                     alt="Capa do projeto"
                     className=" shadow h-100  object-contain w-full"
                 />
                 <h1 className="text-3xl sm:text-4xl font-bold text-blue-900 mt-4 sm:mt-6">
-                    {titulo.toString().toUpperCase()}
+                    {tituloCorrigido}
                 </h1>
                 <p className="text-base sm:text-lg text-gray-600 mt-2">
-                    Descrição do projeto
+                    {descricao}
                 </p>
             </div>
 

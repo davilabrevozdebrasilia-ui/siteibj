@@ -7,11 +7,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ChevronDown } from "lucide-react";
 
 const projetos = [
-    "Mulheres-Belas",
-    "Visao-Para-Todos",
-    "TEA",
-    "Lacos-de-Inclusao",
-    "Meninas-Luz",
+    "mulheres-belas",
+    "visao-para-todos",
+    "tea-lacos-de-inclusao",
+    "lacos-de-inclusao",
+    "meninas-luz",
 ];
 
 type Props = {

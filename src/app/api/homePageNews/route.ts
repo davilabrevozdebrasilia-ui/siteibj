@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(
       ultimasNoticias.map((noticia) => ({
-        noticia, // você pode adaptar o formato aqui conforme o esperado
+        noticia, 
       }))
     );
   } catch (error) {
