@@ -195,7 +195,7 @@ export default function AdminCreate() {
 
     async function handleSubmitImagem() {
         const projetos = imagemForm.projetos.split(",").map((t) => t.trim());
-        await submit({ ...imagemForm, projetos }, "/api/imagens", () =>
+        await submit({ ...imagemForm, projetos }, "/api/images", () =>
             setImagemForm({ titulo: "", descricao: "", url: "", projetos: "" })
         );
     }
