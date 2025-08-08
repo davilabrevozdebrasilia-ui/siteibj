@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-
 import AdSliderFull from "@/components/anuncios/adSliderFull";
 import AdCard from "@/components/anuncios/adCard";
 import { prisma } from "@/lib/prisma";
