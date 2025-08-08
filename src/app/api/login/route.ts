@@ -1,39 +1,26 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const USERNAME = process.env.ADMIN_USERNAME;
-// Aqui substituímos '-' por '$' para restaurar o hash original
 const PASSWORD_HASH_RAW = process.env.ADMIN_PASSWORD || "";
 const PASSWORD_HASH = PASSWORD_HASH_RAW.replace(/-/g, "$");
-const TOKEN = process.env.ADMIN_TOKEN;
+const JWT_SECRET = process.env.JWT_SECRET || "default_secret";
+const JWT_EXPIRES_IN = "24h";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
     const { username, password } = await req.json();
 
-    console.log("Tentativa de login recebida:");
-    console.log("Usuário enviado:", username);
-    console.log("Senha enviada:", password ? "[OCULTA]" : "[NÃO ENVIADA]");
-    console.log("Usuário esperado:", USERNAME);
-    console.log("Hash salvo (com -):", PASSWORD_HASH_RAW);
-    console.log("Hash usado para comparação (com $):", PASSWORD_HASH);
-
     if (username !== USERNAME) {
-        console.warn("⚠️ Usuário inválido.");
         return NextResponse.json({ error: "Unauthorized - usuário inválido" }, { status: 401 });
     }
 
-    let isPasswordValid = false;
-    try {
-        isPasswordValid = await bcrypt.compare(password, PASSWORD_HASH);
-    } catch (error) {
-        console.error("Erro ao comparar senhas:", error);
-    }
-
+    const isPasswordValid = await bcrypt.compare(password, PASSWORD_HASH);
     if (!isPasswordValid) {
-        console.warn("⚠️ Senha inválida.");
         return NextResponse.json({ error: "Unauthorized - senha inválida" }, { status: 401 });
     }
 
-    console.log("✅ Login autorizado. Retornando token.");
-    return NextResponse.json({ token: TOKEN });
+    const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+
+    return NextResponse.json({ token });
 }

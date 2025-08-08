@@ -1,4 +1,5 @@
 import { NoticiaCardProps } from "@/types/noticias";
+import DOMPurify from "isomorphic-dompurify";
 
 export default function NoticiaCard({ noticiaCardProps }: { noticiaCardProps: NoticiaCardProps }) {
     return (
@@ -19,9 +20,12 @@ export default function NoticiaCard({ noticiaCardProps }: { noticiaCardProps: No
                     <h3 className="text-xl font-semibold text-blue-900 truncate">
                         {noticiaCardProps.noticia.titulo}
                     </h3>
-                    <p className="text-gray-700 line-clamp-2">
-                        {noticiaCardProps.noticia.resumo}
-                    </p>
+                    <div
+                        className="text-gray-700 line-clamp-2"
+                        dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(noticiaCardProps.noticia.resumo),
+                        }}
+                    />
                 </div>
             </div>
         </a>

@@ -1,15 +1,15 @@
-// app/noticias/[id]/page.tsx
 export const dynamic = "force-dynamic";
 
 import AdSliderFull from "@/components/anuncios/adSliderFull";
 import AdCard from "@/components/anuncios/adCard";
 import { prisma } from "@/lib/prisma";
-   interface PageProps {
-        params: Promise<{ id: string }>;
-    }
+import DOMPurify from "isomorphic-dompurify";
+
+interface PageProps {
+    params: Promise<{ id: string }>;
+}
 
 export default async function NoticiaPage({ params }: PageProps) {
-
     const id = Number((await params).id);
 
     const noticiaDb = await prisma.noticia.findUnique({
@@ -44,7 +44,7 @@ export default async function NoticiaPage({ params }: PageProps) {
     }));
 
     return (
-        <div className="max-w-7xl mx-auto  py-12 mb-[80] justify-self-center items-center space-y-8">
+        <div className="max-w-7xl mx-auto py-12 mb-[80] justify-self-center items-center space-y-8">
             {anuncios.length > 0 && (
                 <AdSliderFull anuncioCardProps={anuncios} />
             )}
@@ -57,11 +57,37 @@ export default async function NoticiaPage({ params }: PageProps) {
                 />
 
                 <div className="flex flex-col gap-4">
-                    <h1 className="text-3xl font-bold text-blue-800 mb-4 text-center">{noticia.titulo}</h1>
-                    <p className="text-sm text-gray-500 mb-4">Publicado em {noticia.data}</p>
-                    <p className="text-gray-700 mb-4 text-justify">{noticia.resumo}</p>
+                    <h1 className="text-3xl font-bold text-blue-800 mb-4 text-center">
+                        {noticia.titulo}
+                    </h1>
 
+                    <div className="flex flex-col items-center gap-2">
+                        <p className="text-sm text-gray-500">
+                            Publicado em {noticia.data}
+                        </p>
+
+                        {noticia.tags && noticia.tags.length > 0 && (
+                            <div className="flex flex-wrap justify-center gap-2">
+                                {noticia.tags.map((tag, idx) => (
+                                    <span
+                                        key={idx}
+                                        className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full"
+                                    >
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    <div
+                        className="text-gray-700 mb-4 text-justify"
+                        dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(noticia.resumo),
+                        }}
+                    />
                 </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                     <div className="flex flex-col gap-10">
                         {anuncios.length > 1 && (

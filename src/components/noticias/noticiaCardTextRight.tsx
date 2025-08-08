@@ -1,4 +1,5 @@
 import { NoticiaCardProps } from "@/types/noticias";
+import DOMPurify from "isomorphic-dompurify";
 
 export function NoticiaCardTextRight({ noticiaCardProps }: { noticiaCardProps: NoticiaCardProps }) {
     return (
@@ -18,9 +19,13 @@ export function NoticiaCardTextRight({ noticiaCardProps }: { noticiaCardProps: N
                 <h3 className="text-lg font-semibold text-blue-900 truncate">
                     {noticiaCardProps.noticia.titulo}
                 </h3>
-                <p className="text-gray-700 line-clamp-3 mt-1">
-                    {noticiaCardProps.noticia.resumo}
-                </p>
+
+                <div
+                    className="text-gray-700 line-clamp-3 mt-1"
+                    dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(noticiaCardProps.noticia.resumo),
+                    }}
+                />
             </div>
         </a>
     );
