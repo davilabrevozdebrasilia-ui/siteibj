@@ -20,7 +20,8 @@ export default function Transparencia() {
     const [fullscreenAtivo, setFullscreenAtivo] = useState(false);
     const [docAtual, setDocAtual] = useState<Documento | null>(null);
     const [paginaAtual, setPaginaAtual] = useState(0);
-
+    const [windowSize, setWindowSize] = useState({ width: 1200, height: 800 });
+    
     const flipBookRef = useRef<any>(null);
 
     const onFlip = useCallback((e: any) => {
@@ -54,8 +55,8 @@ export default function Transparencia() {
 
         return (
             <HTMLFlipBook
-                width={1200}
-                height={800}
+                width={window.innerWidth * 0.9} // 90% da largura da viewport
+                height={window.innerHeight * 0.85} // 85% da altura da viewport
                 size="fixed"
                 maxShadowOpacity={0.5}
                 showCover={false}
@@ -65,7 +66,15 @@ export default function Transparencia() {
                 onFlip={onFlip}
                 flippingTime={700}
                 className="mx-auto"
-                startPage={paginaAtual} style={undefined} minWidth={0} maxWidth={0} minHeight={0} maxHeight={0} drawShadow={false} usePortrait={false} startZIndex={0} autoSize={false} clickEventForward={false} swipeDistance={0} showPageCorners={false} disableFlipByClick={false}            >
+                startPage={paginaAtual}
+                drawShadow={false}
+                usePortrait={false}
+                startZIndex={0}
+                autoSize={false}
+                clickEventForward={false}
+                swipeDistance={0}
+                showPageCorners={false}
+                disableFlipByClick={false} style={undefined} minWidth={0} maxWidth={0} minHeight={0} maxHeight={0}            >
                 {imagens.map((img) => (
                     <div
                         key={img.id}
@@ -83,8 +92,9 @@ export default function Transparencia() {
                 ))}
             </HTMLFlipBook>
         );
-
     };
+
+
 
     return (
         <main className="min-h-screen max-w-7xl mx-auto py-12 mb-[80px] px-4 text-blue-900">
