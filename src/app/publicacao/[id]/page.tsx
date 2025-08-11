@@ -1,7 +1,7 @@
 import AdSliderFull from "@/components/anuncios/adSliderFull";
 import AdCard from "@/components/anuncios/adCard";
 import { prisma } from "@/lib/prisma";
-import DOMPurify from "isomorphic-dompurify";
+import sanitizeHtml from "sanitize-html";
 
 interface PageProps {
     params: Promise<{ id: string }>;
@@ -25,7 +25,13 @@ export default async function NoticiaPage({ params }: PageProps) {
     const noticia = {
         id: noticiaDb.id,
         titulo: noticiaDb.titulo,
-        resumo: noticiaDb.resumo,
+        resumo: sanitizeHtml(noticiaDb.resumo, {
+            allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
+            allowedAttributes: {
+                ...sanitizeHtml.defaults.allowedAttributes,
+                img: ["src", "alt", "width", "height"],
+            },
+        }),
         imagem: noticiaDb.imagem,
         data: new Date(noticiaDb.data).toLocaleDateString("pt-BR"),
         tags: noticiaDb.tags,
@@ -81,7 +87,7 @@ export default async function NoticiaPage({ params }: PageProps) {
                     <div
                         className="text-gray-700 mb-4 text-justify"
                         dangerouslySetInnerHTML={{
-                            __html: DOMPurify.sanitize(noticia.resumo),
+                            __html: noticia.resumo,
                         }}
                     />
                 </div>

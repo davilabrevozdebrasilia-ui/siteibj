@@ -1,5 +1,5 @@
 import { NoticiaCardProps } from "@/types/noticias";
-import DOMPurify from "isomorphic-dompurify";
+import sanitizeHtml from "sanitize-html";
 
 export default function NoticiaCard({ noticiaCardProps }: { noticiaCardProps: NoticiaCardProps }) {
     return (
@@ -23,7 +23,13 @@ export default function NoticiaCard({ noticiaCardProps }: { noticiaCardProps: No
                     <div
                         className="text-gray-700 line-clamp-2"
                         dangerouslySetInnerHTML={{
-                            __html: DOMPurify.sanitize(noticiaCardProps.noticia.resumo),
+                            __html: sanitizeHtml(noticiaCardProps.noticia.resumo, {
+                                allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
+                                allowedAttributes: {
+                                    ...sanitizeHtml.defaults.allowedAttributes,
+                                    img: ["src", "alt", "width", "height"],
+                                },
+                            }),
                         }}
                     />
                 </div>
