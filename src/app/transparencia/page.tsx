@@ -20,8 +20,7 @@ export default function Transparencia() {
     const [fullscreenAtivo, setFullscreenAtivo] = useState(false);
     const [docAtual, setDocAtual] = useState<Documento | null>(null);
     const [paginaAtual, setPaginaAtual] = useState(0);
-    const [windowSize, setWindowSize] = useState({ width: 1200, height: 800 });
-    
+
     const flipBookRef = useRef<any>(null);
 
     const onFlip = useCallback((e: any) => {
@@ -55,8 +54,8 @@ export default function Transparencia() {
 
         return (
             <HTMLFlipBook
-                width={window.innerWidth * 0.9} // 90% da largura da viewport
-                height={window.innerHeight * 0.85} // 85% da altura da viewport
+                width={900} // Largura menor, para caber melhor
+                height={600} // Altura proporcional (3:2)
                 size="fixed"
                 maxShadowOpacity={0.5}
                 showCover={false}
@@ -65,20 +64,21 @@ export default function Transparencia() {
                 ref={flipBookRef}
                 onFlip={onFlip}
                 flippingTime={700}
-                className="mx-auto"
+                className="mx-auto w-full max-w-[900px] h-auto"
                 startPage={paginaAtual}
                 drawShadow={false}
                 usePortrait={false}
-                startZIndex={0}
                 autoSize={false}
                 clickEventForward={false}
                 swipeDistance={0}
                 showPageCorners={false}
-                disableFlipByClick={false} style={undefined} minWidth={0} maxWidth={0} minHeight={0} maxHeight={0}            >
+                disableFlipByClick={false}
+                style={{ maxWidth: '100%', height: 'auto' }}  minWidth={0} maxWidth={0} minHeight={0} maxHeight={0} startZIndex={0}            >
                 {imagens.map((img) => (
                     <div
                         key={img.id}
                         className="flex items-center justify-center bg-slate-200 w-full h-full rounded relative"
+                        style={{ minHeight: 600 }}
                     >
                         <img
                             src={img.url}
@@ -93,7 +93,6 @@ export default function Transparencia() {
             </HTMLFlipBook>
         );
     };
-
 
 
     return (

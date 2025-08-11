@@ -9,7 +9,7 @@ import { ChevronDown } from "lucide-react";
 const projetos = [
     "mulheres-belas",
     "visao-para-todos",
-    "tea-lacos-de-inclusao",
+    "esporte-e-vida",
     "lacos-de-inclusao",
     "meninas-luz",
 ];
