@@ -1,34 +1,23 @@
-import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+const TOKEN = process.env.ADMIN_TOKEN;
 
-export async function GET(req: NextRequest) {
-    const url = new URL(req.url);
-    const pathname = url.pathname;
-    const parts = pathname.split("/");
-    const titulo = decodeURIComponent(parts[parts.length - 1]);
 
-    const countOnly = url.searchParams.get("count") === "true";
+export async function POST(req: NextRequest) {
 
-    if (countOnly) {
-        const total = await prisma.imagem.count({
-            where: {
-                projetos: { has: titulo },
-            },
-        });
-        return NextResponse.json({ total });
+    const data = await req.json();
+
+    if (!data.titulo || !data.imagem || !data.href) {
+        return NextResponse.json({ error: "Campos obrigatórios faltando" }, { status: 400 });
     }
 
-    const page = parseInt(url.searchParams.get("page") || "0");
-    const pageSize = parseInt(url.searchParams.get("limit") || "2");
-
-    const imagens = await prisma.imagem.findMany({
-        where: {
-            projetos: { has: titulo },
+    const anuncioCriado = await prisma.anuncio.create({
+        data: {
+            titulo: data.titulo,
+            imagem: data.imagem,
+            href: data.href,
         },
-        orderBy: { id: "asc" },
-        skip: page * pageSize,
-        take: pageSize,
     });
 
-    return NextResponse.json(imagens);
+    return NextResponse.json(anuncioCriado);
 }

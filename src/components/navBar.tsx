@@ -29,6 +29,7 @@ const links = [
     { label: "Fotos", href: "/imagens" },
     { label: "Contato", href: "/contato" },
     { label: "Transparência", href: "/transparencia" },
+    { label: "Doações", href: "/doacoes" },
 ];
 
 export default function Navbar() {
@@ -81,8 +82,8 @@ export default function Navbar() {
                 </div>
             </div>
 
-            <div className="h-12 flex items-center md:justify-center justify-between px-4 bg-blue-500 drop-shadow-slate-400 drop-shadow-md ">
-                <nav className="hidden md:flex gap-4 flex-wrap justify-end relative">
+            <div className="h-12 flex items-center lg:justify-center justify-between px-4 bg-blue-500 drop-shadow-slate-400 drop-shadow-md ">
+                <nav className="hidden lg:flex gap-4 flex-wrap justify-end relative">
                     {links.map((link) => {
                         if (link.label === "Projetos") {
                             return (
@@ -126,7 +127,7 @@ export default function Navbar() {
 
                 </nav>
 
-                <div className="md:hidden">
+                <div className="lg:hidden">
                     <Sheet>
                         <SheetTrigger asChild>
                             <Button variant="ghost" size="icon">

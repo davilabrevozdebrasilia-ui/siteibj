@@ -133,7 +133,7 @@ export default function ProjetoPage() {
     );
 
     return (
-        <div className="flex flex-col gap-4 mb-[80] ">
+        <div className="flex flex-col gap-4 mb-[80] px-4 ">
             <div className="text-center">
                 <img
                     src={bannerUrl}

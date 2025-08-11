@@ -22,7 +22,7 @@ export const metadata = {
 };
 
 const anunciosDb = await prisma.anuncio.findMany({
-    take: 8,
+    take: 20,
 });
 
 const anuncios: AnuncioCardProps[] = anunciosDb?.length

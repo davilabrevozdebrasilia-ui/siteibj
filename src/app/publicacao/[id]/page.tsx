@@ -48,7 +48,7 @@ export default async function NoticiaPage({ params }: PageProps) {
     }));
 
     return (
-        <div className="max-w-7xl mx-auto py-12 mb-[80] justify-self-center items-center space-y-8">
+        <div className="max-w-7xl mx-auto py-12 mb-[80] justify-self-center items-center space-y-8 px-4">
             {anuncios.length > 0 && (
                 <AdSliderFull anuncioCardProps={anuncios} />
             )}

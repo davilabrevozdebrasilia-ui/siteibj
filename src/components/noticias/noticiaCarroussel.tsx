@@ -11,7 +11,7 @@ interface NoticiaCarouselProps {
 
 export default function NoticiaCarouselPrime({
     noticias,
-    numVisible = 3,
+    numVisible = 5,
     numScroll = 1,
 }: NoticiaCarouselProps) {
     const noticiaTemplate = (item: NoticiaCardProps) => {
@@ -33,7 +33,7 @@ export default function NoticiaCarouselPrime({
     };
 
     return (
-        <div className="w-full h-50 bg-slate-50  rounded-lg shadow-md border-2 border-slate-300 items-center justify-center">
+        <div className="flex w-full h-50 bg-slate-50  rounded-lg shadow-md border-2 border-slate-300 items-center justify-center">
             <Carousel
                 value={noticias}
                 itemTemplate={noticiaTemplate}

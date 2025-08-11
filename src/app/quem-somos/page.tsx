@@ -4,7 +4,7 @@ import React from "react";
 
 const QuemSomos = () => {
   return (
-    <div className="max-w-7xl mx-auto  py-12 mb-[80] justify-self-center items-center">
+    <div className="max-w-7xl mx-auto  py-12 mb-[80] justify-self-center items-center px-4">
       <h1 className="text-3xl font-bold text-blue-900 mb-6">Quem Somos</h1>
 
       <p className="mb-4 text-gray-800">

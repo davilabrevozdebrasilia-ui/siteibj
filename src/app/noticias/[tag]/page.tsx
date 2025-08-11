@@ -56,7 +56,7 @@ export default async function NoticiasPorTagPage({ params }: PageProps) {
     }));
 
     return (
-        <div className="max-w-7xl mx-auto  py-12 mb-[80] justify-self-center items-center gap-4">
+        <div className="max-w-7xl mx-auto px-4 py-12 mb-[80] justify-self-center items-center gap-4">
             {anuncios.length > 0 && <AdSliderFull anuncioCardProps={anuncios} />}
 
             <section>

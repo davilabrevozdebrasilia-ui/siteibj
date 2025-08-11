@@ -8,8 +8,17 @@ function checkAuth(req: NextRequest) {
     return authHeader === `Bearer ${TOKEN}`;
 }
 
+function slugify(text: string) {
+    return text
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9 ]/g, "")
+        .trim()
+        .replace(/\s+/g, "-");
+}
+
 export async function POST(req: NextRequest) {
-    
     if (!checkAuth(req)) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -35,7 +44,8 @@ export async function POST(req: NextRequest) {
             },
         });
 
-        const hrefCorreto = `/publicacao/${noticiaCriada.id}`;
+        const slug = slugify(data.titulo);
+        const hrefCorreto = `/publicacao/${slug}-${noticiaCriada.id}`;
 
         const noticiaAtualizada = await prisma.noticia.update({
             where: { id: noticiaCriada.id },
