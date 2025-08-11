@@ -137,33 +137,26 @@ export default function HomePage() {
                 return;
             }
 
-            let i = 0;
-            const interval = setInterval(() => {
-                const noticia = data[i];
-                if (noticia?.noticia?.id) {
-                    setUltimasNoticias((prev) => {
-                        const alreadyExists = prev.some((n) => n.noticia.id === noticia.noticia.id);
-                        if (alreadyExists || prev.length >= maxNoticias) return prev;
+            setUltimasNoticias((prev) => {
+                const newNoticias = data.filter(noticia =>
+                    !prev.some((n) => n.noticia.id === noticia.noticia.id)
+                ).slice(0, maxNoticias - prev.length);
 
-                        const keyedNoticia: NoticiaWithKey = {
-                            ...noticia,
-                            _key: `noticia-${noticiaKeyCounter.current++}`,
-                        };
+                const keyedNoticias = newNoticias.map(noticia => ({
+                    ...noticia,
+                    _key: `noticia-${noticiaKeyCounter.current++}`
+                }));
 
-                        return [...prev, keyedNoticia];
-                    });
-                }
-                i++;
-                if (i >= data.length || ultimasNoticias.length + i >= maxNoticias) {
-                    clearInterval(interval);
-                    setOffset((prev) => prev + batchSize);
-                }
-            }, 150);
+                return [...prev, ...keyedNoticias];
+            });
+
+            setOffset((prev) => prev + batchSize);
         } catch (err) {
             console.error("Erro no carregamento incremental:", err);
             setHasMore(false);
         }
     }, [offset, hasMore, ultimasNoticias.length]);
+
 
     useEffect(() => {
         const observer = new IntersectionObserver(
