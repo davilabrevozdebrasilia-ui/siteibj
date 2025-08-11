@@ -1,12 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-const TOKEN = process.env.ADMIN_TOKEN;
 
-function checkAuth(req: NextRequest) {
-    const authHeader = req.headers.get("authorization");
-    return authHeader === `Bearer ${TOKEN}`;
-}
 
 function slugify(text: string) {
     return text
@@ -19,9 +14,6 @@ function slugify(text: string) {
 }
 
 export async function POST(req: NextRequest) {
-    if (!checkAuth(req)) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     try {
         const data = await req.json();
