@@ -4,19 +4,22 @@ import { prisma } from "@/lib/prisma";
 import sanitizeHtml from "sanitize-html";
 
 interface PageProps {
-    params: Promise<{ id: string }>;
+    params: Promise<{ slug: string }>; // agora slug, não id
 }
 
 export default async function NoticiaPage({ params }: PageProps) {
-    const id = Number((await params).id);
+    const slug = (await params).slug;
+    console.log("slug",slug)
+    const idString = slug.substring(slug.lastIndexOf('-') + 1); 
+    const id = Number(idString);
+
+    if (isNaN(id)) {
+        return <div>Notícia inválida.</div>;
+    }
 
     const noticiaDb = await prisma.noticia.findUnique({
         where: { id },
     });
-
-    if (!noticiaDb) {
-        return <div className="p-6 text-center">Notícia não encontrada.</div>;
-    }
 
     const anunciosDb = await prisma.anuncio.findMany({
         take: 8,
@@ -48,7 +51,7 @@ export default async function NoticiaPage({ params }: PageProps) {
     }));
 
     return (
-        <div className="max-w-7xl mx-auto py-12 mb-[80] justify-self-center items-center space-y-8 px-4">
+        <div className="max-w-[1600] mx-auto py-12 mb-[80] justify-self-center items-center space-y-8 px-4">
             {anuncios.length > 0 && (
                 <AdSliderFull anuncioCardProps={anuncios} />
             )}
