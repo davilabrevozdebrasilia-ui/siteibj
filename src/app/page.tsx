@@ -18,7 +18,7 @@ export default function HomePage() {
     const [offsetAnuncios, setOffsetAnuncios] = useState(0);
     const [hasMoreAnuncios, setHasMoreAnuncios] = useState(true);
     const loaderAnunciosRef = useRef<HTMLDivElement | null>(null);
-    const batchSize = 1;
+    const batchSize = 6;
     const [ultimasNoticias, setUltimasNoticias] = useState<NoticiaWithKey[]>([]);
     const [noticiasPorTag, setNoticiasPorTag] = useState<
         { tag: string; noticia: NoticiaCardProps["noticia"] }[]
