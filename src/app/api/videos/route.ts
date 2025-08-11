@@ -2,15 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 const TOKEN = process.env.ADMIN_TOKEN;
 
-function checkAuth(req: NextRequest) {
-    const authHeader = req.headers.get("authorization");
-    return authHeader === `Bearer ${TOKEN}`;
-}
 
 export async function POST(req: NextRequest) {
-    if (!checkAuth(req)) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     const data = await req.json();
 
