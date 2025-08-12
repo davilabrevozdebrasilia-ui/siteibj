@@ -43,7 +43,6 @@ export default function ImagemFormComponent({ form, setForm, handleFileChange, o
                     accept="image/*"
                     onChange={(e) => handleFileChange(e, "imagem")}
                     className="hidden"
-                    multiple
                 />
             </label>
             {form.url && (

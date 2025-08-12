@@ -10,7 +10,7 @@ export default function AdBarCarousel({ anuncioCardProps }: { anuncioCardProps: 
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        setMounted(true); // Marca que já está no cliente
+        setMounted(true);
     }, []);
 
     useEffect(() => {
