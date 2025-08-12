@@ -16,7 +16,7 @@ const projetosSubmenu = [
     { label: "Mulheres Belas", href: "/projetos/mulheres-belas" },
     { label: "Visão para Todos", href: "/projetos/visao-para-todos" },
     { label: "Esporte é vida", href: "/projetos/esporte-e-vida" },
-    { label: "TEA Laços de Inclusao", href: "/projetos/tea-lacos-de-inclusao" },
+    { label: "Laços de Inclusao", href: "/projetos/lacos-de-inclusao" },
     { label: "Meninas Luz", href: "/projetos/meninas-luz" },
 ];
 

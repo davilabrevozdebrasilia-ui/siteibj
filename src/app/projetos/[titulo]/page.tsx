@@ -61,10 +61,10 @@ export default function ProjetoPage() {
     };
 
     const tituloMap = {
-        "tea-lacos-de-inclusao": {
+        "lacos-de-inclusao": {
             descricao: "Respeito à Neurodiversidade, Amor à Inclusão",
-            tituloCorrigido: "TEA Laços de Inclusão",
-            bannerUrl: "/projetos/tea_lacos_de_inclusao.jpg",
+            tituloCorrigido: "Laços de Inclusão",
+            bannerUrl: "/projetos/lacos_de_inclusao.jpg",
         },
         "mulheres-belas": {
             descricao: "Mulheres Fortes, Futuros Brilhantes",

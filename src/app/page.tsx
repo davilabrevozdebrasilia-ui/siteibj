@@ -48,10 +48,10 @@ export default function HomePage() {
         },
         {
             projeto: {
-                titulo: "TEA Laços de Inclusão",
+                titulo: "Laços de Inclusão",
                 descricao: "Respeito à Neurodiversidade, Amor à Inclusão",
-                href: "/projetos/tea-lacos-de-inclusao",
-                imagem: "/projetos/tea_lacos_de_inclusao.jpg",
+                href: "/projetos/lacos-de-inclusao",
+                imagem: "/projetos/lacos_de_inclusao.jpg",
             },
         },
         {
@@ -76,8 +76,8 @@ export default function HomePage() {
         const tags = [
             "mulheres-belas",
             "visao-para-todos",
-            "tea-lacos-de-inclusao",
             "lacos-de-inclusao",
+            "esporte-e-vida",
             "meninas-luz",
         ];
 
