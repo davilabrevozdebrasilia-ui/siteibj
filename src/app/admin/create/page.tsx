@@ -139,9 +139,10 @@ export default function AdminCreate() {
         await submit(
             { ...imagemForm, projetos },
             "/api/images",
-            () => setImagemForm({ titulo: "", descricao: "", url: "", projetos: "" })
+            () => setImagemForm((f) => ({ ...f, url: "" }))
         );
     }
+
 
     async function handleSubmitVideo() {
         const projetos = videoForm.projetos.split(",").map((t) => t.trim());
