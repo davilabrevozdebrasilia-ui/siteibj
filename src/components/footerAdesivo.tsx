@@ -13,7 +13,7 @@ const AdFooter = ({ anuncioCardProps }: { anuncioCardProps: AnuncioCardProps[] }
     if (!isClient || !anuncioCardProps?.length) return null;
 
     return (
-        <div className="bg-transparent text-white text-center fixed bottom-0 w-full px-10 py-2">
+        <div className="bg-transparent text-white text-center fixed bottom-0 place-self-end px-10 py-2">
             <AdBarCarousel anuncioCardProps={anuncioCardProps} />
         </div>
     );
