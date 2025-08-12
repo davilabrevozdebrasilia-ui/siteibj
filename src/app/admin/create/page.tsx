@@ -49,11 +49,12 @@ export default function AdminCreate() {
         href: "",
     });
 
-    const [imagemForm, setImagemForm] = useState<ImagemForm>({
+    const [imagemForm, setImagemForm] = useState<ImagemForm & { urls: string[] }>({
         titulo: "",
         descricao: "",
         url: "",
         projetos: "",
+        urls: [],
     });
 
     const [videoForm, setVideoForm] = useState<VideoForm>({
@@ -67,28 +68,49 @@ export default function AdminCreate() {
     const [success, setSuccess] = useState("");
 
     function handleFileChange(e: React.ChangeEvent<HTMLInputElement>, tipo: string) {
-        const file = e.target.files?.[0];
-        if (!file) return;
+        const files = e.target.files;
+        if (!files) return;
 
-        const reader = new FileReader();
-        reader.onload = () => {
-            const base64 = reader.result as string;
-            switch (tipo) {
-                case "noticia":
-                    setNoticiaForm((f) => ({ ...f, imagem: base64 }));
-                    break;
-                case "anuncio":
-                    setAnuncioForm((f) => ({ ...f, imagem: base64 }));
-                    break;
-                case "imagem":
-                    setImagemForm((f) => ({ ...f, url: base64 }));
-                    break;
-                case "video":
-                    setVideoForm((f) => ({ ...f, url: base64 }));
-                    break;
+        const readers: Promise<string>[] = [];
+
+        for (let i = 0; i < files.length; i++) {
+            readers.push(
+                new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result as string);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(files[i]);
+                })
+            );
+        }
+
+        Promise.all(readers).then((base64Images) => {
+            if (tipo === "imagem") {
+                setImagemForm((f) => ({
+                    ...f,
+                    urls: [...f.urls, ...base64Images], // acumula todas
+                }));
             }
-        };
-        reader.readAsDataURL(file);
+        });
+    }
+
+    async function handleSubmitImagem() {
+        const projetos = imagemForm.projetos.split(",").map((t) => t.trim());
+
+        for (const img of imagemForm.urls) {
+            await submit(
+                { ...imagemForm, url: img, projetos },
+                "/api/images",
+                () =>
+                    setImagemForm({
+                        titulo: "",
+                        descricao: "",
+                        url: "",
+                        projetos: "",
+                        urls: [],
+                    })
+            );
+        }
     }
 
     async function submit(formData: any, endpoint: string, clearFn: () => void) {
@@ -134,14 +156,6 @@ export default function AdminCreate() {
         );
     }
 
-    async function handleSubmitImagem() {
-        const projetos = imagemForm.projetos.split(",").map((t) => t.trim());
-        await submit(
-            { ...imagemForm, projetos },
-            "/api/images",
-            () => setImagemForm({ titulo: "", descricao: "", url: "", projetos: "" })
-        );
-    }
 
     async function handleSubmitVideo() {
         const projetos = videoForm.projetos.split(",").map((t) => t.trim());
