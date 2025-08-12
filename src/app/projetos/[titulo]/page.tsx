@@ -74,7 +74,7 @@ export default function ProjetoPage() {
         el?.addEventListener("scroll", handleScroll);
         return () => el?.removeEventListener("scroll", handleScroll);
     }, [isMobile, totalPaginas]);
-
+    
     const onFlip = useCallback((e: any) => {
         setPaginaAtual(e.data);
     }, []);
@@ -150,7 +150,8 @@ export default function ProjetoPage() {
                             <img
                                 src={img.url}
                                 alt={img.titulo}
-                                className="object-contain max-w-full"
+                                loading="lazy"
+                                className="object-contain cursor-pointer max-w-full max-h-full"
                             />
                             <p className="text-center text-sm text-white bg-black/30 w-full p-1">
                                 {img.titulo}
@@ -195,6 +196,7 @@ export default function ProjetoPage() {
                         <img
                             src={img.url}
                             alt={img.titulo}
+                            loading="lazy"
                             className="object-contain cursor-pointer max-w-full max-h-full"
                         />
                         <p className="text-center text-white absolute bottom-0 bg-black/30 w-full p-2">
