@@ -44,7 +44,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <body >
                 <div className={`${poppins.className}bg-blue-50 text-gray-900 suppressHydrationWarning`}>
                     <Navbar />
-                    <main className={`antialiased`}>{children}
+                    <main className={`antialiased min-h-[calc(100vh-320px)]`}>{children}
                     </main>
                     <Footer />
                     <AdFooter anuncioCardProps={anuncios} />
