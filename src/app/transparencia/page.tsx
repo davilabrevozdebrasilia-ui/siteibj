@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import HTMLFlipBook from "react-pageflip";
-import { Maximize, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Maximize, X } from "lucide-react";
 
 type Documento = {
     titulo: string;
@@ -150,6 +150,7 @@ export default function Transparencia() {
                         <p className="text-center text-white absolute bottom-0 bg-black/30 w-full p-2">
                             {img.titulo}
                         </p>
+                        
                     </div>
                 ))}
             </HTMLFlipBook>
@@ -164,24 +165,26 @@ export default function Transparencia() {
                 {documentos.map((doc, idx) => (
                     <section key={idx}>
                         <h2 className="text-xl font-semibold mb-2">{doc.titulo}</h2>
-                        <div className="relative border rounded-md overflow-hidden bg-slate-100 p-4">
+                        <div className="flex justify-between border rounded-md overflow-hidden bg-slate-100 p-4">
+                            <p className="text-gray-600">Visualize todas as páginas deste documento.</p>
                             <button
                                 onClick={() => {
                                     setDocAtual(doc);
                                     setFullscreenAtivo(true);
                                     setPaginaAtual(0);
                                 }}
-                                className="absolute top-2 right-2 bg-slate-200 hover:bg-slate-400 text-blue-900 font-bold px-4 py-2 rounded shadow cursor-pointer flex items-center gap-2"
+                                className=" bg-slate-200 hover:bg-slate-400 text-blue-900 font-bold px-4 py-2 rounded shadow cursor-pointer flex items-center gap-2"
                             >
                                 Tela cheia
                                 <Maximize size={18} />
                             </button>
-                            <p className="text-gray-600">Visualize todas as páginas deste documento.</p>
                         </div>
                     </section>
                 ))}
             </div>
 
+    <span className="absolute bottom-2 left-2 text-2xl">👈</span>
+    <span className="absolute bottom-2 right-2 text-2xl">👉</span>
             {fullscreenAtivo && docAtual && (
                 <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex flex-col items-center p-4">
                     {/* Botão fechar */}
@@ -196,11 +199,41 @@ export default function Transparencia() {
                     <div className="flex-1 flex items-center justify-center w-full ">
                         {renderFlipBook()}
                     </div>
-
-                    {/* Contador */}
-                    <div className="text-white font-semibold mt-2">
-                        Página {paginaAtual + 1} de {docAtual.totalPaginas}
-                    </div>
+                    {!isMobile && (
+                        <div className="flex flex-wrap justify-center items-center gap-2 mt-2 w-full mx-auto">
+                            <button
+                                onClick={() => irPara(0)}
+                                className="bg-blue-900 hover:bg-blue-600 rounded text-white px-3 py-1 font-bold flex items-center gap-1 cursor-pointer"
+                            >
+                                <ChevronsLeft size={18} />
+                                Página 1
+                            </button>
+                            <button
+                                onClick={() => virarPagina("anterior")}
+                                className="bg-blue-900 hover:bg-blue-600 rounded text-white px-3 py-1 font-bold flex items-center gap-1 cursor-pointer"
+                            >
+                                <ChevronLeft size={18} />
+                                Página Anterior
+                            </button>
+                            <div className="text-white font-semibold mt-2">
+                                Página {paginaAtual + 1} de {docAtual.totalPaginas}
+                            </div>
+                            <button
+                                onClick={() => virarPagina("proxima")}
+                                className="bg-blue-900 hover:bg-blue-600 rounded text-white px-3 py-1 font-bold flex items-center gap-1 cursor-pointer"
+                            >
+                                Próxima Página
+                                <ChevronRight size={18} />
+                            </button>
+                            <button
+                                onClick={() => irPara(docAtual.totalPaginas - 1)}
+                                className="bg-blue-900 hover:bg-blue-600 rounded text-white px-3 py-1 font-bold flex items-center gap-1 cursor-pointer"
+                            >
+                                Página {docAtual.totalPaginas}
+                                <ChevronsRight size={18} />
+                            </button>
+                        </div>
+                    )}
 
                     {/* Paginador */}
                     {!isMobile && (
@@ -218,28 +251,12 @@ export default function Transparencia() {
                                         irPara(paginaInput - 1);
                                     }
                                 }}
-                                className="w-20 px-2 rounded bg-slate-600 drop-shadow-slate-900 shadow-md"
+                                className="w-20 px-2 rounded bg-slate-600 border-slate-200 border-2"
                             />
                         </div>
                     )}
 
-                    {/* Botões navegação */}
-                    {!isMobile && (
-                        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 mt-4">
-                            <button onClick={() => irPara(0)} className="bg-blue-900 hover:bg-blue-600 rounded text-white px-2 py-1 font-bold">
-                                « Página 1
-                            </button>
-                            <button onClick={() => virarPagina("anterior")} className="bg-blue-900 hover:bg-blue-600 rounded text-white px-2 py-1 font-bold">
-                                ‹ Página Anterior
-                            </button>
-                            <button onClick={() => virarPagina("proxima")} className="bg-blue-900 hover:bg-blue-600 rounded text-white px-2 py-1 font-bold">
-                                Próxima Página ›
-                            </button>
-                            <button onClick={() => irPara(docAtual.totalPaginas - 1)} className="bg-blue-900 hover:bg-blue-600 rounded text-white px-2 py-1 font-bold">
-                                Página {docAtual.totalPaginas} »
-                            </button>
-                        </div>
-                    )}
+
                 </div>
             )}
         </main>

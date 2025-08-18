@@ -5,7 +5,7 @@ import { CheckCircle } from "lucide-react";
 
 const Visao = () => {
   return (
-    <div className="max-w-7xl mx-auto  py-12 mb-[80] justify-self-center items-center">
+    <div className="max-w-7xl mx-auto  py-12 mb-[80] justify-self-center items-center px-4">
       <h1 className="text-3xl font-bold text-blue-900 mb-6">Nossa Visão</h1>
 
       <p className="mb-4 text-gray-800">

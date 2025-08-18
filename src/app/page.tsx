@@ -8,8 +8,8 @@ import { NoticiaCardProps } from "@/types/noticias";
 import { NoticiaCardTextRight } from "@/components/noticias/noticiaCardTextRight";
 import { NoticiaCardOverlay } from "@/components/noticias/NoticiaCardOverlay";
 import NoticiaCard from "@/components/noticias/noticiaCard";
-import { ProjetoCardProps } from "@/types/projetos";
-import ProjetoCarouselPrime from "@/components/projetos/projetosCarroussel";
+import { CarrousselCardProps } from "@/types/projetos";
+import CarrouselPrime from "@/components/projetos/itemsCarroussel";
 
 type NoticiaWithKey = NoticiaCardProps & { _key: string };
 
@@ -28,47 +28,53 @@ export default function HomePage() {
     const loaderRef = useRef(null);
     const noticiaKeyCounter = useRef(0);
     const maxNoticias = 21;
-
-    const projetos: ProjetoCardProps[] = [
+    const maxAnunciosAuto = 18;
+    const loadingAnunciosRef = useRef(false);
+    const projetos: CarrousselCardProps[] = [
         {
-            projeto: {
+            item: {
                 titulo: "Meninas Luz",
-                descricao: "Protagonistas da Própria Vida",
                 href: "/projetos/meninas-luz",
                 imagem: "/projetos/meninas_luz.jpg",
             },
+            titulo: "Projetos",
+            style: "object-cover"
         },
         {
-            projeto: {
+            item: {
                 titulo: "Mulheres Belas",
-                descricao: "Mulheres Fortes, Futuros Brilhantes",
                 href: "/projetos/mulheres-belas",
                 imagem: "/projetos/mulheres_belas.jpg",
             },
+            titulo: "Projetos",
+            style: "object-cover"
         },
         {
-            projeto: {
+            item: {
                 titulo: "Laços de Inclusão",
-                descricao: "Respeito à Neurodiversidade, Amor à Inclusão",
                 href: "/projetos/lacos-de-inclusao",
                 imagem: "/projetos/lacos_de_inclusao.jpg",
             },
+            titulo: "Projetos",
+            style: "object-cover"
         },
         {
-            projeto: {
+            item: {
                 titulo: "Esporte é Vida",
-                descricao: "Transformando vidas através do esporte",
                 href: "/projetos/esporte-e-vida",
                 imagem: "/projetos/esporte_e_vida.jpg",
             },
+            titulo: "Projetos",
+            style: "object-cover"
         },
         {
-            projeto: {
+            item: {
                 titulo: "Visão para Todos",
-                descricao: "Devolvendo Olhares, Renovando Esperanças",
                 href: "/projetos/visao-para-todos",
                 imagem: "/projetos/visao_para_todos.png",
             },
+            titulo: "Projetos",
+            style: "object-cover"
         },
     ];
 
@@ -99,16 +105,24 @@ export default function HomePage() {
     }, []);
 
     const loadMoreAnuncios = useCallback(async () => {
-        if (!hasMoreAnuncios) return;
+        if (loadingAnunciosRef.current) return;
+        if (!hasMoreAnuncios || anuncios.length >= maxAnunciosAuto) {
+            if (hasMoreAnuncios && anuncios.length >= maxAnunciosAuto) {
+                // mantemos hasMoreAnuncios como está; apenas paramos por teto local
+            }
+            return;
+        }
 
+        loadingAnunciosRef.current = true;
         try {
             const res = await fetch(
                 `/api/homePageAds?offset=${offsetAnuncios}&limit=${batchSize}`
             );
             if (!res.ok) throw new Error("Erro ao carregar anúncios");
+
             const data: AnuncioCardProps[] = await res.json();
 
-            if (data.length === 0) {
+            if (!data || data.length === 0) {
                 setHasMoreAnuncios(false);
                 return;
             }
@@ -118,8 +132,10 @@ export default function HomePage() {
         } catch (err) {
             console.error("Erro ao carregar anúncios incremental:", err);
             setHasMoreAnuncios(false);
+        } finally {
+            loadingAnunciosRef.current = false;
         }
-    }, [offsetAnuncios, hasMoreAnuncios]);
+    }, [hasMoreAnuncios, anuncios.length, offsetAnuncios]);
 
     const loadMoreNoticias = useCallback(async () => {
         if (!hasMore || ultimasNoticias.length >= maxNoticias) {
@@ -174,21 +190,18 @@ export default function HomePage() {
         };
     }, [loadMoreNoticias]);
 
+
+    // Flags de concorrência para impedir múltiplas requisições simultâneas
+    const loadingNoticiasRef = useRef(false);
     useEffect(() => {
-        if (!loaderAnunciosRef.current) return;
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries[0].isIntersecting) {
-                    loadMoreAnuncios();
-                }
-            },
-            { threshold: 1 }
-        );
-
-        observer.observe(loaderAnunciosRef.current);
-        return () => observer.disconnect();
-    }, [loadMoreAnuncios]);
+        if (
+            hasMoreAnuncios &&
+            anuncios.length < maxAnunciosAuto &&
+            !loadingAnunciosRef.current
+        ) {
+            loadMoreAnuncios();
+        }
+    }, [hasMoreAnuncios, anuncios.length, loadMoreAnuncios]);
 
     useEffect(() => {
         loadMoreAnuncios();
@@ -196,17 +209,31 @@ export default function HomePage() {
 
     return (
         <div className="w-[90%] px-4 py-12 mb-[80] justify-self-center items-center gap-4 space-y-12">
-            {/* {anuncios.length > 0 && <AdSliderFull anuncioCardProps={anuncios} />} */}
             <div className="flex items-center w-full flex-col">
                 <a href="/doacoes">
                     <button className="text-3xl font-bold text-blue-900  items-center cursor-pointer bg-slate-50 rounded-md p-2 drop-shadow-slate-950 shadow-md">
-                        Deseja contribuir com o Instituto Brazil Just? Clique aqui e faça sua doação
+                        Deseja contribuir para um mundo melhor? Clique aqui e faça sua doação
                     </button>
                 </a>
             </div>
+
             <section>
-                <ProjetoCarouselPrime projetos={projetos} />
+                <CarrouselPrime item={projetos} />
             </section>
+            <section>
+                <CarrouselPrime
+                    item={anuncios.map((a) => ({
+                        item: {
+                            titulo: a.anuncio?.titulo ?? "Colaborador",
+                            href: a.anuncio?.href ?? "#",
+                            imagem: a.anuncio?.imagem ?? "/placeholder.jpg",
+                        },
+                        titulo: "Colaboradores",
+                        style: "object-contain"
+                    }))}
+                />
+            </section>
+
 
             <section>
                 <h1 className="text-3xl font-bold text-blue-800 mb-4">Últimas notícias</h1>

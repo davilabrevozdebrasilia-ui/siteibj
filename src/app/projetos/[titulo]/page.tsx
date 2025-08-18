@@ -3,7 +3,8 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useParams } from "next/navigation";
 import HTMLFlipBook from "react-pageflip";
-import { Maximize, X } from "lucide-react";
+import { Maximize, X, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
+
 
 type Imagem = {
     id: number;
@@ -28,29 +29,42 @@ export default function ProjetoPage() {
     const [tituloCorrigido, setTituloCorrigido] = useState("Título corrigido");
     const [bannerUrl, setBannerUrl] = useState("/logo.jpg");
 
-    // Carrega total de páginas
     useEffect(() => {
         fetch(`/api/projetos/${titulo}?count=true`)
             .then((res) => res.json())
             .then((data) => setTotalPaginas(data.total));
     }, [titulo]);
 
-    // Carrega todas as imagens baseado no total
     useEffect(() => {
-        const carregarTodas = async () => {
-            const res = await fetch(`/api/projetos/${titulo}?page=0&limit=${totalPaginas}`);
-            const data: Imagem[] = await res.json();
-            setImagens(data);
+        if (totalPaginas === 0) return;
+
+        const carregarEmBlocos = async () => {
+            let pagina = 0;
+            const bloco = 1;
+
+            while (pagina < totalPaginas) {
+                const res = await fetch(`/api/projetos/${titulo}?page=${pagina}&limit=${bloco}`);
+                const data: Imagem[] = await res.json();
+
+                setImagens((prev) => [...prev, ...data]);
+
+                pagina++; // incrementa de acordo com o tamanho do bloco
+                await new Promise((resolve) => setTimeout(resolve, 50));
+            }
+
+
         };
-        if (totalPaginas > 0) carregarTodas();
+
+        carregarEmBlocos();
     }, [totalPaginas, titulo]);
 
-    // Atualiza input quando páginaAtual muda externamente
+
+
+
     useEffect(() => {
         setPaginaInput(paginaAtual + 1);
     }, [paginaAtual]);
 
-    // Detecta se é mobile para ajustar visualização
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 1600);
@@ -60,7 +74,6 @@ export default function ProjetoPage() {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    // Scroll no mobile para mudar páginaAtual
     useEffect(() => {
         if (!isMobile) return;
         const handleScroll = () => {
@@ -95,7 +108,6 @@ export default function ProjetoPage() {
         }
     };
 
-    // Título, descrição e banner por projeto
     const tituloMap = {
         "lacos-de-inclusao": {
             descricao: "Respeito à Neurodiversidade, Amor à Inclusão",
@@ -140,7 +152,7 @@ export default function ProjetoPage() {
             return (
                 <div
                     ref={scrollRef}
-                    className="flex flex-col gap-4 w-full  overflow-y-auto px-2"
+                    className="flex flex-col gap-4 w-full min-h-40 overflow-y-auto px-2"
                 >
                     {imagens.map((img) => (
                         <div
@@ -188,7 +200,7 @@ export default function ProjetoPage() {
                 swipeDistance={0}
                 showPageCorners={false}
                 disableFlipByClick={false} style={undefined}         >
-                {imagens.map((img) => (
+                {imagens.map((img, index) => (
                     <div
                         key={img.id}
                         className="flex items-center justify-center bg-slate-200 w-full h-full rounded relative"
@@ -199,9 +211,21 @@ export default function ProjetoPage() {
                             loading="lazy"
                             className="object-contain cursor-pointer max-w-full max-h-full"
                         />
-                        <p className="text-center text-white absolute bottom-0 bg-black/30 w-full p-2">
-                            {img.titulo}
-                        </p>
+                        {!isMobile && (
+                            <>
+                                {index % 2 === 0 && index < imagens.length - 1 && (
+                                    <div className="absolute bottom-4 left-4 text-white text-2xl animate-bounce">
+                                        👈
+                                    </div>
+                                )}
+
+                                {index % 2 === 1 && index > 0 && (
+                                    <div className="absolute bottom-4 right-4 text-white text-2xl animate-bounce">
+                                        👉
+                                    </div>
+                                )}
+                            </>
+                        )}
                     </div>
                 ))}
             </HTMLFlipBook>
@@ -210,7 +234,6 @@ export default function ProjetoPage() {
 
     return (
         <main className="min-h-screen mx-12 py-12 mb-[80px] px-4 text-blue-900 flex flex-col gap-8">
-            {/* Descrição e banner */}
             <div className="text-center">
                 <img
                     src={bannerUrl}
@@ -221,14 +244,12 @@ export default function ProjetoPage() {
                 <p className="text-base sm:text-lg text-gray-600 mt-2">{descricao}</p>
             </div>
 
-            {/* Visualização normal */}
             {!fullscreenAtivo && (
-                <section className="flex flex-col items-center w-full max-w-[95%] max-h-[80vh] relative bg-white/15 rounded-lg shadow-lg drop-shadow-slate-900 py-4 px-6 mx-auto">
+                <section className="flex flex-col items-center w-full max-w-[95%] max-h-[100vh] relative bg-white/15 rounded-lg shadow-lg drop-shadow-slate-900 py-4 px-6 mx-auto">
                     <p className="text-3xl font-bold text-blue-900 mb-4 text-center">
                         Conheça mais sobre o projeto {tituloCorrigido} através da coleção abaixo:
                     </p>
 
-                    {/* Botão normal em mobile, absoluto só em sm+ */}
                     <button
                         onClick={() => {
                             setFullscreenAtivo(true);
@@ -242,7 +263,39 @@ export default function ProjetoPage() {
 
                     {renderFlipBook()}
 
-                    {/* Contador */}
+                    {!isMobile && (
+                        <div className="flex flex-wrap justify-center items-center gap-2 mt-2 w-full mx-auto">
+                            <button
+                                onClick={() => irPara(0)}
+                                className="bg-blue-900 hover:bg-blue-600 rounded text-white px-3 py-1 font-bold flex items-center gap-1 cursor-pointer"
+                            >
+                                <ChevronsLeft size={18} />
+                                Página 1
+                            </button>
+                            <button
+                                onClick={() => virarPagina("anterior")}
+                                className="bg-blue-900 hover:bg-blue-600 rounded text-white px-3 py-1 font-bold flex items-center gap-1 cursor-pointer"
+                            >
+                                <ChevronLeft size={18} />
+                                Página Anterior
+                            </button>
+                            <button
+                                onClick={() => virarPagina("proxima")}
+                                className="bg-blue-900 hover:bg-blue-600 rounded text-white px-3 py-1 font-bold flex items-center gap-1 cursor-pointer"
+                            >
+                                Próxima Página
+                                <ChevronRight size={18} />
+                            </button>
+                            <button
+                                onClick={() => irPara(totalPaginas - 1)}
+                                className="bg-blue-900 hover:bg-blue-600 rounded text-white px-3 py-1 font-bold flex items-center gap-1 cursor-pointer"
+                            >
+                                Página {totalPaginas}
+                                <ChevronsRight size={18} />
+                            </button>
+                        </div>
+
+                    )}
                     <span className="text-slate-900 font-semibold my-2 select-none">
                         Página {paginaAtual + 1} de {totalPaginas}
                     </span>
@@ -259,7 +312,7 @@ export default function ProjetoPage() {
                             onKeyDown={(e) => {
                                 if (e.key === "Enter") irPara(paginaInput - 1);
                             }}
-                            className="w-20 px-2 rounded bg-slate-600 text-white shadow-md"
+                            className="w-20 px-2 rounded bg-slate-200 text-slate-900 border-slate-900 border-2"
                         />
                     </div>
 
@@ -291,8 +344,39 @@ export default function ProjetoPage() {
                     <div className="flex-1 flex items-center justify-center w-full  ">
                         {renderFlipBook()}
                     </div>
+                    {!isMobile && (
+                        <div className="flex flex-wrap justify-center items-center gap-2 mt-2 w-full mx-auto">
+                            <button
+                                onClick={() => irPara(0)}
+                                className="bg-blue-900 hover:bg-blue-600 rounded text-white px-3 py-1 font-bold flex items-center gap-1 cursor-pointer"
+                            >
+                                <ChevronsLeft size={18} />
+                                Página 1
+                            </button>
+                            <button
+                                onClick={() => virarPagina("anterior")}
+                                className="bg-blue-900 hover:bg-blue-600 rounded text-white px-3 py-1 font-bold flex items-center gap-1 cursor-pointer"
+                            >
+                                <ChevronLeft size={18} />
+                                Página Anterior
+                            </button>
+                            <button
+                                onClick={() => virarPagina("proxima")}
+                                className="bg-blue-900 hover:bg-blue-600 rounded text-white px-3 py-1 font-bold flex items-center gap-1 cursor-pointer"
+                            >
+                                Próxima Página
+                                <ChevronRight size={18} />
+                            </button>
+                            <button
+                                onClick={() => irPara(totalPaginas - 1)}
+                                className="bg-blue-900 hover:bg-blue-600 rounded text-white px-3 py-1 font-bold flex items-center gap-1 cursor-pointer"
+                            >
+                                Página {totalPaginas}
+                                <ChevronsRight size={18} />
+                            </button>
+                        </div>
 
-                    {/* Contador */}
+                    )}
                     <div className="text-white font-semibold mt-4 select-none">
                         Página {paginaAtual + 1} de {totalPaginas}
                     </div>
@@ -308,38 +392,10 @@ export default function ProjetoPage() {
                             onKeyDown={(e) => {
                                 if (e.key === "Enter") irPara(paginaInput - 1);
                             }}
-                            className="w-20 px-2 rounded bg-slate-600 text-white shadow-md"
+                            className="w-20 px-2 rounded bg-slate-600 text-white shadow-md border-slate-200 border-2"
                         />
                     </div>
-                    {/* Navegação e input para ir a página fullscreen */}
-                    {!isMobile && (
-                        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 mt-4 w-full mx-auto">
-                            <button
-                                onClick={() => irPara(0)}
-                                className="bg-slate-200 text-blue-900 font-bold px-4 py-2 rounded hover:bg-slate-400"
-                            >
-                                « Página 1
-                            </button>
-                            <button
-                                onClick={() => virarPagina("anterior")}
-                                className="bg-slate-200 text-blue-900 font-bold px-4 py-2 rounded hover:bg-slate-400"
-                            >
-                                ‹ Página Anterior
-                            </button>
-                            <button
-                                onClick={() => virarPagina("proxima")}
-                                className="bg-slate-200 text-blue-900 font-bold px-4 py-2 rounded hover:bg-slate-400"
-                            >
-                                Próxima Página ›
-                            </button>
-                            <button
-                                onClick={() => irPara(totalPaginas - 1)}
-                                className="bg-slate-200 text-blue-900 font-bold px-4 py-2 rounded hover:bg-slate-400"
-                            >
-                                Página {totalPaginas} »
-                            </button>
-                        </div>
-                    )}
+
                 </div>
             )}
 
