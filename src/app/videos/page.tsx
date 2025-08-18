@@ -26,9 +26,7 @@ function LazyVideo({ src, titulo }: { src: string; titulo: string }) {
             { threshold: 0.1 }
         );
 
-        if (videoRef.current) {
-            observer.observe(videoRef.current);
-        }
+        if (videoRef.current) observer.observe(videoRef.current);
 
         return () => observer.disconnect();
     }, []);
@@ -47,20 +45,19 @@ function LazyVideo({ src, titulo }: { src: string; titulo: string }) {
 }
 
 export default function PaginaVideos() {
-    const ITEMS_PER_PAGE = 12;
-
+    const ITEMS_PER_PAGE = 1;
     const [videos, setVideos] = useState<Video[]>([]);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [modalVideo, setModalVideo] = useState<Video | null>(null);
+    const loaderRef = useRef<HTMLDivElement | null>(null);
 
     const fetchSingleVideo = async (index: number) => {
         try {
             const res = await fetch(`/api/videos?page=${index}&limit=1`);
             const json = await res.json();
-            const novoVideo = json.data[0];
-            return novoVideo || null;
+            return json.data[0] || null;
         } catch {
             return null;
         }
@@ -72,6 +69,7 @@ export default function PaginaVideos() {
             const video = await fetchSingleVideo(startingIndex + i);
             if (video) {
                 setVideos((prev) => [...prev, video]);
+                await new Promise((resolve) => requestAnimationFrame(resolve));
             } else {
                 setHasMore(false);
                 break;
@@ -84,12 +82,25 @@ export default function PaginaVideos() {
         fetchBatch(1);
     }, []);
 
-    const handleCarregarMais = () => {
-        if (loading || !hasMore) return;
-        const nextIndex = page * ITEMS_PER_PAGE + 1;
-        setPage((prev) => prev + 1);
-        fetchBatch(nextIndex);
-    };
+    useEffect(() => {
+        if (!hasMore) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting && !loading) {
+                        const nextIndex = page * ITEMS_PER_PAGE + 1;
+                        setPage((prev) => prev + 1);
+                        fetchBatch(nextIndex);
+                    }
+                });
+            },
+            { rootMargin: "200px" }
+        );
+
+        if (loaderRef.current) observer.observe(loaderRef.current);
+        return () => observer.disconnect();
+    }, [hasMore, loading, page]);
 
     const emptySlots = hasMore
         ? 0
@@ -98,7 +109,7 @@ export default function PaginaVideos() {
     const closeModal = () => setModalVideo(null);
 
     return (
-        <div className="w-[95%] mx-auto  py-12 mb-[80] justify-self-center items-center gap-4 px-4">
+        <div className="w-[95%] mx-auto py-12 mb-[80] justify-self-center items-center gap-4 px-4">
             <h1 className="text-2xl font-bold mb-4 text-blue-900">Vídeos</h1>
 
             <div className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -124,15 +135,9 @@ export default function PaginaVideos() {
                 ))}
             </div>
 
-            {hasMore && (
-                <button
-                    className="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
-                    onClick={handleCarregarMais}
-                    disabled={loading}
-                >
-                    {loading ? "Carregando..." : "Carregar mais"}
-                </button>
-            )}
+            <div ref={loaderRef} className="h-10 flex justify-center items-center mt-4">
+                {loading && <p className="text-gray-500">Carregando...</p>}
+            </div>
 
             {modalVideo && (
                 <div
