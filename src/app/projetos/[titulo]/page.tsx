@@ -116,23 +116,28 @@ export default function ProjetoPage() {
         },
         "mulheres-belas": {
             descricao: "Mulheres Fortes, Futuros Brilhantes",
-            tituloCorrigido: "MULHERES BELAS",
+            tituloCorrigido: "Mulheres Belas",
             bannerUrl: "/projetos/mulheres_belas.jpg",
         },
         "visao-para-todos": {
             descricao: "Devolvendo Olhares, Renovando Esperanças",
-            tituloCorrigido: "VISÃO PARA TODOS",
+            tituloCorrigido: "Visão Para Todos",
             bannerUrl: "/projetos/visao_para_todos.png",
         },
         "meninas-luz": {
             descricao: "Protagonistas da Própria Vida",
-            tituloCorrigido: "MENINAS LUZ",
+            tituloCorrigido: "Meninas Luz",
             bannerUrl: "/projetos/meninas_luz.jpg",
         },
         "esporte-e-vida": {
             descricao: "Transformando vidas através do esporte",
-            tituloCorrigido: "ESPORTE É VIDA",
+            tituloCorrigido: "Esporte é Vida",
             bannerUrl: "/projetos/esporte_e_vida.jpg",
+        },
+        "acoes-comunitarias": {
+            descricao: "Cada ato de bondade importa",
+            tituloCorrigido: "Ações Comunitárias",
+            bannerUrl: "/projetos/acoes_comunitarias.jpg",
         },
     };
 
