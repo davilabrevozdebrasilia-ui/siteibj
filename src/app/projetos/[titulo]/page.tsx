@@ -209,7 +209,7 @@ export default function ProjetoPage() {
                             src={img.url}
                             alt={img.titulo}
                             loading="lazy"
-                            className="object-contain cursor-pointer max-w-full max-h-full"
+                            className="object-contain cursor-pointer max-w-full max-h-full place-self-center"
                         />
                         {!isMobile && (
                             <>

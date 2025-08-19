@@ -18,6 +18,7 @@ const projetosSubmenu = [
     { label: "Esporte é vida", href: "/projetos/esporte-e-vida" },
     { label: "Laços de Inclusao", href: "/projetos/lacos-de-inclusao" },
     { label: "Meninas Luz", href: "/projetos/meninas-luz" },
+    { label: "Ações Comunitárias", href: "/projetos/acoes-comunitarias" },
 ];
 
 const links = [
@@ -30,6 +31,7 @@ const links = [
     { label: "Contato", href: "/contato" },
     { label: "Transparência", href: "/transparencia" },
     { label: "Doações", href: "/doacoes" },
+    { label: "Seja Voluntário", href: "/voluntario" },
 ];
 
 export default function Navbar() {

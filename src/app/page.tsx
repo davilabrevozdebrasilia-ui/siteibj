@@ -76,6 +76,16 @@ export default function HomePage() {
             titulo: "Projetos",
             style: "object-cover"
         },
+        
+        {
+            item: {
+                titulo: "Ações Comunitárias",
+                href: "/projetos/acoes-comunitarias",
+                imagem: "/projetos/acoes_comunitarias.jpg",
+            },
+            titulo: "Projetos",
+            style: "object-cover"
+        },
     ];
 
     useEffect(() => {
@@ -85,6 +95,7 @@ export default function HomePage() {
             "lacos-de-inclusao",
             "esporte-e-vida",
             "meninas-luz",
+            "acoes-comunitarias"
         ];
 
         async function fetchNoticiasPorTag() {

@@ -11,6 +11,7 @@ const projetos = [
     "esporte-e-vida",
     "lacos-de-inclusao",
     "meninas-luz",
+    "acoes-comunitarias"
 ];
 
 type Props = {

@@ -183,8 +183,8 @@ export default function Transparencia() {
                 ))}
             </div>
 
-    <span className="absolute bottom-2 left-2 text-2xl">👈</span>
-    <span className="absolute bottom-2 right-2 text-2xl">👉</span>
+    <span className="absolute bottom-2 left-2 text-2xl">👉</span>
+    <span className="absolute bottom-2 right-2 text-2xl">👈</span>
             {fullscreenAtivo && docAtual && (
                 <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex flex-col items-center p-4">
                     {/* Botão fechar */}

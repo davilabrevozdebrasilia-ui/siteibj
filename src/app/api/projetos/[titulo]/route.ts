@@ -17,7 +17,6 @@ export async function GET(req: NextRequest) {
         });
         return NextResponse.json({ total });
     }
-
     const page = parseInt(url.searchParams.get("page") || "0");
     const pageSize = parseInt(url.searchParams.get("limit") || "2");
 

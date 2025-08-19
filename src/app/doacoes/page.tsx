@@ -23,9 +23,7 @@ const Doacoes = () => {
             </p>
 
             <p className="mb-4 text-gray-800">
-                Você pode ajudar de diversas formas: doando recursos financeiros, alimentos,
-                roupas, materiais escolares, óculos de grau, equipamentos esportivos e muito mais.
-                Toda doação é destinada diretamente aos nossos projetos e ações comunitárias.
+                Você pode ajudar de diversas formas: doando recursos financeiros, alimentos, roupas, móveis, utensílios para casa, brinquedos, material escolar, óculos de grau, equipamentos esportivos, informática e outros, ligue ou mande whatsapp que nossa equipe irá retirar em sua residência ou empresa.
             </p>
 
             <div className="flex  gap-4 flex-col bg-blue-50 p-6 rounded-lg shadow-md mb-6">
