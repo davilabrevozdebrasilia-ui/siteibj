@@ -220,13 +220,13 @@ export default function ProjetoPage() {
                             <>
                                 {index % 2 === 0 && index < imagens.length - 1 && (
                                     <div className="absolute bottom-4 left-4 text-white text-2xl animate-bounce">
-                                        👈
+                                        👉
                                     </div>
                                 )}
 
                                 {index % 2 === 1 && index > 0 && (
                                     <div className="absolute bottom-4 right-4 text-white text-2xl animate-bounce">
-                                        👉
+                                        👈
                                     </div>
                                 )}
                             </>
