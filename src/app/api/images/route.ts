@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import sharp from "sharp";
 
+// ------------------ POST ------------------
 export async function POST(req: NextRequest) {
     const data = await req.json();
 
@@ -34,7 +35,7 @@ export async function POST(req: NextRequest) {
                 titulo: data.titulo,
                 descricao: data.descricao || null,
                 url: optimizedBase64,
-                projetos: data.projetos
+                projetos: data.projetos,
             },
         });
 
@@ -61,9 +62,8 @@ export async function GET(req: NextRequest) {
                     id: true,
                     titulo: true,
                     descricao: true,
-                    url: true,
                     dataCriacao: true,
-                    projetos: true
+                    projetos: true,
                 },
             }),
             prisma.imagem.count(),
@@ -81,5 +81,25 @@ export async function GET(req: NextRequest) {
     } catch (error) {
         console.error("Erro ao buscar imagens:", error);
         return new NextResponse("Erro ao buscar imagens", { status: 500 });
+    }
+}
+
+export async function GET_IMAGE(req: NextRequest, id: string) {
+    try {
+        const imagem = await prisma.imagem.findUnique({
+            where: { id: Number(id) },
+            select: { url: true },
+        });
+
+        if (!imagem) return new NextResponse("Imagem não encontrada", { status: 404 });
+
+        const buffer = Buffer.from(imagem.url.split(",")[1], "base64");
+        return new NextResponse(buffer, {
+            status: 200,
+            headers: { "Content-Type": "image/webp" },
+        });
+    } catch (error) {
+        console.error("Erro ao buscar imagem:", error);
+        return new NextResponse("Erro interno", { status: 500 });
     }
 }
