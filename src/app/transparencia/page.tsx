@@ -26,12 +26,10 @@ export default function Transparencia() {
     const flipBookRef = useRef<any>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
 
-    // Atualiza input quando página mudar externamente
     useEffect(() => {
         setPaginaInput(paginaAtual + 1);
     }, [paginaAtual]);
 
-    // Contador no mobile via scroll
     useEffect(() => {
         if (!isMobile) return;
 
@@ -48,7 +46,6 @@ export default function Transparencia() {
         return () => el?.removeEventListener("scroll", handleScroll);
     }, [isMobile, docAtual]);
 
-    // Detecta tamanho da tela
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 1600);

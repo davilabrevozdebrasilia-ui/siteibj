@@ -6,8 +6,8 @@ const Footer = () => {
         <strong>CNPJ:</strong> 13.838.187/0001‑49
       </p>
       <p>
-        <strong>Endereço:</strong> Setor SGCV Lote 15 (St Garagens e Conces de Veículos), Bloco C, S/N,
-        Sala 402 e 403, Edifício Hot.Jade Home Office, Zona Industrial (Guará), Brasília‑DF, CEP 71215‑650
+        <strong>Endereço:</strong> Setor SGCV Lote 15 (St Garagens e Conceções de Veículos), Bloco C, S/N,
+        Sala 402 e 403, Edifício Hotel Jade Home Office, Zona Industrial (Guará), Brasília‑DF, CEP 71215‑650
       </p>
     </footer>
   );

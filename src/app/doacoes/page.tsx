@@ -23,7 +23,7 @@ const Doacoes = () => {
             </p>
 
             <p className="mb-4 text-gray-800">
-                Você pode ajudar de diversas formas: doando recursos financeiros, alimentos, roupas, móveis, utensílios para casa, brinquedos, material escolar, óculos de grau, equipamentos esportivos, informática e outros, ligue ou mande whatsapp que nossa equipe irá retirar em sua residência ou empresa.
+                Você pode ajudar de diversas formas: doando recursos financeiros, alimentos, roupas, móveis, utensílios para casa, brinquedos, material escolar, óculos de grau, equipamentos esportivos, informática e outros, ligue ou mande whatsapp para o telefone (61) 9981-2341, que nossa equipe irá retirar em sua residência ou empresa.
             </p>
 
             <div className="flex  gap-4 flex-col bg-blue-50 p-6 rounded-lg shadow-md mb-6">
