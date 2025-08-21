@@ -5,12 +5,12 @@ import { useParams } from "next/navigation";
 import HTMLFlipBook from "react-pageflip";
 import { Maximize, X, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 
-
 type Imagem = {
     id: number;
     titulo: string;
     descricao?: string;
     url: string;
+    projetos?: string;
 };
 
 export default function ProjetoPage() {
@@ -30,36 +30,44 @@ export default function ProjetoPage() {
     const [bannerUrl, setBannerUrl] = useState("/logo.jpg");
 
     useEffect(() => {
-        fetch(`/api/projetos/${titulo}?count=true`)
-            .then((res) => res.json())
-            .then((data) => setTotalPaginas(data.total));
+        const buscarTotal = async () => {
+            const res = await fetch(`/api/images?limit=1&page=1&projetos=${titulo}`);
+            const data = await res.json();
+            const todas = data.meta.total as number;
+            setTotalPaginas(todas);
+        };
+        buscarTotal();
     }, [titulo]);
 
     useEffect(() => {
         if (totalPaginas === 0) return;
 
         const carregarEmBlocos = async () => {
-            let pagina = 0;
+            let pagina = 1;
             const bloco = 1;
 
-            while (pagina < totalPaginas) {
-                const res = await fetch(`/api/projetos/${titulo}?page=${pagina}&limit=${bloco}`);
-                const data: Imagem[] = await res.json();
+            while (pagina <= totalPaginas) {
+                const resLista = await fetch(`/api/images?page=${pagina}&limit=${bloco}&projetos=${titulo}`);
+                const dataLista = await resLista.json();
 
-                setImagens((prev) => [...prev, ...data]);
+                for (const img of dataLista.data) {
+                    const resImg = await fetch(`/api/images/${img.id}`);
+                    const blob = await resImg.blob();
+                    const objectUrl = URL.createObjectURL(blob);
 
-                pagina++; // incrementa de acordo com o tamanho do bloco
+                    setImagens((prev) => [
+                        ...prev,
+                        { ...img, url: objectUrl }
+                    ]);
+                }
+
+                pagina++;
                 await new Promise((resolve) => setTimeout(resolve, 50));
             }
-
-
         };
 
         carregarEmBlocos();
     }, [totalPaginas, titulo]);
-
-
-
 
     useEffect(() => {
         setPaginaInput(paginaAtual + 1);
@@ -321,17 +329,12 @@ export default function ProjetoPage() {
                         />
                     </div>
 
-                    {/* Navegação */}
                     {!isMobile && (
-                        <div className="flex flex-wrap justify-center items-center gap-2 mt-2 w-full mx-auto">
-                            {/* ...botões */}
-                        </div>
+                        <div className="flex flex-wrap justify-center items-center gap-2 mt-2 w-full mx-auto"></div>
                     )}
                 </section>
-
             )}
 
-            {/* Visualização fullscreen */}
             {fullscreenAtivo && (
                 <div
                     className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex flex-col items-center p-4 overflow-y-auto"
@@ -345,7 +348,6 @@ export default function ProjetoPage() {
                         <X size={20} />
                     </button>
 
-                    {/* Container do flipbook maior e centralizado */}
                     <div className="flex-1 flex items-center justify-center w-full  ">
                         {renderFlipBook()}
                     </div>
@@ -380,7 +382,6 @@ export default function ProjetoPage() {
                                 <ChevronsRight size={18} />
                             </button>
                         </div>
-
                     )}
                     <div className="text-white font-semibold mt-4 select-none">
                         Página {paginaAtual + 1} de {totalPaginas}
@@ -400,10 +401,8 @@ export default function ProjetoPage() {
                             className="w-20 px-2 rounded bg-slate-600 text-white shadow-md border-slate-200 border-2"
                         />
                     </div>
-
                 </div>
             )}
-
         </main>
     );
 }
