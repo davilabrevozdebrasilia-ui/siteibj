@@ -83,7 +83,7 @@ export async function GET(req: NextRequest) {
                 where,
                 skip,
                 take: limit,
-                orderBy: { dataCriacao: "desc" },
+                orderBy: { dataCriacao: "asc" },
                 select: {
                     id: true,
                     titulo: true,
