@@ -1,3 +1,5 @@
+"use client"
+
 import AdSliderFull from "@/components/anuncios/adSliderFull";
 import AdCard from "@/components/anuncios/adCard";
 import { prisma } from "@/lib/prisma";
@@ -9,8 +11,8 @@ interface PageProps {
 
 export default async function NoticiaPage({ params }: PageProps) {
     const slug = (await params).slug;
-    console.log("slug",slug)
-    const idString = slug.substring(slug.lastIndexOf('-') + 1); 
+    console.log("slug", slug);
+    const idString = slug.substring(slug.lastIndexOf("-") + 1);
     const id = Number(idString);
 
     if (isNaN(id)) {
@@ -29,12 +31,29 @@ export default async function NoticiaPage({ params }: PageProps) {
         id: noticiaDb.id,
         titulo: noticiaDb.titulo,
         resumo: sanitizeHtml(noticiaDb.resumo, {
-            allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
+            allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+                "img",
+                "span",
+                "p",
+                "br",
+                "a",
+            ]),
             allowedAttributes: {
                 ...sanitizeHtml.defaults.allowedAttributes,
                 img: ["src", "alt", "width", "height"],
+                span: ["style"],
+                p: ["style", "align"],
+                a: ["href", "target", "rel", "style"],
             },
-        }),
+            allowedStyles: {
+                "*": {
+                    color: [/^#[0-9A-Fa-f]{3,6}$/, /^rgb\(/, /^rgba\(/],
+                    "font-size": [/^\d+(px|em|rem|%)$/],
+                    "text-align": [/^(left|center|right|justify)$/],
+                },
+            },
+            nonTextTags: [], // mantém tags vazias
+        }).replace(/<p><\/p>/g, "<p>&nbsp;</p>"),
         imagem: noticiaDb.imagem,
         data: new Date(noticiaDb.data).toLocaleDateString("pt-BR"),
         tags: noticiaDb.tags,
@@ -51,11 +70,7 @@ export default async function NoticiaPage({ params }: PageProps) {
     }));
 
     return (
-        <div className="max-w-[1600] mx-auto py-12 mb-[80] justify-self-center items-center space-y-8 px-4">
-            {anuncios.length > 0 && (
-                <AdSliderFull anuncioCardProps={anuncios} />
-            )}
-
+        <div className="max-w-[1600px] mx-auto py-12 mb-[80px] justify-self-center items-center space-y-8 px-4">
             <section>
                 <img
                     src={noticia.imagem}
@@ -87,8 +102,9 @@ export default async function NoticiaPage({ params }: PageProps) {
                         )}
                     </div>
 
+                    {/* CONTEÚDO FORMATADO */}
                     <div
-                        className="text-gray-700 mb-4 text-justify"
+                        className="noticia-conteudo text-gray-700 mb-4"
                         dangerouslySetInnerHTML={{
                             __html: noticia.resumo,
                         }}
@@ -113,6 +129,28 @@ export default async function NoticiaPage({ params }: PageProps) {
                     </div>
                 </div>
             </section>
+
+            <style jsx>{`
+                .noticia-conteudo p {
+                    margin-bottom: 1rem;
+                }
+                .noticia-conteudo a {
+                    color: #2563eb;
+                    text-decoration: underline;
+                }
+                .noticia-conteudo span {
+                    display: inline;
+                }
+                .noticia-conteudo p[style*="text-align:center"] {
+                    text-align: center;
+                }
+                .noticia-conteudo p[style*="text-align:right"] {
+                    text-align: right;
+                }
+                .noticia-conteudo p[style*="text-align:left"] {
+                    text-align: left;
+                }
+            `}</style>
         </div>
     );
 }

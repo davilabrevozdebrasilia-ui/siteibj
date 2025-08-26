@@ -41,10 +41,10 @@ const anuncios: AnuncioCardProps[] = anunciosDb?.length
 export default function RootLayout({ children }: { children: ReactNode }) {
     return (
         <html lang="pt-BR">
-            <body className="bg-gradient-to-b from-blue-50 via-blue-100 to-blue-50">
-                <div className={`${poppins.className}bg-gradient-to-b from-blue-50 via-blue-100 to-blue-50 text-gray-900 suppressHydrationWarning`}>
+            <body className="">
+                <div className={`${poppins.className} text-gray-900 suppressHydrationWarning`}>
                     <Navbar />
-                    <main className={`antialiased min-h-[calc(100vh-280px)] bg-gradient-to-b from-blue-50 via-blue-100 to-blue-50`}>{children}
+                    <main className={`antialiased min-h-[calc(100vh-280px)] `}>{children}
                     </main>
                     <Footer />
                     <AdFooter anuncioCardProps={anuncios} />
