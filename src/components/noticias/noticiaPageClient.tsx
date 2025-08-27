@@ -123,8 +123,7 @@ export default function NoticiaPageClient({ slug }: ClientProps) {
                         )}
                     </div>
 
-                    <div
-                        className="noticia-conteudo text-gray-700 mb-4"
+                    <div className="noticia-conteudo text-gray-700 mb-4 mx-4 sm:mx-6 md:mx-12 lg:mx-24 xl:mx-32"
                         dangerouslySetInnerHTML={{ __html: noticia.resumo }}
                     />
                 </div>
