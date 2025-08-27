@@ -76,7 +76,7 @@ export default function HomePage() {
             titulo: "Projetos",
             style: "object-cover"
         },
-        
+
         {
             item: {
                 titulo: "Ações Comunitárias",
@@ -119,7 +119,6 @@ export default function HomePage() {
         if (loadingAnunciosRef.current) return;
         if (!hasMoreAnuncios || anuncios.length >= maxAnunciosAuto) {
             if (hasMoreAnuncios && anuncios.length >= maxAnunciosAuto) {
-                // mantemos hasMoreAnuncios como está; apenas paramos por teto local
             }
             return;
         }
@@ -231,19 +230,6 @@ export default function HomePage() {
             <section>
                 <CarrouselPrime item={projetos} />
             </section>
-            <section>
-                <CarrouselPrime
-                    item={anuncios.map((a) => ({
-                        item: {
-                            titulo: a.anuncio?.titulo ?? "Colaborador",
-                            href: a.anuncio?.href ?? "#",
-                            imagem: a.anuncio?.imagem ?? "/placeholder.jpg",
-                        },
-                        titulo: "Colaboradores",
-                        style: "object-contain"
-                    }))}
-                />
-            </section>
 
 
             <section>
@@ -284,14 +270,19 @@ export default function HomePage() {
                 ))}
             </section>
 
-
-            {(hasMoreAnuncios && hasMoreAnuncios) && (
-                <div
-                    ref={loaderAnunciosRef}
-                    className="text-center py-4 text-blue-600 font-medium cursor-pointer"
-                >
-                </div>
-            )}
+            <section>
+                <CarrouselPrime
+                    item={anuncios.map((a) => ({
+                        item: {
+                            titulo: a.anuncio?.titulo ?? "Colaborador",
+                            href: a.anuncio?.href ?? "#",
+                            imagem: a.anuncio?.imagem ?? "/placeholder.jpg",
+                        },
+                        titulo: "Colaboradores",
+                        style: "object-contain"
+                    }))}
+                />
+            </section>
         </div>
     );
 }
