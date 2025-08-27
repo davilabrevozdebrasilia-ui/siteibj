@@ -262,14 +262,6 @@ export default function HomePage() {
                 )}
             </section>
 
-            <section className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-8">
-                {anuncios.slice(0, 3).map((a) => (
-                    <LazyCardWrapper key={a.anuncio.id}>
-                        <AdCard anuncioCardProps={a} />
-                    </LazyCardWrapper>
-                ))}
-            </section>
-
             <section>
                 <CarrouselPrime
                     item={anuncios.map((a) => ({
