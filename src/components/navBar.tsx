@@ -76,18 +76,15 @@ export default function Navbar() {
                     style={{ backgroundImage: "url('/banner5.png')" }}
                 />
 
-                <div className="flex-1 h-full flex justify-end items-center">
-                    <div className="flex items-center gap-2 px-4 py-2 bg-slate-100/90 rounded-lg shadow-md mr-4">
-                        <Calendar className="w-4 h-4 text-blue-900" />
-                        <span className="sm:text-lg text-md text-blue-900 font-mono font-bold">
+                <div className="flex-1 flex justify-end items-center h-full px-4">
+                    <div className="inline-flex items-center gap-3 px-4 py-2 bg-slate-100/90 rounded-lg shadow-md">
+                        <Calendar className="w-12 h-12 text-blue-900" />
+                        <span className="sm:text-lg text-md text-blue-900 font-mono font-bold whitespace-nowrap">
                             {horaAtual}
                         </span>
                     </div>
                 </div>
             </Link>
-
-
-
 
             <div className="h-12 flex items-center lg:justify-center justify-between px-4 bg-blue-500 drop-shadow-slate-400 drop-shadow-md ">
                 <nav className="hidden lg:flex gap-4 flex-wrap justify-end relative">
