@@ -1,10 +1,10 @@
 import NoticiaPageClient from "@/components/noticias/noticiaPageClient";
 
-
 interface PageProps {
-    params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
-export default function Page({ params }: PageProps) {
-    return <NoticiaPageClient slug={params.slug} />;
+export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
+  return <NoticiaPageClient slug={slug} />;
 }
