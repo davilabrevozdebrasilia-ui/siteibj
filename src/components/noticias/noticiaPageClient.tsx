@@ -106,8 +106,9 @@ export default function NoticiaPageClient({ slug }: ClientProps) {
 
                     <div className="flex flex-col items-center gap-2">
                         <p className="text-sm text-gray-500">
-                            Publicado em {noticia.data}
+                            Publicado em {new Date(noticia.data).toLocaleDateString("pt-BR")}
                         </p>
+
 
                         {noticia.tags && noticia.tags.length > 0 && (
                             <div className="flex flex-wrap justify-center gap-2">
