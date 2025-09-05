@@ -5,9 +5,9 @@ export function NoticiaCardTextRight({ noticiaCardProps }: { noticiaCardProps: N
     return (
         <a
             href={noticiaCardProps.noticia.href}
-            className="flex bg-white rounded-lg shadow border border-slate-100 overflow-hidden hover:shadow-lg transition-transform duration-200 hover:-translate-y-1"
+            className="flex bg-white  shadow border border-slate-100 overflow-hidden hover:shadow-lg transition-transform duration-200 hover:-translate-y-1"
         >
-            <div className="w-1/3 min-w-[150px] h-auto">
+            <div className="w-1/3 min-w-[100px] h-auto">
                 <img
                     src={noticiaCardProps.noticia.imagem}
                     alt={noticiaCardProps.noticia.titulo}

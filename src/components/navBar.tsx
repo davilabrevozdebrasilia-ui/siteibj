@@ -36,18 +36,10 @@ const links = [
 
 export default function Navbar() {
     const pathname = usePathname();
-    const [horaAtual, setHoraAtual] = useState<string>(() => {
-        const agora = new Date();
-        const hora = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-        const data = agora.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        return `${data} - ${hora}`;
-    });
-
     const [projetosAberto, setProjetosAberto] = useState(false);
     const [projetosMobileAberto, setProjetosMobileAberto] = useState(false);
     const projetosRef = useRef<HTMLDivElement>(null);
 
-    // Fecha o submenu de projetos se clicar fora
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
@@ -68,7 +60,7 @@ export default function Navbar() {
         <header className="sticky top-0 z-50 bg-white border-b">
             <Link
                 href="/"
-                className="relative flex items-center w-full h-32 md:h-40 lg:h-48 rounded-xl shadow-md overflow-hidden bg-cover bg-center"
+                className="relative flex items-center w-full h-32 md:h-40 lg:h-48 rounded-xl shadow-md overflow-hidden bg-contain bg-center"
                 style={{ backgroundImage: "url('/banner6.png')" }}
             >
                 <div
@@ -76,18 +68,11 @@ export default function Navbar() {
                     style={{ backgroundImage: "url('/banner5.png')" }}
                 />
 
-                <div className="flex-1 flex justify-end items-center h-full px-4">
-                    <div className="inline-flex items-center gap-3 px-4 py-2 bg-slate-100/90 rounded-lg shadow-md">
-                        <Calendar className="w-12 h-12 text-blue-900" />
-                        <span className="sm:text-lg text-md text-blue-900 font-mono font-bold whitespace-nowrap">
-                            {horaAtual}
-                        </span>
-                    </div>
-                </div>
             </Link>
 
-            <div className="h-12 flex items-center lg:justify-center justify-between px-4 bg-blue-500 drop-shadow-slate-400 drop-shadow-md ">
-                <nav className="hidden lg:flex gap-4 flex-wrap justify-end relative">
+            <div className="h-12 flex items-center lg:justify-center justify-between px-4 
+    bg-blue-700 
+    shadow-md border-y-1 border-slate-600">    <nav className="hidden lg:flex gap-4 flex-wrap justify-end relative">
                     {links.map((link) => {
                         if (link.label === "Projetos") {
                             return (
@@ -100,7 +85,7 @@ export default function Navbar() {
                                     >
                                         Projetos <ChevronDown className="w-4 h-4" />
                                     </span>
-                                    <div className="absolute top-full left-0 bg-white shadow-lg rounded text-blue-900 z-50 hidden group-hover:block">
+                                    <div className="absolute top-full left-0 bg-white shadow-lg rounded text-blue-950 z-50 hidden group-hover:block">
                                         {projetosSubmenu.map((proj) => (
                                             <Link
                                                 key={proj.href}
@@ -135,12 +120,12 @@ export default function Navbar() {
                     <Sheet>
                         <SheetTrigger asChild>
                             <Button variant="ghost" size="icon">
-                                <Menu className="w-6 h-6 text-blue-900" />
+                                <Menu className="w-6 h-6 text-blue-950" />
                             </Button>
                         </SheetTrigger>
                         <SheetContent side="right" className="w-64 p-4 bg-blue-50">
                             <DialogTitle>
-                                <h2 className="text-lg font-bold mb-4 text-blue-900">Menu</h2>
+                                <h2 className="text-lg font-bold mb-4 text-blue-950">Menu</h2>
                             </DialogTitle>
                             <div className="flex flex-col space-y-3 mt-6">
                                 {links.map((link) => {
@@ -178,7 +163,7 @@ export default function Navbar() {
                                             key={link.href}
                                             href={link.href}
                                             className={`text-base font-medium py-1 px-2 rounded hover:underline ${pathname === link.href
-                                                ? "text-blue-900 font-bold"
+                                                ? "text-blue-950 font-bold"
                                                 : "text-blue-700"
                                                 }`}
                                         >

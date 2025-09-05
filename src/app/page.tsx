@@ -219,50 +219,67 @@ export default function HomePage() {
 
     return (
         <div className="w-[90%] px-4 py-12 mb-[80] justify-self-center items-center gap-4 space-y-12">
+
             <div className="flex items-center w-full flex-col">
                 <a href="/doacoes">
-                    <button className="text-3xl font-bold text-blue-900  items-center cursor-pointer bg-slate-50 rounded-md p-2 drop-shadow-slate-950 shadow-md">
+                    <button className="text-3xl font-bold text-blue-900  items-center cursor-pointer  rounded-md p-2  ">
                         Deseja contribuir para um mundo melhor? Clique aqui e faça sua doação
                     </button>
                 </a>
             </div>
 
-            <section>
-                <CarrouselPrime item={projetos} />
-            </section>
+            <section className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <aside className="lg:col-span-1">
+                    <img
+                        src="/banner7.png"
+                        alt="Banner de destaque"
+                        className="w-full h-full min-h-80 object-cover lg:object-fill rounded-md shadow-md"
+                    />
+                </aside>
 
-
-            <section>
-                <h1 className="text-3xl font-bold text-blue-800 mb-4">Últimas notícias</h1>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                    {ultimasNoticias.map((n, i) => {
-                        if (!n?.noticia) return null;
-                        if (i < 6)
+                <div className="lg:col-span-3 h-full ">
+                    <h1 className="text-3xl font-bold text-blue-900 mb-4 ">Últimas notícias</h1>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
+                        {ultimasNoticias.slice(0, 6).map((n) => {
+                            if (!n?.noticia) return null;
                             return (
                                 <LazyCardWrapper key={n._key}>
                                     <NoticiaCardTextRight noticiaCardProps={n} />
                                 </LazyCardWrapper>
                             );
-                        if (i < 12)
-                            return (
-                                <LazyCardWrapper key={n._key}>
-                                    <NoticiaCardOverlay noticiaCardProps={n} />
-                                </LazyCardWrapper>
-                            );
+                        })}
+                    </div>
+                </div>
+            </section>
+
+            <section className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                {ultimasNoticias.slice(6).map((n) => {
+                    if (!n?.noticia) return null;
+
+                    if (n._key && ultimasNoticias.indexOf(n) < 12) {
                         return (
                             <LazyCardWrapper key={n._key}>
-                                <NoticiaCard noticiaCardProps={n} />
+                                <NoticiaCardOverlay noticiaCardProps={n} />
                             </LazyCardWrapper>
                         );
-                    })}
-                </div>
+                    }
+
+                    return (
+                        <LazyCardWrapper key={n._key}>
+                            <NoticiaCard noticiaCardProps={n} />
+                        </LazyCardWrapper>
+                    );
+                })}
+
                 {hasMore && (
-                    <div ref={loaderRef} className="text-center py-10 text-blue-600 font-medium">
-                    </div>
+                    <div ref={loaderRef} className="text-center py-10 text-blue-600 font-medium"></div>
                 )}
             </section>
 
-            <section>
+            <section >
+                <section className="mb-6">
+                    <CarrouselPrime item={projetos} />
+                </section >
                 <CarrouselPrime
                     item={anuncios.map((a) => ({
                         item: {
