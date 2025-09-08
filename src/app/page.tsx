@@ -249,66 +249,11 @@ export default function HomePage() {
                         autoPlay
                         muted
                         playsInline
-                        className="block lg:hidden w-full h-full object-fill"
+                        className="block lg:hidden w-full h-full object-100"
                     />
                 </div>
             </section>
-            <div className="relative bg-gradient-to-r from-blue-900/90 via-blue-950/90 to-indigo-900/90  drop-shadow-2xl overflow-hidden py-24">
-                {/* Linhas diagonais e shapes */}
-                <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                    <div className="absolute inset-0 bg-diagonal-lines animate-diagonalScroll"></div>
 
-                    <div className="absolute w-72 h-72 bg-blue-800 rounded-full opacity-20 -top-16 -left-16 blur-3xl animate-pulseSlow"></div>
-                    <div className="absolute w-96 h-96 bg-indigo-800 rounded-full opacity-10 -bottom-20 -right-24 blur-3xl animate-pulseSlow"></div>
-                </div>
-
-                <div className="relative w-[90%] mx-auto p-8">
-                    <section className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                        {/* Banner à esquerda */}
-                        <aside className="lg:col-span-1">
-                            <img
-                                src="/banner7.png"
-                                alt="Banner de destaque"
-                                className="w-full h-full min-h-80 object-cover lg:object-fill rounded-md shadow-md"
-                            />
-                        </aside>
-
-                        {/* Fitas à direita */}
-                        <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-24 ">
-                            {/* Fita única no mobile, duas no desktop */}
-                            <div className="relative h-100 overflow-hidden rounded-md shadow-lg p-4 bg-white/10 backdrop-blur-md border border-white/20">
-                                <div className="animate-scroll-up flex flex-col gap-4">
-                                    {/* No mobile, renderiza todas as imagens juntas */}
-                                    {[...imagesUp, ...imagesDown, ...imagesUp, ...imagesDown].map((src, idx) => (
-                                        <img
-                                            key={`combined-${idx}`}
-                                            src={src}
-                                            alt={`img-${idx}`}
-                                            className="w-full h-40 object-cover rounded-md shadow-md"
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Apenas desktop: fita rolando para baixo */}
-                            <div className="hidden lg:block relative h-100 overflow-hidden rounded-md shadow-lg p-4 bg-white/10 backdrop-blur-md border border-white/20 mt-8 lg:mt-0">
-                                <div className="animate-scroll-down flex flex-col gap-4">
-                                    {[...imagesDown, ...imagesDown].map((src, idx) => (
-                                        <img
-                                            key={`down-${idx}`}
-                                            src={src}
-                                            alt={`img-down-${idx}`}
-                                            className="w-full h-40 object-cover rounded-md shadow-md"
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
-
-            </div>
             <section className="w-[90%] mx-auto my-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 {/* Coluna esquerda - imagem */}
                 <motion.div
@@ -375,23 +320,60 @@ export default function HomePage() {
                     </Link>
                 </motion.div>
             </section>
+            <div className="relative bg-gradient-to-r from-blue-900/90 via-blue-950/90 to-indigo-900/90  drop-shadow-2xl overflow-hidden py-24">
+                {/* Linhas diagonais e shapes */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                    <div className="absolute inset-0 bg-diagonal-lines animate-diagonalScroll"></div>
+
+                    <div className="absolute w-72 h-72 bg-blue-800 rounded-full opacity-20 -top-16 -left-16 blur-3xl animate-pulseSlow"></div>
+                    <div className="absolute w-96 h-96 bg-indigo-800 rounded-full opacity-10 -bottom-20 -right-24 blur-3xl animate-pulseSlow"></div>
+                </div>
+
+                <div className="relative w-[90%] mx-auto p-8">
+                    <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-3  lg:gap-24 ">
+                            {/* Fita única no mobile, duas no desktop */}
+                            <aside className="lg:col-span-1">
+                                <img
+                                    src="/banner7.png"
+                                    alt="Banner de destaque"
+                                    className="w-full h-100 min-h-80 object-fill  rounded-md shadow-md"
+                                />
+                            </aside>
+                            <div className="relative h-100 overflow-hidden rounded-md shadow-lg p-4 bg-white/10 backdrop-blur-md border border-white/20">
+                                <div className="animate-scroll-up flex flex-col gap-4">
+                                    {/* No mobile, renderiza todas as imagens juntas */}
+                                    {[...imagesUp, ...imagesDown, ...imagesUp, ...imagesDown].map((src, idx) => (
+                                        <img
+                                            key={`combined-${idx}`}
+                                            src={src}
+                                            alt={`img-${idx}`}
+                                            className="w-full h-40 object-cover rounded-md shadow-md"
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Apenas desktop: fita rolando para baixo */}
+                            <div className="hidden lg:block relative h-100 overflow-hidden rounded-md shadow-lg p-4 bg-white/10 backdrop-blur-md border border-white/20 mt-8 lg:mt-0">
+                                <div className="animate-scroll-down flex flex-col gap-4">
+                                    {[...imagesDown, ...imagesDown].map((src, idx) => (
+                                        <img
+                                            key={`down-${idx}`}
+                                            src={src}
+                                            alt={`img-down-${idx}`}
+                                            className="w-full h-40 object-cover rounded-md shadow-md"
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
 
 
+            </div>
 
-
-            <section>
-                <CarrouselPrime
-                    item={anuncios.map((a) => ({
-                        item: {
-                            titulo: a.anuncio?.titulo ?? "Colaborador",
-                            href: a.anuncio?.href ?? "#",
-                            imagem: a.anuncio?.imagem ?? "/placeholder.jpg",
-                        },
-                        titulo: "Colaboradores",
-                        style: "object-contain",
-                    }))}
-                />
-            </section>
         </div>
     );
 

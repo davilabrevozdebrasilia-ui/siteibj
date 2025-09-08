@@ -65,7 +65,11 @@ export default function Navbar() {
             >
                 {/* Logo à esquerda */}
                 <Link href="/" className="flex items-center h-full">
-                    
+                    <img
+                        src="/logo6.png"
+                        alt="Logo"
+                        className="h-full w-auto object-contain"
+                    />
                 </Link>
 
                 {/* Menu Desktop */}
