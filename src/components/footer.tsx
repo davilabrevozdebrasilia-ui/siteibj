@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="bottom-0  w-full bg-blue-700 text-white py-6 px-4 text-center space-y-2 h-80 sm:h-56">
+    <footer className="bottom-0  w-full bg-blue-950 text-white py-6 px-4 text-center space-y-2 h-80 sm:h-56">
       <p className="font-semibold">&copy; {new Date().getFullYear()} Instituto Brazil Just (IBJ). Todos os direitos reservados.</p>
       <p>
         <strong>CNPJ:</strong> 13.838.187/0001‑49

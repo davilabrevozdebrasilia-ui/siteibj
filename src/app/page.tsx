@@ -10,7 +10,22 @@ import { NoticiaCardOverlay } from "@/components/noticias/NoticiaCardOverlay";
 import NoticiaCard from "@/components/noticias/noticiaCard";
 import { CarrousselCardProps } from "@/types/projetos";
 import CarrouselPrime from "@/components/projetos/itemsCarroussel";
+import { motion } from "framer-motion";
+import Link from "next/link";
 
+const imagesUp = [
+    "/strips/strip1.jpg",
+    "/strips/strip2.jpg",
+    "/strips/strip3.jpg",
+    "/strips/strip4.jpg",
+];
+
+const imagesDown = [
+    "/strips/strip5.jpg",
+    "/strips/strip6.jpg",
+    "/strips/strip7.jpg",
+    "/strips/strip8.jpg",
+];
 type NoticiaWithKey = NoticiaCardProps & { _key: string };
 
 export default function HomePage() {
@@ -218,68 +233,153 @@ export default function HomePage() {
     }, []);
 
     return (
-        <div className="w-[90%] px-4 py-12 mb-[80] justify-self-center items-center gap-4 space-y-12">
-
-            <div className="flex items-center w-full flex-col">
-                <a href="/doacoes">
-                    <button className="text-3xl font-bold text-blue-900  items-center cursor-pointer  rounded-md p-2  ">
-                        Deseja contribuir para um mundo melhor? Clique aqui e faça sua doação
-                    </button>
-                </a>
-            </div>
-
-            <section className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                <aside className="lg:col-span-1">
-                    <img
-                        src="/banner7.png"
-                        alt="Banner de destaque"
-                        className="w-full h-full min-h-80 object-cover lg:object-fill rounded-md shadow-md"
+        <div className="w-[100%] mb-[80] justify-self-center items-center gap-4 ">
+            <section>
+                <div className="w-full h-full overflow-hidden  shadow-md ">
+                    <video
+                        src="/3.mp4"
+                        autoPlay
+                        muted
+                        playsInline
+                        className="hidden lg:block w-full h-full object-fill"
                     />
-                </aside>
 
-                <div className="lg:col-span-3 h-full ">
-                    <h1 className="text-3xl font-bold text-blue-900 mb-4 ">Últimas notícias</h1>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 ">
-                        {ultimasNoticias.slice(0, 6).map((n) => {
-                            if (!n?.noticia) return null;
-                            return (
-                                <LazyCardWrapper key={n._key}>
-                                    <NoticiaCardTextRight noticiaCardProps={n} />
-                                </LazyCardWrapper>
-                            );
-                        })}
-                    </div>
+                    <video
+                        src="/1.mp4"
+                        autoPlay
+                        muted
+                        playsInline
+                        className="block lg:hidden w-full h-full object-fill"
+                    />
                 </div>
             </section>
+            <div className="relative bg-gradient-to-r from-blue-900/90 via-blue-950/90 to-indigo-900/90  drop-shadow-2xl overflow-hidden py-24">
+                {/* Linhas diagonais e shapes */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                    <div className="absolute inset-0 bg-diagonal-lines animate-diagonalScroll"></div>
 
-            <section className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                {ultimasNoticias.slice(6).map((n) => {
-                    if (!n?.noticia) return null;
+                    <div className="absolute w-72 h-72 bg-blue-800 rounded-full opacity-20 -top-16 -left-16 blur-3xl animate-pulseSlow"></div>
+                    <div className="absolute w-96 h-96 bg-indigo-800 rounded-full opacity-10 -bottom-20 -right-24 blur-3xl animate-pulseSlow"></div>
+                </div>
 
-                    if (n._key && ultimasNoticias.indexOf(n) < 12) {
-                        return (
-                            <LazyCardWrapper key={n._key}>
-                                <NoticiaCardOverlay noticiaCardProps={n} />
-                            </LazyCardWrapper>
-                        );
-                    }
+                <div className="relative w-[90%] mx-auto p-8">
+                    <section className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                        {/* Banner à esquerda */}
+                        <aside className="lg:col-span-1">
+                            <img
+                                src="/banner7.png"
+                                alt="Banner de destaque"
+                                className="w-full h-full min-h-80 object-cover lg:object-fill rounded-md shadow-md"
+                            />
+                        </aside>
 
-                    return (
-                        <LazyCardWrapper key={n._key}>
-                            <NoticiaCard noticiaCardProps={n} />
-                        </LazyCardWrapper>
-                    );
-                })}
+                        {/* Fitas à direita */}
+                        <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-24 ">
+                            {/* Fita única no mobile, duas no desktop */}
+                            <div className="relative h-100 overflow-hidden rounded-md shadow-lg p-4 bg-white/10 backdrop-blur-md border border-white/20">
+                                <div className="animate-scroll-up flex flex-col gap-4">
+                                    {/* No mobile, renderiza todas as imagens juntas */}
+                                    {[...imagesUp, ...imagesDown, ...imagesUp, ...imagesDown].map((src, idx) => (
+                                        <img
+                                            key={`combined-${idx}`}
+                                            src={src}
+                                            alt={`img-${idx}`}
+                                            className="w-full h-40 object-cover rounded-md shadow-md"
+                                        />
+                                    ))}
+                                </div>
+                            </div>
 
-                {hasMore && (
-                    <div ref={loaderRef} className="text-center py-10 text-blue-600 font-medium"></div>
-                )}
+                            {/* Apenas desktop: fita rolando para baixo */}
+                            <div className="hidden lg:block relative h-100 overflow-hidden rounded-md shadow-lg p-4 bg-white/10 backdrop-blur-md border border-white/20 mt-8 lg:mt-0">
+                                <div className="animate-scroll-down flex flex-col gap-4">
+                                    {[...imagesDown, ...imagesDown].map((src, idx) => (
+                                        <img
+                                            key={`down-${idx}`}
+                                            src={src}
+                                            alt={`img-down-${idx}`}
+                                            className="w-full h-40 object-cover rounded-md shadow-md"
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+
+            </div>
+            <section className="w-[90%] mx-auto my-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                {/* Coluna esquerda - imagem */}
+                <motion.div
+                    className="w-full h-full flex justify-center"
+                    initial={{ x: -100, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.4 }}
+                    viewport={{ once: true }}
+                >
+                    <img
+                        src="/banner5.png"
+                        alt="Instituto Brazil Just"
+                        className="w-full  rounded-2xl shadow-2xl object-cover"
+                    />
+                </motion.div>
+
+                {/* Coluna direita - texto */}
+                <motion.div
+                    className="flex flex-col justify-center gap-6"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={{
+                        hidden: {},
+                        visible: { transition: { staggerChildren: 0.2 } },
+                    }}
+                >
+                    <motion.h2
+                        className="text-4xl font-bold text-blue-950"
+                        initial={{ x: 50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.4 }}
+                    >
+                        Instituto Brazil Just
+                    </motion.h2>
+
+                    <motion.p
+                        className="text-lg text-slate-700 leading-relaxed"
+                        initial={{ x: 50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                    >
+                        O Instituto Brazil Just é uma organização dedicada a promover ações sociais e educativas que impactam positivamente comunidades em todo o Brasil. Nossa missão é gerar oportunidades, inclusão e desenvolvimento sustentável para todos.
+                    </motion.p>
+
+                    <motion.p
+                        className="text-lg text-slate-700 leading-relaxed"
+                        initial={{ x: 50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                    >
+                        Atuamos em diversos projetos, incluindo educação, saúde, cultura e esportes, buscando sempre transformar vidas e construir um futuro mais justo e igualitário.
+                    </motion.p>
+
+                    <Link href="/quem-somos" passHref>
+                        <motion.button
+                            className="self-start bg-blue-950 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-cyan-700 transition-colors cursor-pointer"
+                            initial={{ y: 20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ duration: 0.6, delay: 0.6 }}
+                        >
+                            Saiba Mais
+                        </motion.button>
+                    </Link>
+                </motion.div>
             </section>
 
-            <section >
-                <section className="mb-6">
-                    <CarrouselPrime item={projetos} />
-                </section >
+
+
+
+            <section>
                 <CarrouselPrime
                     item={anuncios.map((a) => ({
                         item: {
@@ -288,11 +388,12 @@ export default function HomePage() {
                             imagem: a.anuncio?.imagem ?? "/placeholder.jpg",
                         },
                         titulo: "Colaboradores",
-                        style: "object-contain"
+                        style: "object-contain",
                     }))}
                 />
             </section>
         </div>
     );
+
 }
 

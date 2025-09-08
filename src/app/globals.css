@@ -120,3 +120,48 @@
     @apply bg-background text-foreground;
   }
 }
+/* Linhas diagonais com Tailwind */
+.bg-diagonal-lines {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px,
+    transparent 20px
+  );
+}
+
+/* Animação de rolagem diagonal */
+@keyframes diagonalScroll {
+  0% { background-position: 0 0; }
+  100% { background-position: 100px 100px; }
+}
+.animate-diagonalScroll {
+  animation: diagonalScroll 60s linear infinite;
+}
+
+/* Pulso suave das bubbles */
+@keyframes pulseSlow {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(10px) scale(1.05); }
+}
+.animate-pulseSlow {
+  animation: pulseSlow 15s ease-in-out infinite;
+}
+@keyframes scroll-up {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-600px); }
+}
+
+@keyframes scroll-down {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0%); }
+}
+
+.animate-scroll-up {
+  animation: scroll-up 30s linear infinite;
+}
+
+.animate-scroll-down {
+  animation: scroll-down 30s linear infinite;
+}
