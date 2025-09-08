@@ -369,10 +369,59 @@ export default function HomePage() {
                             </div>
                         </div>
                     </section>
+
                 </div>
 
 
+
+
             </div>
+            {/* Seção Colaboradores */}
+            <section className="relative bg-white py-24 mt-20">
+                <div className="w-[90%] mx-auto flex flex-col items-center text-center">
+                    <motion.h2
+                        className="text-4xl lg:text-5xl font-bold text-blue-950 mb-6"
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, ease: "easeOut" }}
+                        viewport={{ once: true }}
+                    >
+                        Nossos Colaboradores
+                    </motion.h2>
+
+                    <motion.p
+                        className="text-lg text-slate-600 max-w-2xl mb-12"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                        viewport={{ once: true }}
+                    >
+                        Pessoas e organizações que caminham conosco para transformar vidas e construir um futuro mais justo.
+                    </motion.p>
+
+                    <motion.div
+                        className="w-full max-w-6xl p-6 bg-white rounded-3xl shadow-xl border border-slate-200 relative"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                        viewport={{ once: true }}
+                        whileHover={{ scale: 1.02, boxShadow: "0px 10px 30px rgba(0,0,0,0.15)" }}
+                    >
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.9, delay: 0.4 }}
+                            viewport={{ once: true }}
+                        >
+                            <img
+                                src="/colaboradores.png"
+                                alt="Colaboradores do Instituto Brazil Just"
+                                className="w-full h-auto rounded-2xl shadow-md object-contain"
+                            />
+                        </motion.div>
+                    </motion.div>
+                </div>
+            </section>
 
         </div>
     );
