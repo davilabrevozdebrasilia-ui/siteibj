@@ -235,23 +235,25 @@ export default function HomePage() {
     return (
         <div className="w-[100%] mb-[80] justify-self-center items-center gap-4 ">
             <section>
-                <div className="w-full h-full overflow-hidden  shadow-md ">
-                    <video
-                        src="/3.mp4"
-                        autoPlay
-                        muted
-                        playsInline
-                        className="hidden lg:block w-full h-full object-fill"
-                    />
+                <Link href={"/doacoes"}>
+                    <div className="w-full h-full overflow-hidden  shadow-md ">
+                        <video
+                            src="/3.mp4"
+                            autoPlay
+                            muted
+                            playsInline
+                            className="hidden lg:block w-full h-full object-fill"
+                        />
 
-                    <video
-                        src="/1.mp4"
-                        autoPlay
-                        muted
-                        playsInline
-                        className="block lg:hidden w-full h-full object-100"
-                    />
-                </div>
+                        <video
+                            src="/1.mp4"
+                            autoPlay
+                            muted
+                            playsInline
+                            className="block lg:hidden w-full h-full object-100"
+                        />
+                    </div>
+                </Link>
             </section>
 
             <section className="w-[90%] mx-auto my-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
