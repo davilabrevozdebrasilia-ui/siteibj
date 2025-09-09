@@ -256,19 +256,45 @@ export default function HomePage() {
                 </Link>
             </section>
 
-            <section className="w-[90%] mx-auto my-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                {/* Coluna esquerda - imagem */}
+            {/* Seção Nossa História */}
+            <section className="w-[90%] mx-auto my-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center text-justify">
+                {/* Coluna esquerda - imagens */}
                 <motion.div
-                    className="w-full h-full flex justify-center"
+                    className="relative w-full h-full flex justify-center items-center group"
                     initial={{ x: -100, opacity: 0 }}
                     whileInView={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.4 }}
                     viewport={{ once: true }}
                 >
-                    <img
-                        src="/banner5.png"
-                        alt="Instituto Brazil Just"
-                        className="w-full  rounded-2xl shadow-2xl object-cover"
+                    {/* Background animado */}
+                    <motion.div
+                        className="absolute w-96 h-96 rounded-full bg-gradient-to-r from-blue-300/30 to-purple-300/30 blur-3xl -z-10"
+                        animate={{ x: [0, 30, -30, 0], y: [0, 20, -20, 0] }}
+                        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                    />
+
+                    {/* Imagem esquerda */}
+                    <motion.img
+                        src="/quemsomos/1.png"
+                        alt="História extra esquerda"
+                        className="w-56 h-56 rounded-full shadow-xl object-cover absolute left-10 top-10 opacity-80"
+                        whileHover={{ scale: 1.05 }}
+                    />
+
+                    {/* Imagem central */}
+                    <motion.img
+                        src="/quemsomos/2.jpg"
+                        alt="História do Instituto Brazil Just"
+                        className="w-80 h-80 rounded-full shadow-2xl object-cover z-10 transition-transform duration-500 group-hover:scale-110"
+                        whileHover={{ rotate: 2 }}
+                    />
+
+                    {/* Imagem direita */}
+                    <motion.img
+                        src="/quemsomos/3.jpg"
+                        alt="História extra direita"
+                        className="w-56 h-56 rounded-full shadow-xl object-cover absolute right-10 bottom-10 opacity-80"
+                        whileHover={{ scale: 1.05 }}
                     />
                 </motion.div>
 
@@ -289,7 +315,7 @@ export default function HomePage() {
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.4 }}
                     >
-                        Instituto Brazil Just
+                        Nossa História
                     </motion.h2>
 
                     <motion.p
@@ -298,30 +324,155 @@ export default function HomePage() {
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        O Instituto Brazil Just é uma organização dedicada a promover ações sociais e educativas que impactam positivamente comunidades em todo o Brasil. Nossa missão é gerar oportunidades, inclusão e desenvolvimento sustentável para todos.
+                        O Instituto Brazil Just nasceu com o propósito de transformar vidas através de iniciativas sociais e educativas. Ao longo dos anos, temos trabalhado lado a lado com comunidades, fortalecendo valores de inclusão, justiça e solidariedade.
                     </motion.p>
+                </motion.div>
+            </section>
+
+            {/* Seção Quem Somos */}
+            <section className="w-[90%] mx-auto my-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center text-justify">
+                <motion.div
+                    className="flex flex-col justify-center gap-6 order-2 lg:order-1"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={{
+                        hidden: {},
+                        visible: { transition: { staggerChildren: 0.2 } },
+                    }}
+                >
+                    <motion.h2
+                        className="text-4xl font-bold text-blue-950"
+                        initial={{ x: -50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.4 }}
+                    >
+                        Quem Somos
+                    </motion.h2>
+
+                    <motion.p
+                        className="text-lg text-slate-700 leading-relaxed"
+                        initial={{ x: -50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                    >
+                        O Instituto Brazil Just é uma organização dedicada a promover ações sociais e educativas que impactam positivamente comunidades em todo o Brasil.
+                    </motion.p>
+                </motion.div>
+
+                <motion.div
+                    className="relative w-full h-full flex justify-center items-center order-1 lg:order-2 group"
+                    initial={{ x: 100, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.4 }}
+                    viewport={{ once: true }}
+                >
+                    {/* Background animado */}
+                    <motion.div
+                        className="absolute w-96 h-96 rounded-full bg-gradient-to-r from-purple-300/30 to-pink-300/30 blur-3xl -z-10"
+                        animate={{ x: [0, -25, 25, 0], y: [0, 15, -15, 0] }}
+                        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+                    />
+
+                    {/* Imagem esquerda */}
+                    <motion.img
+                        src="/quemsomos/4.jpg"
+                        alt="Quem Somos extra esquerda"
+                        className="w-56 h-56 rounded-full shadow-xl object-cover absolute left-10 bottom-10 opacity-80"
+                        whileHover={{ scale: 1.05 }}
+                    />
+
+                    {/* Imagem central */}
+                    <motion.img
+                        src="/quemsomos/5.jpg"
+                        alt="Quem Somos"
+                        className="w-80 h-80 rounded-full shadow-2xl object-cover z-10 transition-transform duration-500 group-hover:scale-110"
+                        whileHover={{ rotate: -2 }}
+                    />
+
+                    {/* Imagem direita */}
+                    <motion.img
+                        src="/quemsomos/6.jpg"
+                        alt="Quem Somos extra direita"
+                        className="w-56 h-56 rounded-full shadow-xl object-cover absolute right-10 top-10 opacity-80"
+                        whileHover={{ scale: 1.05 }}
+                    />
+                </motion.div>
+            </section>
+
+            {/* Seção Nossa Missão */}
+            <section className="w-[90%] mx-auto my-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center text-justify">
+                <motion.div
+                    className="relative w-full h-full flex justify-center items-center group"
+                    initial={{ x: -100, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.4 }}
+                    viewport={{ once: true }}
+                >
+                    {/* Background animado */}
+                    <motion.div
+                        className="absolute w-96 h-96 rounded-full bg-gradient-to-r from-green-300/30 to-blue-300/30 blur-3xl -z-10"
+                        animate={{ x: [0, 20, -20, 0], y: [0, -20, 20, 0] }}
+                        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+                    />
+
+                    {/* Imagem esquerda */}
+                    <motion.img
+                        src="/quemsomos/7.jpg"
+                        alt="Nossa Missão extra esquerda"
+                        className="w-56 h-56 rounded-full shadow-xl object-cover absolute left-10 top-10 opacity-80"
+                        whileHover={{ scale: 1.05 }}
+                    />
+
+                    {/* Imagem central */}
+                    <motion.img
+                        src="/quemsomos/8.jpg"
+                        alt="Nossa Missão"
+                        className="w-80 h-80 rounded-full shadow-2xl object-cover z-10 transition-transform duration-500 group-hover:scale-110"
+                        whileHover={{ rotate: 2 }}
+                    />
+
+                    {/* Imagem direita */}
+                    <motion.img
+                        src="/quemsomos/9.jpg"
+                        alt="Nossa Missão extra direita"
+                        className="w-56 h-56 rounded-full shadow-xl object-cover absolute right-10 bottom-10 opacity-80"
+                        whileHover={{ scale: 1.05 }}
+                    />
+                </motion.div>
+
+                <motion.div
+                    className="flex flex-col justify-center gap-6"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={{
+                        hidden: {},
+                        visible: { transition: { staggerChildren: 0.2 } },
+                    }}
+                >
+                    <motion.h2
+                        className="text-4xl font-bold text-blue-950"
+                        initial={{ x: 50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.4 }}
+                    >
+                        Nossa Missão
+                    </motion.h2>
 
                     <motion.p
                         className="text-lg text-slate-700 leading-relaxed"
                         initial={{ x: 50, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        Atuamos em diversos projetos, incluindo educação, saúde, cultura e esportes, buscando sempre transformar vidas e construir um futuro mais justo e igualitário.
+                        Nossa missão é gerar oportunidades, inclusão e desenvolvimento sustentável, promovendo educação, saúde, cultura e esportes para transformar vidas e construir um futuro mais justo e igualitário.
                     </motion.p>
-
-                    <Link href="/quem-somos" passHref>
-                        <motion.button
-                            className="self-start bg-blue-950 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-cyan-700 transition-colors cursor-pointer"
-                            initial={{ y: 20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ duration: 0.6, delay: 0.6 }}
-                        >
-                            Saiba Mais
-                        </motion.button>
-                    </Link>
                 </motion.div>
             </section>
+
+
+
             <div className="relative bg-gradient-to-r from-blue-900/90 via-blue-950/90 to-indigo-900/90  drop-shadow-2xl overflow-hidden py-24">
                 {/* Linhas diagonais e shapes */}
                 <div className="absolute inset-0 pointer-events-none overflow-hidden">

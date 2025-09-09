@@ -26,12 +26,12 @@ export default function AdBarCarousel({ anuncioCardProps }: { anuncioCardProps: 
     const anuncioAtual = anuncioCardProps[index];
 
     return (
-        <div className="relative rounded-lg  w-40 h-40 sm:w-80 sm:h-80 place-self-end bg-slate-100 border border-slate-300 shadow-md overflow-hidden">
+        <div className="relative rounded-lg  w-40 h-40 sm:w-80 sm:h-80 place-self-end bg-slate-100 border border-slate-300 shadow-md overflow-hidden cursor-pointer">
             <button
                 onClick={() => setVisible(false)}
-                className="absolute top-2 right-2 bg-white/80 rounded-full p-1 hover:bg-white shadow"
+                className="absolute top-2 right-2 bg-white/80 rounded-full p-1 hover:bg-white shadow cursor-pointer"
             >
-                <X className="w-4 h-4 text-gray-600" />
+                <X className="w-4 h-4 text-gray-600 " />
             </button>
 
             <a
