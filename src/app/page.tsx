@@ -324,8 +324,13 @@ export default function HomePage() {
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        O Instituto Brazil Just nasceu com o propósito de transformar vidas através de iniciativas sociais e educativas. Ao longo dos anos, temos trabalhado lado a lado com comunidades, fortalecendo valores de inclusão, justiça e solidariedade.
-                    </motion.p>
+                        O Instituto Brazil Just nasceu com a missão de promover inclusão social e transformar vidas em todo o território nacional.
+                        Fundado no Distrito Federal, o IBJ atua como uma organização autônoma, sem fins lucrativos, guiada por valores de justiça e solidariedade.
+                        Sua trajetória é marcada por projetos voltados à educação, esporte, cultura, saúde e meio ambiente, sempre oferecendo serviços gratuitos.
+                        Entre as iniciativas de destaque estão programas como Esporte é Vida, Mulheres Belas e TEA Laços de Inclusão, que acolhem famílias em situação de vulnerabilidade.
+                        O Instituto também apoia causas indígenas, promove a defesa da floresta e abraça o diálogo com diferentes setores da sociedade civil.
+                        Em cada ação, o IBJ reafirma seu compromisso com a dignidade humana e a igualdade de oportunidades.
+                        Assim, constrói diariamente uma história de impacto social e esperança para o Brasil.</motion.p>
                 </motion.div>
             </section>
 
