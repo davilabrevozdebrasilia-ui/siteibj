@@ -361,8 +361,7 @@ export default function HomePage() {
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        O Instituto Brazil Just é uma organização dedicada a promover ações sociais e educativas que impactam positivamente comunidades em todo o Brasil.
-                    </motion.p>
+                        O Instituto Brazil Just é uma organização de caráter social e educativo, comprometida em transformar realidades e gerar impacto positivo nas comunidades brasileiras, o Instituto se consolida como um agente de mudança, presente nas regiões mais diversas do país. Nosso propósito é inspirar esperança, construir caminhos de dignidade e oferecer às pessoas ferramentas para alcançarem uma vida mais justa, equilibrada e plena.</motion.p>
                 </motion.div>
 
                 <motion.div
@@ -471,8 +470,7 @@ export default function HomePage() {
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        Nossa missão é gerar oportunidades, inclusão e desenvolvimento sustentável, promovendo educação, saúde, cultura e esportes para transformar vidas e construir um futuro mais justo e igualitário.
-                    </motion.p>
+                        Nossa missão vai além da promoção de ações pontuais: buscamos criar oportunidades que fortaleçam a cidadania, incentivem a educação, promovam a inclusão e ampliem o acesso a direitos fundamentais. Por meio de projetos inovadores, parcerias estratégicas e atuação em diversas áreas, como saúde, esporte, cultura, meio ambiente e desenvolvimento humano. Com uma visão pautada na ética, na solidariedade e na responsabilidade social, o Instituto Brazil Just reafirma seu compromisso com o Brasil e com cada indivíduo que dele faz parte, acreditando que quando a justiça social se une à educação, o futuro se torna possível para todos.</motion.p>
                 </motion.div>
             </section>
 
