@@ -354,9 +354,17 @@ export default function HomePage() {
             </section>
 
             {/* Seção das fitas azuis com 3 colunas */}
-            <section className="relative  drop-shadow-2xl overflow-hidden py-24 mx-auto">
+            <section className="relative drop-shadow-2xl overflow-hidden py-24 mx-auto">
 
-                <h2 className="text-4xl font-bold text-blue-950 mb-4 place-self-center text-center">Conheça nossos projetos</h2>
+                <motion.h2
+                    className="text-4xl font-bold text-blue-950 mb-4 place-self-center text-center"
+                    initial={{ y: -30, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                >
+                    Conheça nossos projetos
+                </motion.h2>
+
                 <div className="relative w-[90%] sm:max-w-[80%] mx-auto p-8">
                     <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
@@ -375,17 +383,20 @@ export default function HomePage() {
                         </div>
 
                         {/* Coluna do meio: projetos */}
-                        <div className="lg:col-span-1 flex flex-col items-center justify-center gap-6 text-center ">
-                            <div className="grid grid-cols-1  gap-4 w-full items-center place-self-center">
-
+                        <div className="lg:col-span-1 flex flex-col items-center justify-center gap-6 text-center">
+                            <div className="grid grid-cols-1 gap-4 w-full items-center place-self-center">
                                 {projetosSubmenu.map((projeto, idx) => (
-                                    <a
+                                    <motion.a
                                         key={idx}
                                         href={projeto.href}
                                         className="w-full py-3 text-center bg-blue-950 backdrop-blur-md border border-slate-900 rounded-xl shadow-md text-white font-semibold hover:bg-slate-900 transition"
+                                        initial={{ y: 20, opacity: 0 }}
+                                        whileInView={{ y: 0, opacity: 1 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.6, delay: idx * 0.1 }}
                                     >
                                         {projeto.label}
-                                    </a>
+                                    </motion.a>
                                 ))}
                             </div>
                         </div>
@@ -403,6 +414,8 @@ export default function HomePage() {
                                 ))}
                             </div>
                         </div>
+
+                        {/* Fita única para mobile */}
                         <div className="lg:hidden relative h-100 overflow-hidden rounded-md shadow-lg p-4 bg-slate-900 backdrop-blur-md border border-slate-300">
                             <div className="animate-scroll-up flex flex-col gap-4">
                                 {[...imagesUp, ...imagesDown, ...imagesUp, ...imagesDown].map((src, idx) => (
@@ -415,6 +428,7 @@ export default function HomePage() {
                                 ))}
                             </div>
                         </div>
+
                     </section>
                 </div>
 
