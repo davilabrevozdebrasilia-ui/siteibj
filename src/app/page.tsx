@@ -32,111 +32,14 @@ export default function HomePage() {
     const [anuncios, setAnuncios] = useState<AnuncioCardProps[]>([]);
     const [offsetAnuncios, setOffsetAnuncios] = useState(0);
     const [hasMoreAnuncios, setHasMoreAnuncios] = useState(true);
-    const loaderAnunciosRef = useRef<HTMLDivElement | null>(null);
-    const batchSize = 6;
-    const [ultimasNoticias, setUltimasNoticias] = useState<NoticiaWithKey[]>([]);
-    const [noticiasPorTag, setNoticiasPorTag] = useState<
-        { tag: string; noticia: NoticiaCardProps["noticia"] }[]
-    >([]);
-    const [offset, setOffset] = useState(0);
-    const [hasMore, setHasMore] = useState(true);
-    const loaderRef = useRef(null);
-    const noticiaKeyCounter = useRef(0);
-    const maxNoticias = 21;
+
+    const batchSize = 2;
     const maxAnunciosAuto = 18;
     const loadingAnunciosRef = useRef(false);
-    const projetos: CarrousselCardProps[] = [
-        {
-            item: {
-                titulo: "Meninas Luz",
-                href: "/projetos/meninas-luz",
-                imagem: "/projetos/meninas_luz.jpg",
-            },
-            titulo: "Projetos",
-            style: "object-cover"
-        },
-        {
-            item: {
-                titulo: "Mulheres Belas",
-                href: "/projetos/mulheres-belas",
-                imagem: "/projetos/mulheres_belas.jpg",
-            },
-            titulo: "Projetos",
-            style: "object-cover"
-        },
-        {
-            item: {
-                titulo: "Laços de Inclusão",
-                href: "/projetos/lacos-de-inclusao",
-                imagem: "/projetos/lacos_de_inclusao.jpg",
-            },
-            titulo: "Projetos",
-            style: "object-cover"
-        },
-        {
-            item: {
-                titulo: "Esporte é Vida",
-                href: "/projetos/esporte-e-vida",
-                imagem: "/projetos/esporte_e_vida.jpg",
-            },
-            titulo: "Projetos",
-            style: "object-cover"
-        },
-        {
-            item: {
-                titulo: "Visão para Todos",
-                href: "/projetos/visao-para-todos",
-                imagem: "/projetos/visao_para_todos.png",
-            },
-            titulo: "Projetos",
-            style: "object-cover"
-        },
-
-        {
-            item: {
-                titulo: "Ações Comunitárias",
-                href: "/projetos/acoes-comunitarias",
-                imagem: "/projetos/acoes_comunitarias.jpg",
-            },
-            titulo: "Projetos",
-            style: "object-cover"
-        },
-    ];
-
-    useEffect(() => {
-        const tags = [
-            "mulheres-belas",
-            "visao-para-todos",
-            "lacos-de-inclusao",
-            "esporte-e-vida",
-            "meninas-luz",
-            "acoes-comunitarias"
-        ];
-
-        async function fetchNoticiasPorTag() {
-            try {
-                const resTag = await fetch(
-                    `/api/projetos/por-tag?tags=${encodeURIComponent(tags.join(","))}`
-                );
-                if (resTag.ok) {
-                    const noticiasPorTagRaw = await resTag.json();
-                    setNoticiasPorTag(noticiasPorTagRaw);
-                }
-            } catch (err) {
-                console.error("Erro ao carregar por tag:", err);
-            }
-        }
-
-        fetchNoticiasPorTag();
-    }, []);
 
     const loadMoreAnuncios = useCallback(async () => {
         if (loadingAnunciosRef.current) return;
-        if (!hasMoreAnuncios || anuncios.length >= maxAnunciosAuto) {
-            if (hasMoreAnuncios && anuncios.length >= maxAnunciosAuto) {
-            }
-            return;
-        }
+        if (!hasMoreAnuncios || anuncios.length >= maxAnunciosAuto) return;
 
         loadingAnunciosRef.current = true;
         try {
@@ -162,75 +65,12 @@ export default function HomePage() {
         }
     }, [hasMoreAnuncios, anuncios.length, offsetAnuncios]);
 
-    const loadMoreNoticias = useCallback(async () => {
-        if (!hasMore || ultimasNoticias.length >= maxNoticias) {
-            setHasMore(false);
-            return;
-        }
-
-        try {
-            const res = await fetch(`/api/noticias/ultimas?offset=${offset}&limit=${batchSize}`);
-            if (!res.ok) throw new Error("Erro ao buscar notícias");
-            const data: NoticiaCardProps[] = await res.json();
-
-            if (data.length === 0) {
-                setHasMore(false);
-                return;
-            }
-
-            setUltimasNoticias((prev) => {
-                const newNoticias = data.filter(noticia =>
-                    !prev.some((n) => n.noticia.id === noticia.noticia.id)
-                ).slice(0, maxNoticias - prev.length);
-
-                const keyedNoticias = newNoticias.map(noticia => ({
-                    ...noticia,
-                    _key: `noticia-${noticiaKeyCounter.current++}`
-                }));
-
-                return [...prev, ...keyedNoticias];
-            });
-
-            setOffset((prev) => prev + batchSize);
-        } catch (err) {
-            console.error("Erro no carregamento incremental:", err);
-            setHasMore(false);
-        }
-    }, [offset, hasMore, ultimasNoticias.length]);
-
-
+    // Carrega até ter pelo menos 12 anúncios
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries[0].isIntersecting) {
-                    loadMoreNoticias();
-                }
-            },
-            { threshold: 1 }
-        );
-
-        if (loaderRef.current) observer.observe(loaderRef.current);
-        return () => {
-            if (loaderRef.current) observer.unobserve(loaderRef.current);
-        };
-    }, [loadMoreNoticias]);
-
-
-    // Flags de concorrência para impedir múltiplas requisições simultâneas
-    const loadingNoticiasRef = useRef(false);
-    useEffect(() => {
-        if (
-            hasMoreAnuncios &&
-            anuncios.length < maxAnunciosAuto &&
-            !loadingAnunciosRef.current
-        ) {
+        if (anuncios.length < 12 && hasMoreAnuncios) {
             loadMoreAnuncios();
         }
-    }, [hasMoreAnuncios, anuncios.length, loadMoreAnuncios]);
-
-    useEffect(() => {
-        loadMoreAnuncios();
-    }, []);
+    }, [anuncios.length, hasMoreAnuncios, loadMoreAnuncios]);
 
     return (
         <div className="w-[100%] mb-[80] justify-self-center items-center gap-4 ">
@@ -257,7 +97,7 @@ export default function HomePage() {
             </section>
 
             {/* Seção Nossa História */}
-            <section className="w-[90%] mx-auto my-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center text-justify">
+            <section className="w-[90%] mx-auto my-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center text-justify place-self-center">
                 {/* Coluna esquerda - imagens */}
                 <motion.div
                     className="relative w-full h-full flex justify-center items-center group"
@@ -268,7 +108,7 @@ export default function HomePage() {
                 >
                     {/* Background animado */}
                     <motion.div
-                        className="absolute w-96 h-96 rounded-full bg-gradient-to-r from-blue-300/30 to-purple-300/30 blur-3xl -z-10"
+                        className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-gradient-to-r from-blue-300/30 to-purple-300/30 blur-3xl -z-10"
                         animate={{ x: [0, 30, -30, 0], y: [0, 20, -20, 0] }}
                         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
                     />
@@ -277,7 +117,7 @@ export default function HomePage() {
                     <motion.img
                         src="/quemsomos/1.png"
                         alt="História extra esquerda"
-                        className="w-56 h-56 rounded-full shadow-xl object-cover absolute left-10 top-10 opacity-80"
+                        className="w-40 sm:w-56 h-40 sm:h-56 rounded-full shadow-xl object-cover absolute left-4 sm:left-10 top-1/2 -translate-y-1/2 opacity-80"
                         whileHover={{ scale: 1.05 }}
                     />
 
@@ -285,7 +125,7 @@ export default function HomePage() {
                     <motion.img
                         src="/quemsomos/2.jpg"
                         alt="História do Instituto Brazil Just"
-                        className="w-80 h-80 rounded-full shadow-2xl object-cover z-10 transition-transform duration-500 group-hover:scale-110"
+                        className="w-64 sm:w-80 h-64 sm:h-80 rounded-full shadow-2xl object-cover z-10 transition-transform duration-500 group-hover:scale-110"
                         whileHover={{ rotate: 2 }}
                     />
 
@@ -293,10 +133,12 @@ export default function HomePage() {
                     <motion.img
                         src="/quemsomos/3.jpg"
                         alt="História extra direita"
-                        className="w-56 h-56 rounded-full shadow-xl object-cover absolute right-10 bottom-10 opacity-80"
+                        className="w-40 sm:w-56 h-40 sm:h-56 rounded-full shadow-xl object-cover absolute right-4 sm:right-10 top-1/2 -translate-y-1/2 opacity-80"
                         whileHover={{ scale: 1.05 }}
                     />
                 </motion.div>
+
+
 
                 {/* Coluna direita - texto */}
                 <motion.div
@@ -335,7 +177,7 @@ export default function HomePage() {
             </section>
 
             {/* Seção Quem Somos */}
-            <section className="w-[90%] mx-auto my-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center text-justify">
+            <section className="w-[90%]  my-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center text-justify place-self-center">
                 <motion.div
                     className="flex flex-col justify-center gap-6 order-2 lg:order-1"
                     initial="hidden"
@@ -373,7 +215,7 @@ export default function HomePage() {
                 >
                     {/* Background animado */}
                     <motion.div
-                        className="absolute w-96 h-96 rounded-full bg-gradient-to-r from-purple-300/30 to-pink-300/30 blur-3xl -z-10"
+                        className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-gradient-to-r from-purple-300/30 to-pink-300/30 blur-3xl -z-10"
                         animate={{ x: [0, -25, 25, 0], y: [0, 15, -15, 0] }}
                         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
                     />
@@ -382,7 +224,7 @@ export default function HomePage() {
                     <motion.img
                         src="/quemsomos/4.jpg"
                         alt="Quem Somos extra esquerda"
-                        className="w-56 h-56 rounded-full shadow-xl object-cover absolute left-10 bottom-10 opacity-80"
+                        className="w-40 sm:w-56 h-40 sm:h-56 rounded-full shadow-xl object-cover absolute left-4 sm:left-10 top-1/2 -translate-y-1/2 opacity-80"
                         whileHover={{ scale: 1.05 }}
                     />
 
@@ -390,7 +232,7 @@ export default function HomePage() {
                     <motion.img
                         src="/quemsomos/5.jpg"
                         alt="Quem Somos"
-                        className="w-80 h-80 rounded-full shadow-2xl object-cover z-10 transition-transform duration-500 group-hover:scale-110"
+                        className="w-64 sm:w-80 h-64 sm:h-80 rounded-full shadow-2xl object-cover z-10 transition-transform duration-500 group-hover:scale-110"
                         whileHover={{ rotate: -2 }}
                     />
 
@@ -398,14 +240,16 @@ export default function HomePage() {
                     <motion.img
                         src="/quemsomos/6.jpg"
                         alt="Quem Somos extra direita"
-                        className="w-56 h-56 rounded-full shadow-xl object-cover absolute right-10 top-10 opacity-80"
+                        className="w-40 sm:w-56 h-40 sm:h-56 rounded-full shadow-xl object-cover absolute right-4 sm:right-10 top-1/2 -translate-y-1/2 opacity-80"
                         whileHover={{ scale: 1.05 }}
                     />
                 </motion.div>
+
+
             </section>
 
             {/* Seção Nossa Missão */}
-            <section className="w-[90%] mx-auto my-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center text-justify">
+            <section className="w-[90%]  my-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center text-justify place-self-center">
                 <motion.div
                     className="relative w-full h-full flex justify-center items-center group"
                     initial={{ x: -100, opacity: 0 }}
@@ -415,7 +259,7 @@ export default function HomePage() {
                 >
                     {/* Background animado */}
                     <motion.div
-                        className="absolute w-96 h-96 rounded-full bg-gradient-to-r from-green-300/30 to-blue-300/30 blur-3xl -z-10"
+                        className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-gradient-to-r from-green-300/30 to-blue-300/30 blur-3xl -z-10"
                         animate={{ x: [0, 20, -20, 0], y: [0, -20, 20, 0] }}
                         transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
                     />
@@ -424,7 +268,7 @@ export default function HomePage() {
                     <motion.img
                         src="/quemsomos/7.jpg"
                         alt="Nossa Missão extra esquerda"
-                        className="w-56 h-56 rounded-full shadow-xl object-cover absolute left-10 top-10 opacity-80"
+                        className="w-40 sm:w-56 h-40 sm:h-56 rounded-full shadow-xl object-cover absolute left-4 sm:left-10 top-1/2 -translate-y-1/2 opacity-80"
                         whileHover={{ scale: 1.05 }}
                     />
 
@@ -432,7 +276,7 @@ export default function HomePage() {
                     <motion.img
                         src="/quemsomos/8.jpg"
                         alt="Nossa Missão"
-                        className="w-80 h-80 rounded-full shadow-2xl object-cover z-10 transition-transform duration-500 group-hover:scale-110"
+                        className="w-64 sm:w-80 h-64 sm:h-80 rounded-full shadow-2xl object-cover z-10 transition-transform duration-500 group-hover:scale-110"
                         whileHover={{ rotate: 2 }}
                     />
 
@@ -440,10 +284,12 @@ export default function HomePage() {
                     <motion.img
                         src="/quemsomos/9.jpg"
                         alt="Nossa Missão extra direita"
-                        className="w-56 h-56 rounded-full shadow-xl object-cover absolute right-10 bottom-10 opacity-80"
+                        className="w-40 sm:w-56 h-40 sm:h-56 rounded-full shadow-xl object-cover absolute right-4 sm:right-10 top-1/2 -translate-y-1/2 opacity-80"
                         whileHover={{ scale: 1.05 }}
                     />
                 </motion.div>
+
+
 
                 <motion.div
                     className="flex flex-col justify-center gap-6"
@@ -485,7 +331,7 @@ export default function HomePage() {
                     <div className="absolute w-96 h-96 bg-indigo-800 rounded-full opacity-10 -bottom-20 -right-24 blur-3xl animate-pulseSlow"></div>
                 </div>
 
-                <div className="relative w-[90%] mx-auto p-8">
+                <div className="relative w-[90%] sm:max-w-[80%]  mx-auto p-8">
                     <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-3  lg:gap-24 ">
                             {/* Fita única no mobile, duas no desktop */}
@@ -511,7 +357,7 @@ export default function HomePage() {
                             </div>
 
                             {/* Apenas desktop: fita rolando para baixo */}
-                            <div className="hidden lg:block relative h-100 overflow-hidden rounded-md shadow-lg p-4 bg-white/10 backdrop-blur-md border border-white/20 mt-8 lg:mt-0">
+                            <div className="hidden lg:block relative h-100 overflow-hidden rounded-md shadow-lg p-4 bg-white/10 backdrop-blur-md border  border-white/20 mt-8 lg:mt-0">
                                 <div className="animate-scroll-down flex flex-col gap-4">
                                     {[...imagesDown, ...imagesDown].map((src, idx) => (
                                         <img
@@ -533,8 +379,8 @@ export default function HomePage() {
 
             </div>
             {/* Seção Colaboradores */}
-            <section className="relative bg-white py-24 mt-20">
-                <div className="w-[90%] mx-auto flex flex-col items-center text-center">
+            <section className="place-self-center bg-white py-24 mt-20 w-[80%] md:max-w-[80%]">
+                <div className=" flex flex-col items-center text-center">
                     <motion.h2
                         className="text-4xl lg:text-5xl font-bold text-blue-950 mb-6"
                         initial={{ opacity: 0, y: 40 }}
@@ -552,7 +398,8 @@ export default function HomePage() {
                         transition={{ duration: 0.8, delay: 0.2 }}
                         viewport={{ once: true }}
                     >
-                        Pessoas e organizações que caminham conosco para transformar vidas e construir um futuro mais justo.
+                        Pessoas e organizações que caminham conosco para transformar vidas e
+                        construir um futuro mais justo.
                     </motion.p>
 
                     <motion.div
@@ -561,23 +408,39 @@ export default function HomePage() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
                         viewport={{ once: true }}
-                        whileHover={{ scale: 1.02, boxShadow: "0px 10px 30px rgba(0,0,0,0.15)" }}
+                        whileHover={{
+                            scale: 1.02,
+                            boxShadow: "0px 10px 30px rgba(0,0,0,0.15)",
+                        }}
                     >
                         <motion.div
+                            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.9, delay: 0.4 }}
                             viewport={{ once: true }}
                         >
-                            <img
-                                src="/colaboradores.png"
-                                alt="Colaboradores do Instituto Brazil Just"
-                                className="w-full h-auto rounded-2xl shadow-md object-contain"
-                            />
+                            {anuncios.slice(0, 14).map((item) => (
+                                <a
+                                    key={item.anuncio.id}
+                                    href={item.anuncio.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center justify-center p-2 border border-slate-200 rounded-xl bg-white shadow-sm hover:scale-105 hover:shadow-lg transition cursor-pointer"
+                                >
+                                    <img
+                                        src={item.anuncio.imagem}
+                                        alt={item.anuncio.titulo}
+                                        className="w-full h-20 sm:h-24 lg:h-40 object-contain"
+                                    />
+                                </a>
+                            ))}
                         </motion.div>
                     </motion.div>
                 </div>
             </section>
+
+
 
         </div>
     );

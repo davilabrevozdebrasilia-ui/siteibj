@@ -7,7 +7,7 @@ export async function GET(request: Request) {
     const limit = Number(url.searchParams.get("limit")) || 20;
 
     const anunciosDb = await prisma.anuncio.findMany({
-        orderBy: { id: "desc" },
+        orderBy: { id: "asc" },
         skip: offset,
         take: limit,
     });

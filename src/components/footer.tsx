@@ -47,7 +47,7 @@ const Footer = () => {
           <img
             src="/logo7.svg"
             alt="Logo IBJ"
-            className="w-36 bg-white rounded-lg p-2 object-contain"
+            className="w-full bg-white rounded-lg p-2 object-contain"
           />
           <p className="text-sm leading-relaxed">
             O Instituto Brazil Just (IBJ) promove projetos sociais e culturais
