@@ -12,7 +12,14 @@ import { CarrousselCardProps } from "@/types/projetos";
 import CarrouselPrime from "@/components/projetos/itemsCarroussel";
 import { motion } from "framer-motion";
 import Link from "next/link";
-
+const projetosSubmenu = [
+    { label: "Mulheres Belas", href: "/projetos/mulheres-belas" },
+    { label: "Visão para Todos", href: "/projetos/visao-para-todos" },
+    { label: "Esporte é vida", href: "/projetos/esporte-e-vida" },
+    { label: "Laços de Inclusao", href: "/projetos/lacos-de-inclusao" },
+    { label: "Meninas Luz", href: "/projetos/meninas-luz" },
+    { label: "Ações Comunitárias", href: "/projetos/acoes-comunitarias" },
+];
 const imagesUp = [
     "/strips/strip1.jpg",
     "/strips/strip2.jpg",
@@ -33,7 +40,7 @@ export default function HomePage() {
     const [offsetAnuncios, setOffsetAnuncios] = useState(0);
     const [hasMoreAnuncios, setHasMoreAnuncios] = useState(true);
 
-    const batchSize = 2;
+    const batchSize = 1;
     const maxAnunciosAuto = 18;
     const loadingAnunciosRef = useRef(false);
 
@@ -320,66 +327,103 @@ export default function HomePage() {
                 </motion.div>
             </section>
 
+            {/* Seção Setembro Amarelo */}
+            <section className="w-full bg-yellow-200 py-12">
+                <div className="w-[90%] sm:max-w-[80%] mx-auto flex flex-col lg:flex-row items-center gap-6">
+                    {/* Banner */}
+                    <img
+                        src="/banner7.png"
+                        alt="Setembro Amarelo"
+                        className="w-full lg:w-1/3 h-auto rounded-md shadow-md"
+                    />
+                    {/* Texto */}
+                    <div className="flex-1 text-center lg:text-left">
+                        <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
+                            Setembro Amarelo
+                        </h2>
+                        <p className="text-gray-800 text-base lg:text-lg text-justify">
+                            Setembro é o mês de conscientização sobre a prevenção do suicídio.
+                            Sua vida importa e você não está sozinho. Fique atento a sinais de alerta, como isolamento, mudanças de comportamento ou fala sobre não querer viver.
+                            Ouça com atenção, ofereça apoio e incentive quem precisa a procurar ajuda profissional.
+                            Cuidar de si e dos outros é um ato de coragem e amor.
+                            Juntos, podemos salvar vidas.
+                        </p>
 
-
-            <div className="relative bg-gradient-to-r from-blue-900/90 via-blue-950/90 to-indigo-900/90  drop-shadow-2xl overflow-hidden py-24">
-                {/* Linhas diagonais e shapes */}
-                <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                    <div className="absolute inset-0 bg-diagonal-lines animate-diagonalScroll"></div>
-
-                    <div className="absolute w-72 h-72 bg-blue-800 rounded-full opacity-20 -top-16 -left-16 blur-3xl animate-pulseSlow"></div>
-                    <div className="absolute w-96 h-96 bg-indigo-800 rounded-full opacity-10 -bottom-20 -right-24 blur-3xl animate-pulseSlow"></div>
+                    </div>
                 </div>
+            </section>
 
-                <div className="relative w-[90%] sm:max-w-[80%]  mx-auto p-8">
+            {/* Seção das fitas azuis com 3 colunas */}
+            <section className="relative  drop-shadow-2xl overflow-hidden py-24 mx-auto">
+
+                <h2 className="text-4xl font-bold text-blue-950 mb-4 place-self-center text-center">Conheça nossos projetos</h2>
+                <div className="relative w-[90%] sm:max-w-[80%] mx-auto p-8">
                     <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div className="lg:col-span-3 grid grid-cols-1 lg:grid-cols-3  lg:gap-24 ">
-                            {/* Fita única no mobile, duas no desktop */}
-                            <aside className="lg:col-span-1">
-                                <img
-                                    src="/banner7.png"
-                                    alt="Banner de destaque"
-                                    className="w-full h-100 min-h-80 object-fill  rounded-md shadow-md"
-                                />
-                            </aside>
-                            <div className="relative h-100 overflow-hidden rounded-md shadow-lg p-4 bg-white/10 backdrop-blur-md border border-white/20">
-                                <div className="animate-scroll-up flex flex-col gap-4">
-                                    {/* No mobile, renderiza todas as imagens juntas */}
-                                    {[...imagesUp, ...imagesDown, ...imagesUp, ...imagesDown].map((src, idx) => (
-                                        <img
-                                            key={`combined-${idx}`}
-                                            src={src}
-                                            alt={`img-${idx}`}
-                                            className="w-full h-40 object-cover rounded-md shadow-md"
-                                        />
-                                    ))}
-                                </div>
-                            </div>
 
-                            {/* Apenas desktop: fita rolando para baixo */}
-                            <div className="hidden lg:block relative h-100 overflow-hidden rounded-md shadow-lg p-4 bg-white/10 backdrop-blur-md border  border-white/20 mt-8 lg:mt-0">
-                                <div className="animate-scroll-down flex flex-col gap-4">
-                                    {[...imagesDown, ...imagesDown].map((src, idx) => (
-                                        <img
-                                            key={`down-${idx}`}
-                                            src={src}
-                                            alt={`img-down-${idx}`}
-                                            className="w-full h-40 object-cover rounded-md shadow-md"
-                                        />
-                                    ))}
-                                </div>
+                        {/* Coluna esquerda: fita rolando para cima */}
+                        <div className="hidden lg:block relative h-100 overflow-hidden rounded-md shadow-lg p-4 bg-slate-900 backdrop-blur-md border border-slate-300 mt-8 lg:mt-0">
+                            <div className="animate-scroll-up flex flex-col gap-4">
+                                {[...imagesUp, ...imagesDown, ...imagesUp, ...imagesDown].map((src, idx) => (
+                                    <img
+                                        key={`combined-${idx}`}
+                                        src={src}
+                                        alt={`img-${idx}`}
+                                        className="w-full h-40 object-cover rounded-md shadow-md"
+                                    />
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Coluna do meio: projetos */}
+                        <div className="lg:col-span-1 flex flex-col items-center justify-center gap-6 text-center ">
+                            <div className="grid grid-cols-1  gap-4 w-full items-center place-self-center">
+
+                                {projetosSubmenu.map((projeto, idx) => (
+                                    <a
+                                        key={idx}
+                                        href={projeto.href}
+                                        className="w-full py-3 text-center bg-blue-950 backdrop-blur-md border border-slate-900 rounded-xl shadow-md text-white font-semibold hover:bg-slate-900 transition"
+                                    >
+                                        {projeto.label}
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Coluna direita: fita rolando para baixo */}
+                        <div className="hidden lg:block relative h-100 overflow-hidden rounded-md shadow-lg p-4 bg-slate-900 backdrop-blur-md border border-slate-300 mt-8 lg:mt-0">
+                            <div className="animate-scroll-down flex flex-col gap-4">
+                                {[...imagesDown, ...imagesDown].map((src, idx) => (
+                                    <img
+                                        key={`down-${idx}`}
+                                        src={src}
+                                        alt={`img-down-${idx}`}
+                                        className="w-full h-40 object-cover rounded-md shadow-md"
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                        <div className="lg:hidden relative h-100 overflow-hidden rounded-md shadow-lg p-4 bg-slate-900 backdrop-blur-md border border-slate-300">
+                            <div className="animate-scroll-up flex flex-col gap-4">
+                                {[...imagesUp, ...imagesDown, ...imagesUp, ...imagesDown].map((src, idx) => (
+                                    <img
+                                        key={`mobile-${idx}`}
+                                        src={src}
+                                        alt={`img-mobile-${idx}`}
+                                        className="w-full h-40 object-cover rounded-md shadow-md"
+                                    />
+                                ))}
                             </div>
                         </div>
                     </section>
-
                 </div>
 
+            </section>
 
 
 
-            </div>
             {/* Seção Colaboradores */}
-            <section className="place-self-center bg-white py-24 mt-20 w-[80%] md:max-w-[80%]">
+            <section className="place-self-center bg-white  w-[80%] md:max-w-[80%]">
                 <div className=" flex flex-col items-center text-center">
                     <motion.h2
                         className="text-4xl lg:text-5xl font-bold text-blue-950 mb-6"
