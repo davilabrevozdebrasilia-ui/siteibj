@@ -1,5 +1,5 @@
 "use client";
-
+import { BR, GB, ES } from "country-flag-icons/react/3x2";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, Calendar, ChevronDown } from "lucide-react";
@@ -11,6 +11,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { useEffect, useState, useRef } from "react";
+import { changeLanguage } from "@/components/translate/googleTranslate";
+import ReactCountryFlag from "react-country-flag";
+
+
 
 const projetosSubmenu = [
     { label: "Mulheres Belas", href: "/projetos/mulheres-belas" },
@@ -61,7 +65,7 @@ export default function Navbar() {
             <div
                 className="h-16 flex items-center justify-between px-4 
             bg-white 
-            shadow-md  border-slate-600"
+            shadow-md border-slate-600"
             >
                 {/* Logo à esquerda */}
                 <Link href="/" className="flex items-center h-full">
@@ -73,7 +77,7 @@ export default function Navbar() {
                 </Link>
 
                 {/* Menu Desktop */}
-                <nav className="hidden xl:flex gap-2 flex-wrap justify-end relative ">
+                <nav className="hidden 2xl:flex gap-2 flex-wrap justify-end relative ">
                     {links.map((link) => {
                         if (link.label === "Projetos") {
                             return (
@@ -106,8 +110,8 @@ export default function Navbar() {
                                 key={link.href}
                                 href={link.href}
                                 className={`text-md px-2 py-3 whitespace-nowrap h-full hover:bg-slate-200 transition rounded-md ${pathname === link.href
-                                        ? "text-blue-950 font-bold"
-                                        : "text-blue-950"
+                                    ? "text-blue-950 font-bold"
+                                    : "text-blue-950"
                                     }`}
                             >
                                 {link.label}
@@ -116,8 +120,32 @@ export default function Navbar() {
                     })}
                 </nav>
 
+                {/* Bandeirinhas no canto superior direito */}
+                <div className="hidden 2xl:flex items-center gap-3 ml-6">
+                    <button onClick={() => changeLanguage("pt")}>
+                        <ReactCountryFlag countryCode="BR" svg style={{ width: "32px", height: "32px" }} className="cursor-pointer" />
+                    </button>
+                    <button onClick={() => changeLanguage("en")}>
+                        <ReactCountryFlag countryCode="GB" svg style={{ width: "32px", height: "32px" }} className="cursor-pointer" />
+                    </button>
+                    <button onClick={() => changeLanguage("es")}>
+                        <ReactCountryFlag countryCode="ES" svg style={{ width: "32px", height: "32px" }} className="cursor-pointer" />
+                    </button>
+                </div>
+
                 {/* Menu Mobile */}
-                <div className="lg:hidden">
+                <div className="2xl:hidden flex items-center gap-3 pl-2">
+                    {/* Bandeiras também no mobile */}
+                    <button onClick={() => changeLanguage("pt")}>
+                        <ReactCountryFlag countryCode="BR" svg style={{ width: "32px", height: "32px" }} className="cursor-pointer"/>
+                    </button>
+                    <button onClick={() => changeLanguage("en")}>
+                        <ReactCountryFlag countryCode="GB" svg style={{ width: "32px", height: "32px" }} className="cursor-pointer"/>
+                    </button>
+                    <button onClick={() => changeLanguage("es")}>
+                        <ReactCountryFlag countryCode="ES" svg style={{ width: "32px", height: "32px" }} className="cursor-pointer"/>
+                    </button>
+
                     <Sheet>
                         <SheetTrigger asChild>
                             <Button variant="ghost" size="icon">
@@ -164,8 +192,8 @@ export default function Navbar() {
                                             key={link.href}
                                             href={link.href}
                                             className={`text-base font-medium py-1 px-2 rounded hover:underline ${pathname === link.href
-                                                    ? "text-blue-950 font-bold"
-                                                    : "text-blue-950"
+                                                ? "text-blue-950 font-bold"
+                                                : "text-blue-950"
                                                 }`}
                                         >
                                             {link.label}
@@ -179,5 +207,6 @@ export default function Navbar() {
             </div>
         </header>
     );
+
 
 }

@@ -111,6 +111,19 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
+/* Oculta banners do Google Translate */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-gadget,
+.goog-te-combo {
+    display: none !important;
+}
+
+/* Evita que a página fique “empurrada” pelo banner */
+body {
+    top: 0 !important;
+    position: static !important;
+}
+
 
 @layer base {
   * {
