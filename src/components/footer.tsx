@@ -89,28 +89,28 @@ const Footer = () => {
             Office, Brasília-DF
           </a>
           <a
-            href="tel:+5561999999999"
+            href="tel:+5561999812341"
             className="flex items-center gap-2 hover:underline"
           >
             <span className="bg-blue-600 p-2 rounded-md">
               <FaPhoneAlt />
             </span>
-            (61) 99999-9999
+            (61) 99981-2341
           </a>
           <a
-            href="mailto:contato@ibj.org"
+            href="mailto:institutobraziljust@gmail.com"
             className="flex items-center gap-2 hover:underline"
           >
             <span className="bg-red-600 p-2 rounded-md">
               <FaEnvelope />
             </span>
-            contato@ibj.org
+            institutobraziljust@gmail.com
           </a>
           <p className="flex items-center gap-2">
             <span className="bg-yellow-600 p-2 rounded-md">
               <FaClock />
             </span>
-            Seg a Sex, 9h às 18h
+            Seg a Sex, 8h às 18h
           </p>
         </div>
 
