@@ -40,7 +40,7 @@ export default function HomePage() {
     const [offsetAnuncios, setOffsetAnuncios] = useState(0);
     const [hasMoreAnuncios, setHasMoreAnuncios] = useState(true);
 
-    const batchSize = 1;
+    const batchSize = 6;
     const maxAnunciosAuto = 18;
     const loadingAnunciosRef = useRef(false);
 

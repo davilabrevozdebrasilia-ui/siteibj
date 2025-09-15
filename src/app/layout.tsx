@@ -7,7 +7,7 @@ import { AnuncioCardProps } from "@/types/anuncios";
 import { prisma } from "@/lib/prisma";
 import AdFooter from "@/components/footerAdesivo";
 import { GoogleTranslateWrapper } from "@/components/translate/googleTranslate";
-import { RemoveSkipTranslateDiv, RemoveTranslateIframe } from "@/components/translate/removeTranslater";
+import { RemoveSkipTranslateDiv } from "@/components/translate/removeTranslater";
 
 const poppins = Poppins({
     weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
