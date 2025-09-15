@@ -142,7 +142,7 @@ const Footer = () => {
                   <ul className="ml-4 mt-2 space-y-1 text-xs border-l border-white/30 pl-3">
                     {projetosSubmenu.map((submenu, subIdx) => (
                       <li key={subIdx}>
-                        <a href={submenu.href} className="hover:underline">
+                        <a href={submenu.href} className="hover:underline cursor-pointer">
                           {submenu.label}
                         </a>
                       </li>
