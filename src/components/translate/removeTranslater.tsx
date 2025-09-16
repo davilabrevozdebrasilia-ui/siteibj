@@ -17,7 +17,7 @@ export function RemoveSkipTranslateDiv() {
                         setTimeout(() => {
                             node.remove();
                             console.log("Div skiptranslate removida:", node);
-                        }, 2000); // espera 1 segundo antes de remover
+                        }, 200000); // espera 1 segundo antes de remover
                     }
                 });
             });
