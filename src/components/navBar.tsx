@@ -133,9 +133,7 @@ export default function Navbar() {
                     </button>
                 </div>
 
-                {/* Menu Mobile */}
                 <div className="2xl:hidden flex items-center gap-3 pl-2">
-                    {/* Bandeiras também no mobile */}
                     <button onClick={() => changeLanguage("pt")}>
                         <ReactCountryFlag countryCode="BR" svg style={{ width: "32px", height: "32px" }} className="cursor-pointer"/>
                     </button>

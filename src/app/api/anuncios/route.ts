@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-const TOKEN = process.env.ADMIN_TOKEN;
-
 
 export async function POST(req: NextRequest) {
 

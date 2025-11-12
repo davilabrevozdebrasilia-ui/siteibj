@@ -184,7 +184,6 @@ export default function Transparencia() {
     <span className="absolute bottom-2 right-2 text-2xl">👈</span>
             {fullscreenAtivo && docAtual && (
                 <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex flex-col items-center p-4">
-                    {/* Botão fechar */}
                     <button
                         onClick={() => setFullscreenAtivo(false)}
                         className="absolute top-4 right-4 z-50 bg-slate-200 hover:bg-slate-400 text-blue-900 font-bold px-4 py-2 rounded shadow cursor-pointer flex items-center"
@@ -231,8 +230,6 @@ export default function Transparencia() {
                             </button>
                         </div>
                     )}
-
-                    {/* Paginador */}
                     {!isMobile && (
                         <div className="flex gap-2 text-slate-100 mt-2">
                             Ir para a página:

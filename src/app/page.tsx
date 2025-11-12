@@ -1,15 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import AdCard from "@/components/anuncios/adCard";
-import LazyCardWrapper from "@/components/lazyCardWrapper";
 import { AnuncioCardProps } from "@/types/anuncios";
 import { NoticiaCardProps } from "@/types/noticias";
-import { NoticiaCardTextRight } from "@/components/noticias/noticiaCardTextRight";
-import { NoticiaCardOverlay } from "@/components/noticias/NoticiaCardOverlay";
-import NoticiaCard from "@/components/noticias/noticiaCard";
-import { CarrousselCardProps } from "@/types/projetos";
-import CarrouselPrime from "@/components/projetos/itemsCarroussel";
 import { motion } from "framer-motion";
 import Link from "next/link";
 const projetosSubmenu = [
@@ -72,7 +65,6 @@ export default function HomePage() {
         }
     }, [hasMoreAnuncios, anuncios.length, offsetAnuncios]);
 
-    // Carrega até ter pelo menos 12 anúncios
     useEffect(() => {
         if (anuncios.length < 12 && hasMoreAnuncios) {
             loadMoreAnuncios();
@@ -103,9 +95,7 @@ export default function HomePage() {
                 </Link>
             </section>
 
-            {/* Seção Nossa História */}
             <section className="w-[90%] mx-auto my-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center text-justify place-self-center">
-                {/* Coluna esquerda - imagens */}
                 <motion.div
                     className="relative w-full h-full flex justify-center items-center group"
                     initial={{ x: -100, opacity: 0 }}
@@ -113,30 +103,23 @@ export default function HomePage() {
                     transition={{ duration: 0.4 }}
                     viewport={{ once: true }}
                 >
-                    {/* Background animado */}
                     <motion.div
                         className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-gradient-to-r from-blue-300/30 to-purple-300/30 blur-3xl -z-10"
                         animate={{ x: [0, 30, -30, 0], y: [0, 20, -20, 0] }}
                         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
                     />
-
-                    {/* Imagem esquerda */}
                     <motion.img
                         src="/quemsomos/1.png"
                         alt="História extra esquerda"
                         className="w-40 sm:w-56 h-40 sm:h-56 rounded-full shadow-xl object-cover absolute left-4 sm:left-10 top-1/2 -translate-y-1/2 opacity-80"
                         whileHover={{ scale: 1.05 }}
                     />
-
-                    {/* Imagem central */}
                     <motion.img
                         src="/quemsomos/2.jpg"
                         alt="História do Instituto Brazil Just"
                         className="w-64 sm:w-80 h-64 sm:h-80 rounded-full shadow-2xl object-cover z-10 transition-transform duration-500 group-hover:scale-110"
                         whileHover={{ rotate: 2 }}
                     />
-
-                    {/* Imagem direita */}
                     <motion.img
                         src="/quemsomos/3.jpg"
                         alt="História extra direita"
@@ -144,10 +127,6 @@ export default function HomePage() {
                         whileHover={{ scale: 1.05 }}
                     />
                 </motion.div>
-
-
-
-                {/* Coluna direita - texto */}
                 <motion.div
                     className="flex flex-col justify-center gap-6"
                     initial="hidden"
@@ -182,8 +161,6 @@ export default function HomePage() {
                         Assim, constrói diariamente uma história de impacto social e esperança para o Brasil.</motion.p>
                 </motion.div>
             </section>
-
-            {/* Seção Quem Somos */}
             <section className="w-[90%]  my-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center text-justify place-self-center">
                 <motion.div
                     className="flex flex-col justify-center gap-6 order-2 lg:order-1"
@@ -220,30 +197,23 @@ export default function HomePage() {
                     transition={{ duration: 0.4 }}
                     viewport={{ once: true }}
                 >
-                    {/* Background animado */}
                     <motion.div
                         className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-gradient-to-r from-purple-300/30 to-pink-300/30 blur-3xl -z-10"
                         animate={{ x: [0, -25, 25, 0], y: [0, 15, -15, 0] }}
                         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
                     />
-
-                    {/* Imagem esquerda */}
                     <motion.img
                         src="/quemsomos/4.jpg"
                         alt="Quem Somos extra esquerda"
                         className="w-40 sm:w-56 h-40 sm:h-56 rounded-full shadow-xl object-cover absolute left-4 sm:left-10 top-1/2 -translate-y-1/2 opacity-80"
                         whileHover={{ scale: 1.05 }}
                     />
-
-                    {/* Imagem central */}
                     <motion.img
                         src="/quemsomos/5.jpg"
                         alt="Quem Somos"
                         className="w-64 sm:w-80 h-64 sm:h-80 rounded-full shadow-2xl object-cover z-10 transition-transform duration-500 group-hover:scale-110"
                         whileHover={{ rotate: -2 }}
                     />
-
-                    {/* Imagem direita */}
                     <motion.img
                         src="/quemsomos/6.jpg"
                         alt="Quem Somos extra direita"
@@ -254,8 +224,6 @@ export default function HomePage() {
 
 
             </section>
-
-            {/* Seção Nossa Missão */}
             <section className="w-[90%]  my-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center text-justify place-self-center">
                 <motion.div
                     className="relative w-full h-full flex justify-center items-center group"
@@ -264,30 +232,23 @@ export default function HomePage() {
                     transition={{ duration: 0.4 }}
                     viewport={{ once: true }}
                 >
-                    {/* Background animado */}
                     <motion.div
                         className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-gradient-to-r from-green-300/30 to-blue-300/30 blur-3xl -z-10"
                         animate={{ x: [0, 20, -20, 0], y: [0, -20, 20, 0] }}
                         transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
                     />
-
-                    {/* Imagem esquerda */}
                     <motion.img
                         src="/quemsomos/7.jpg"
                         alt="Nossa Missão extra esquerda"
                         className="w-40 sm:w-56 h-40 sm:h-56 rounded-full shadow-xl object-cover absolute left-4 sm:left-10 top-1/2 -translate-y-1/2 opacity-80"
                         whileHover={{ scale: 1.05 }}
                     />
-
-                    {/* Imagem central */}
                     <motion.img
                         src="/quemsomos/8.jpg"
                         alt="Nossa Missão"
                         className="w-64 sm:w-80 h-64 sm:h-80 rounded-full shadow-2xl object-cover z-10 transition-transform duration-500 group-hover:scale-110"
                         whileHover={{ rotate: 2 }}
                     />
-
-                    {/* Imagem direita */}
                     <motion.img
                         src="/quemsomos/9.jpg"
                         alt="Nossa Missão extra direita"
@@ -326,34 +287,30 @@ export default function HomePage() {
                         Nossa missão vai além da promoção de ações pontuais: buscamos criar oportunidades que fortaleçam a cidadania, incentivem a educação, promovam a inclusão e ampliem o acesso a direitos fundamentais. Por meio de projetos inovadores, parcerias estratégicas e atuação em diversas áreas, como saúde, esporte, cultura, meio ambiente e desenvolvimento humano. Com uma visão pautada na ética, na solidariedade e na responsabilidade social, o Instituto Brazil Just reafirma seu compromisso com o Brasil e com cada indivíduo que dele faz parte, acreditando que quando a justiça social se une à educação, o futuro se torna possível para todos.</motion.p>
                 </motion.div>
             </section>
+        <section className="w-full bg-blue-200 py-12">
 
-            {/* Seção Setembro Amarelo */}
-            <section className="w-full bg-yellow-200 py-12">
-                <div className="w-[90%] sm:max-w-[80%] mx-auto flex flex-col lg:flex-row items-center gap-6">
-                    {/* Banner */}
+         <div className="w-[90%] sm:max-w-[80%] mx-auto flex flex-col lg:flex-row items-center gap-6">
                     <img
-                        src="/banner7.png"
-                        alt="Setembro Amarelo"
+                        src="/Novembro-Azul-1.jpg"
+                        alt="Novembro Azul"
                         className="w-full lg:w-1/3 h-auto rounded-md shadow-md"
                     />
-                    {/* Texto */}
                     <div className="flex-1 text-center lg:text-left">
                         <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                            Setembro Amarelo
+                            Novembro Azul
                         </h2>
                         <p className="text-gray-800 text-base lg:text-lg text-justify">
-                            Setembro é o mês de conscientização sobre a prevenção do suicídio.
-                            Sua vida importa e você não está sozinho. Fique atento a sinais de alerta, como isolamento, mudanças de comportamento ou fala sobre não querer viver.
-                            Ouça com atenção, ofereça apoio e incentive quem precisa a procurar ajuda profissional.
-                            Cuidar de si e dos outros é um ato de coragem e amor.
-                            Juntos, podemos salvar vidas.
+                         Novembro é o mês de conscientização sobre a saúde do homem.
+Cuidar de si também é um ato de coragem. A prevenção e o diagnóstico precoce do câncer de próstata salvam vidas.
+Fique atento aos exames de rotina e não ignore sinais como dificuldade para urinar, dor ou alterações no corpo.
+Converse com profissionais de saúde, tire suas dúvidas e incentive outros homens a fazer o mesmo.
+Falar sobre saúde é um gesto de amor e responsabilidade consigo e com quem você ama.
+Juntos, podemos vencer o preconceito e promover uma vida mais longa e saudável.
                         </p>
 
                     </div>
                 </div>
             </section>
-
-            {/* Seção das fitas azuis com 3 colunas */}
             <section className="relative drop-shadow-2xl overflow-hidden py-24 mx-auto">
 
                 <motion.h2
@@ -367,8 +324,6 @@ export default function HomePage() {
 
                 <div className="relative w-[90%] sm:max-w-[80%] mx-auto p-8">
                     <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-                        {/* Coluna esquerda: fita rolando para cima */}
                         <div className="hidden lg:block relative h-100 overflow-hidden rounded-md shadow-lg p-4 bg-slate-900 backdrop-blur-md border border-slate-300 mt-8 lg:mt-0">
                             <div className="animate-scroll-up flex flex-col gap-4">
                                 {[...imagesUp, ...imagesDown, ...imagesUp, ...imagesDown].map((src, idx) => (
@@ -381,8 +336,6 @@ export default function HomePage() {
                                 ))}
                             </div>
                         </div>
-
-                        {/* Coluna do meio: projetos */}
                         <div className="lg:col-span-1 flex flex-col items-center justify-center gap-6 text-center">
                             <div className="grid grid-cols-1 gap-4 w-full items-center place-self-center">
                                 {projetosSubmenu.map((projeto, idx) => (
@@ -400,8 +353,6 @@ export default function HomePage() {
                                 ))}
                             </div>
                         </div>
-
-                        {/* Coluna direita: fita rolando para baixo */}
                         <div className="hidden lg:block relative h-100 overflow-hidden rounded-md shadow-lg p-4 bg-slate-900 backdrop-blur-md border border-slate-300 mt-8 lg:mt-0">
                             <div className="animate-scroll-down flex flex-col gap-4">
                                 {[...imagesDown, ...imagesDown].map((src, idx) => (
@@ -415,7 +366,6 @@ export default function HomePage() {
                             </div>
                         </div>
 
-                        {/* Fita única para mobile */}
                         <div className="lg:hidden relative h-100 overflow-hidden rounded-md shadow-lg p-4 bg-slate-900 backdrop-blur-md border border-slate-300">
                             <div className="animate-scroll-up flex flex-col gap-4">
                                 {[...imagesUp, ...imagesDown, ...imagesUp, ...imagesDown].map((src, idx) => (
@@ -434,9 +384,6 @@ export default function HomePage() {
 
             </section>
 
-
-
-            {/* Seção Colaboradores */}
             <section className="place-self-center bg-white  w-[80%] md:max-w-[80%]">
                 <div className=" flex flex-col items-center text-center">
                     <motion.h2

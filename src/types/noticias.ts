@@ -1,4 +1,3 @@
-// components/noticias/types.ts
 export interface Noticia {
   id: number;
   titulo: string;

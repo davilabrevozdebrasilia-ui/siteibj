@@ -71,7 +71,6 @@ export default function PaginaImagens() {
     fetchImagens(page);
   }, [page]);
 
-  // Infinite scroll
   useEffect(() => {
     if (!hasMore) return;
 
@@ -124,7 +123,6 @@ export default function PaginaImagens() {
         ))}
       </div>
 
-      {/* Elemento sentinela */}
       <div ref={loaderRef} className="h-10 flex justify-center items-center mt-4">
         {loading && <p className="text-gray-500">Carregando...</p>}
       </div>

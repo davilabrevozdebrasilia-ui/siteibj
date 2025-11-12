@@ -42,7 +42,6 @@ const Footer = () => {
     return (
         <footer className="w-full bg-blue-950 text-white py-12 px-6">
             <div className="max-w-[90%] mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
-                {/* Coluna 1 - Logo + Descrição + Redes */}
                 <div className="space-y-4">
                     <img
                         src="/logo7.svg"
@@ -72,8 +71,6 @@ const Footer = () => {
                         </a>
                     </div>
                 </div>
-
-                {/* Coluna 2 - Contato */}
                 <div className="space-y-3 text-sm">
                     <h3 className="font-semibold text-lg mb-3">Conecte-se</h3>
                     <a
@@ -113,12 +110,9 @@ const Footer = () => {
                         Seg a Sex, 8h às 18h
                     </p>
                 </div>
-
-                {/* Coluna 3 - Menu dividido em 2 */}
                 <div>
                     <h3 className="font-semibold text-lg mb-3">Menu</h3>
                     <div className="grid grid-cols-2 gap-6">
-                        {/* Primeira parte do menu */}
                         <ul className="space-y-2 text-sm">
                             {links.slice(0, 7).map((link, idx) => (
                                 <li key={idx}>
@@ -156,8 +150,6 @@ const Footer = () => {
                                 </li>
                             ))}
                         </ul>
-
-                        {/* Segunda parte do menu (últimos 3 itens) */}
                         <ul className="space-y-2 text-sm">
                             {links.slice(7).map((link, idx) => (
                                 <li key={idx}>
@@ -169,9 +161,6 @@ const Footer = () => {
                         </ul>
                     </div>
                 </div>
-
-
-                {/* Coluna 4 - Políticas */}
                 <div className="space-y-2 text-sm">
                     <h3 className="font-semibold text-lg mb-3">Legal</h3>
                     <ul className="space-y-2">
@@ -194,14 +183,10 @@ const Footer = () => {
                     </ul>
                 </div>
             </div>
-
-            {/* Linha de baixo */}
             <div className="text-center text-sm mt-8 border-t border-white/20 pt-4">
                 &copy; {new Date().getFullYear()} Instituto Brazil Just (IBJ). Todos os
                 direitos reservados.
             </div>
-
-            {/* Dialogs */}
             {openDialog && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50  ">
                     <div className="bg-white text-black rounded-lg max-w-[80%] w-full max-h-[80vh] overflow-y-auto p-6 relative shadow-xl">

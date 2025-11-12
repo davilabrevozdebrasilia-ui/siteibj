@@ -1,4 +1,3 @@
-// lib/googleTranslate.tsx
 "use client";
 import { useEffect } from "react";
 
@@ -9,14 +8,10 @@ declare global {
     }
 }
 
-/**
- * Wrapper React que injeta o script do Google Translate.
- */
 export function GoogleTranslateWrapper({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         if (typeof window === "undefined") return;
 
-        // init exigido pelo script do Google
         window.googleTranslateElementInit = () => {
             try {
                 new (window as any).google.translate.TranslateElement(
@@ -28,11 +23,9 @@ export function GoogleTranslateWrapper({ children }: { children: React.ReactNode
                     "google_translate_element"
                 );
             } catch (e) {
-                // silent
             }
         };
 
-        // injeta o script se ainda não existe
         if (!document.querySelector('script[src*="translate_a/element.js"]')) {
             const s = document.createElement("script");
             s.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
@@ -40,17 +33,14 @@ export function GoogleTranslateWrapper({ children }: { children: React.ReactNode
             document.body.appendChild(s);
         }
 
-        // expõe função global
         window.__gt_changeLanguage = (lang: string) => {
             tryChangeLanguage(lang);
         };
 
-        // observer para remover apenas elementos visuais indesejados
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 mutation.addedNodes.forEach((node) => {
                     if (node instanceof HTMLElement) {
-                        // remove container de UI automática do Google
                         if (node.id === ":2.container") {
                             node.remove();
                             console.log("Removido iframe :2.container!");
@@ -68,9 +58,7 @@ export function GoogleTranslateWrapper({ children }: { children: React.ReactNode
 
     return (
         <>
-            {/* Google injeta o markup aqui */}
             <div id="google_translate_element" style={{ display: "none" }} />
-            {/* CSS para esconder logo e barra do Google */}
             <style jsx global>{`
                 .goog-te-banner-frame,
                 .goog-logo-link,
@@ -87,9 +75,6 @@ export function GoogleTranslateWrapper({ children }: { children: React.ReactNode
     );
 }
 
-/**
- * Função pública para trocar idioma
- */
 export function changeLanguage(lang: string) {
     if (typeof window === "undefined") return;
 
@@ -117,7 +102,6 @@ export function changeLanguage(lang: string) {
                 return true;
             }
         } catch {
-            // cross-origin
         }
         return false;
     };
@@ -146,10 +130,6 @@ export function changeLanguage(lang: string) {
     if (tryIframeClick()) return;
     setCookieAndReload();
 }
-
-/**
- * Função interna usada pelo wrapper também
- */
 function tryChangeLanguage(lang: string) {
     const select = document.querySelector<HTMLSelectElement>(".goog-te-combo");
     if (select) {

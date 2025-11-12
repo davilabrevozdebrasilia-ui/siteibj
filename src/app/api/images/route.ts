@@ -2,7 +2,6 @@ import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import sharp from "sharp";
 
-// ------------------ POST: criar imagem ------------------
 export async function POST(req: NextRequest) {
     const data = await req.json();
 
@@ -46,8 +45,6 @@ export async function POST(req: NextRequest) {
     }
 }
 
-// ------------------ GET: listar imagens ------------------
-// ------------------ GET: listar imagens ------------------
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
 
@@ -55,7 +52,6 @@ export async function GET(req: NextRequest) {
     const limit = parseInt(searchParams.get("limit") || "12");
     const skip = (page - 1) * limit;
 
-    // --- filtros ---
     const tagsParam = searchParams.get("tags");
     const projetosParam = searchParams.get("projetos");
 

@@ -52,7 +52,6 @@ declare module "slate" {
     }
 }
 
-// --------------------- SERIALIZE ---------------------
 function serialize(value: Descendant[]): string {
     return value
         .map((n) => {
@@ -97,7 +96,6 @@ function deserialize(value: string): Descendant[] {
     ];
 }
 
-// --------------------- MARK HELPERS ---------------------
 const isMarkActive = (editor: Editor, format: keyof CustomText) => {
     const marks = Editor.marks(editor);
     return marks ? marks[format] !== undefined : false;
@@ -112,7 +110,6 @@ const toggleMark = (editor: Editor, format: keyof CustomText, value?: any) => {
     }
 };
 
-// --------------------- ALIGN HELPERS ---------------------
 const isAlignmentActive = (
     editor: Editor,
     align: "left" | "center" | "right"
@@ -140,7 +137,6 @@ const toggleAlignment = (editor: Editor, align: "left" | "center" | "right") => 
     );
 };
 
-// --------------------- LINK HELPERS ---------------------
 const insertLink = (editor: Editor, url: string) => {
     if (!url) return;
     const { selection } = editor;
@@ -166,7 +162,6 @@ const unwrapLink = (editor: Editor) => {
     });
 };
 
-// --------------------- TOOLBAR BUTTONS ---------------------
 const ToolbarButton = ({
     icon,
     onClick,
@@ -270,7 +265,6 @@ const LinkButton = () => {
     );
 };
 
-// --------------------- COMPONENT ---------------------
 export default function EditorComponent({ value, onChange }: Props) {
     const editor = useMemo(() => withHistory(withReact(createEditor())), []);
     const [content, setContent] = useState<Descendant[]>(() => deserialize(value));
@@ -312,7 +306,6 @@ export default function EditorComponent({ value, onChange }: Props) {
     );
 }
 
-// --------------------- LEAF / ELEMENT ---------------------
 const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
     if (leaf.bold) children = <strong>{children}</strong>;
     if (leaf.italic) children = <em>{children}</em>;
