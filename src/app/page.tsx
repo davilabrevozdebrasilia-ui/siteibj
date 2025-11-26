@@ -290,7 +290,7 @@ export default function HomePage() {
   <div className="w-[90%] sm:max-w-[80%] mx-auto flex flex-col items-center gap-6">
 
     <img
-      src="/bebeprematuro.webp"
+      src="/bebe prematuro.webp"
       alt="Prematuridade"
       className="w-full max-w-[1500px] mx-auto h-auto rounded-md shadow-md"
     />
