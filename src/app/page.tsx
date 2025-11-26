@@ -303,14 +303,15 @@ export default function HomePage() {
             <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
               Prematuridade
             </h2>
+<div className="text-gray-800 text-base lg:text-lg text-justify space-y-4">
 
-            <p className="text-gray-800 text-base lg:text-lg text-justify">
-              {/* Cole aqui o texto completo da Dra. Deijanete, sem comentário */}
-              <p>
-    <strong>Prematuridade: um começo antecipado e seus impactos na vida do bebê e da família sob a luz da Psicoembriologia e das Neurociências</strong>
+  <p className="font-semibold">
+    Prematuridade: um começo antecipado e seus impactos na vida do bebê e da família sob a luz da Psicoembriologia e das Neurociências
   </p>
 
-  <p><em>Por Dra. Deijanete Fayad</em></p>
+  <p className="italic">
+    Por Dra. Deijanete Fayad
+  </p>
 
   <p>
     A prematuridade representa um nascimento que chega antes do tempo biológico ideal, interrompendo processos fundamentais do desenvolvimento cerebral, sensorial e emocional do bebê. Cada dia de gestação preservado equivale a milhares de conexões sinápticas formadas, estruturas refinadas e circuitos neurológicos estabelecidos. Quando o parto ocorre precocemente, o bebê é lançado a um ambiente sensorial agressivo e desorganizado — luzes intensas, ruídos, manuseios constantes — muito diferente do útero, local onde deveria continuar seu amadurecimento harmonioso.
@@ -331,7 +332,8 @@ export default function HomePage() {
   <p>
     Assim, embora a prematuridade apresente desafios significativos, ela também revela a extraordinária capacidade de resiliência do cérebro humano e a força transformadora da relação bebê-família. O cuidado contínuo, sensível e informado pelas neurociências e pela psicoembriologia é capaz de ressignificar esse início antecipado, permitindo que o bebê se desenvolva com segurança, vinculação e esperança. Aqui, cada dia importa — porque cada dia molda o cérebro, a emoção e a história desse pequeno ser.
   </p>
-            </p>
+
+</div>
           </div>
         </div>
       </section>
