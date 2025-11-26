@@ -293,7 +293,7 @@ export default function HomePage() {
         <div className="w-[95%] max-w-[1200px] mx-auto flex flex-col items-center gap-8">
           {/* Imagem centralizada em cima */}
           <img
-            src="/bebeprematuro.webp"
+            src="/bebe prematuro.webp"
             alt="Prematuridade"
             className="w-full max-w-[700px] h-auto rounded-md shadow-md"
           />
@@ -306,9 +306,14 @@ export default function HomePage() {
 
             <p className="text-gray-800 text-base lg:text-lg text-justify">
               {/* Cole aqui o texto completo da Dra. Deijanete, sem comentário */}
-              Por Dra. Deijanete Fayad A prematuridade representa um nascimento que
-              chega antes do tempo biológico ideal, interrompendo processos
-              fundamentais... (resto do texto)
+              Prematuridade: um começo antecipado e seus impactos na vida do bebê e da família sob a luz da Psicoembriologia e das Neurociências
+
+Por Dra. Deijanete Fayad 
+A prematuridade representa um nascimento que chega antes do tempo biológico ideal, interrompendo processos fundamentais do desenvolvimento cerebral, sensorial e emocional do bebê. Cada dia de gestação preservado equivale a milhares de conexões sinápticas formadas, estruturas refinadas e circuitos neurológicos estabelecidos. Quando o parto ocorre precocemente, o bebê é lançado a um ambiente sensorial agressivo e desorganizado — luzes intensas, ruídos, manuseios constantes — muito diferente do útero, local onde deveria continuar seu amadurecimento harmonioso.
+As neurociências mostram que um bebê prematuro enfrenta desafios na autorregulação, no manejo do estresse e na formação de vínculos, pois estruturas como o sistema límbico, o corpo caloso e o córtex pré-frontal ainda estão em acelerado processo de formação. Cada estímulo excessivo ou intervenção brusca pode ativar respostas de estresse tóxico, elevando cortisol e interferindo na maturação neural. Por outro lado, práticas de cuidado humanizado, como o método canguru, o toque organizado, o som da voz materna e a presença afetiva dos pais, ajudam a reequilibrar o sistema nervoso imaturo e favorecem a plasticidade cerebral positiva.
+Sob a perspectiva da psicoembriologia, entende-se que a vida emocional do bebê começa antes do parto, e que experiências intrauterinas — ritmo cardíaco materno, vozes, emoções e segurança uterina — são matrizes fundamentais para a construção da identidade e da segurança emocional. O nascimento prematuro interrompe esse campo de vinculação, criando um “hiato afetivo” que mobiliza profundamente a mãe, o pai e toda a família. Surge um luto silencioso pelo gestar interrompido, misturado a medo, culpa, esperança e vigilância contínua.
+A família passa a viver entre monitores, rotinas hospitalares e incertezas. Porém, também é nesse cenário que o vínculo se reinventa. O olhar, o toque, o cheiro e a presença dos pais tornam-se estímulos reguladores que funcionam como extensão do útero, reorganizando o bebê no mundo externo. A neurociência confirma: a presença afetiva dos cuidadores modula o sistema nervoso da criança, reduz o estresse, estabiliza indicadores fisiológicos e fortalece conexões neurais ligadas ao apego seguro.
+Assim, embora a prematuridade apresente desafios significativos, ela também revela a extraordinária capacidade de resiliência do cérebro humano e a força transformadora da relação bebê-família. O cuidado contínuo, sensível e informado pelas neurociências e pela psicoembriologia é capaz de ressignificar esse início antecipado, permitindo que o bebê se desenvolva com segurança, vinculação e esperança. Aqui, cada dia importa — porque cada dia molda o cérebro, a emoção e a história desse pequeno ser.
             </p>
           </div>
         </div>
