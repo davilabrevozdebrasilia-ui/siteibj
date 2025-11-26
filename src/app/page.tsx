@@ -285,34 +285,45 @@ export default function HomePage() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
                         Nossa missão vai além da promoção de ações pontuais: buscamos criar oportunidades que fortaleçam a cidadania, incentivem a educação, promovam a inclusão e ampliem o acesso a direitos fundamentais. Por meio de projetos inovadores, parcerias estratégicas e atuação em diversas áreas, como saúde, esporte, cultura, meio ambiente e desenvolvimento humano. Com uma visão pautada na ética, na solidariedade e na responsabilidade social, o Instituto Brazil Just reafirma seu compromisso com o Brasil e com cada indivíduo que dele faz parte, acreditando que quando a justiça social se une à educação, o futuro se torna possível para todos.</motion.p>
-                </motion.div>
-           <section className="w-full bg-blue-200 py-12">
-  <div className="w-[90%] max-w-[900px] mx-auto flex flex-col items-center gap-6">
-    <img
-      src="/bebeprematuro.webp"
-      alt="Prematuridade"
-      className="w-full max-w-[700px] h-auto rounded-md shadow-md"
-    />
+                 </motion.div>
+      </section> {/* FECHA a section anterior aqui */}
 
-    <div className="w-full text-left">
-      <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-        Prematuridade
-      </h2>
+      {/* --- SECTION PREMATURIDADE --- */}
+      <section className="w-full bg-blue-200 py-16">
+        <div className="w-[95%] max-w-[1200px] mx-auto flex flex-col items-center gap-8">
+          {/* Imagem centralizada em cima */}
+          <img
+            src="/bebeprematuro.webp"
+            alt="Prematuridade"
+            className="w-full max-w-[700px] h-auto rounded-md shadow-md"
+          />
 
-      <p className="text-gray-800 text-base lg:text-lg text-justify">
-      Por Dra. Deijanete Fayad A prematuridade representa um nascimento que chega antes do tempo biológico ideal, interrompendo processos fundamentais do desenvolvimento cerebral, sensorial e emocional do bebê. Cada dia de gestação preservado equivale a milhares de conexões sinápticas formadas, estruturas refinadas e circuitos neurológicos estabelecidos. Quando o parto ocorre precocemente, o bebê é lançado a um ambiente sensorial agressivo e desorganizado — luzes intensas, ruídos, manuseios constantes — muito diferente do útero, local onde deveria continuar seu amadurecimento harmonioso. As neurociências mostram que um bebê prematuro enfrenta desafios na autorregulação, no manejo do estresse e na formação de vínculos, pois estruturas como o sistema límbico, o corpo caloso e o córtex pré-frontal ainda estão em acelerado processo de formação. Cada estímulo excessivo ou intervenção brusca pode ativar respostas de estresse tóxico, elevando cortisol e interferindo na maturação neural. Por outro lado, práticas de cuidado humanizado, como o método canguru, o toque organizado, o som da voz materna e a presença afetiva dos pais, ajudam a reequilibrar o sistema nervoso imaturo e favorecem a plasticidade cerebral positiva. Sob a perspectiva da psicoembriologia, entende-se que a vida emocional do bebê começa antes do parto, e que experiências intrauterinas — ritmo cardíaco materno, vozes, emoções e segurança uterina — são matrizes fundamentais para a construção da identidade e da segurança emocional. O nascimento prematuro interrompe esse campo de vinculação, criando um “hiato afetivo” que mobiliza profundamente a mãe, o pai e toda a família. Surge um luto silencioso pelo gestar interrompido, misturado a medo, culpa, esperança e vigilância contínua. A família passa a viver entre monitores, rotinas hospitalares e incertezas. Porém, também é nesse cenário que o vínculo se reinventa. O olhar, o toque, o cheiro e a presença dos pais tornam-se estímulos reguladores que funcionam como extensão do útero, reorganizando o bebê no mundo externo. A neurociência confirma: a presença afetiva dos cuidadores modula o sistema nervoso da criança, reduz o estresse, estabiliza indicadores fisiológicos e fortalece conexões neurais ligadas ao apego seguro. Assim, embora a prematuridade apresente desafios significativos, ela também revela a extraordinária capacidade de resiliência do cérebro humano e a força transformadora da relação bebê-família. O cuidado contínuo, sensível e informado pelas neurociências e pela psicoembriologia é capaz de ressignificar esse início antecipado, permitindo que o bebê se desenvolva com segurança, vinculação e esperança. Aqui, cada dia importa — porque cada dia molda o cérebro, a emoção e a história desse pequeno ser.
-      </p>
-    </div>
-  </div>
-</section>
-                <motion.h2
-                    className="text-4xl font-bold text-blue-950 mb-4 place-self-center text-center"
-                    initial={{ y: -30, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                >
-                    Conheça nossos projetos
-                </motion.h2>
+          {/* Texto ocupa quase a tela toda */}
+          <div className="w-full text-left">
+            <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
+              Prematuridade
+            </h2>
+
+            <p className="text-gray-800 text-base lg:text-lg text-justify">
+              {/* Cole aqui o texto completo da Dra. Deijanete, sem comentário */}
+              Por Dra. Deijanete Fayad A prematuridade representa um nascimento que
+              chega antes do tempo biológico ideal, interrompendo processos
+              fundamentais... (resto do texto)
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* --- SECTION CONHEÇA NOSSOS PROJETOS --- */}
+      <section className="w-full py-16">
+        <motion.h2
+          className="text-4xl font-bold text-blue-950 mb-8 text-center"
+          initial={{ y: -30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          Conheça nossos projetos
+        </motion.h2>
 
                 <div className="relative w-[90%] sm:max-w-[80%] mx-auto p-8">
                     <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
