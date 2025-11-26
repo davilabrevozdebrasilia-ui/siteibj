@@ -16,7 +16,7 @@ const poppins = Poppins({
 
 
 export const metadata = {
-    title: 'Instituo Brazil Just',
+    title: 'Instituto Brazil Just',
     description: 'Fique por dentro das últimas notícias',
     icons: {
         icon: "/favicon.ico",
