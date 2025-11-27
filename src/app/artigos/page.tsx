@@ -3,23 +3,21 @@ import Link from "next/link";
 export default function ArtigosPage() {
   const artigos = [
     {
-      slug: "importancia-da-inclusao-social",
       titulo: "A Importância da Inclusão Social",
+      slug: "importancia-da-inclusao-social",
       descricao: "Como projetos sociais transformam vidas e comunidades inteiras.",
       imagem: "/logoIBJ.png",
     },
     {
-      slug: "psicoembriologia-e-primeira-infancia",
       titulo: "Psicoembriologia e Primeira Infância",
-      descricao:
-        "Como as experiências maternas moldam o desenvolvimento cerebral do bebê.",
+      slug: "psicoembriologia-e-primeira-infancia",
+      descricao: "Como as experiências maternas moldam o desenvolvimento cerebral do bebê.",
       imagem: "/logoIBJ.png",
     },
     {
-      slug: "esporte-e-cidadania",
       titulo: "Esporte e Cidadania",
-      descricao:
-        "O impacto do esporte na formação de crianças e jovens.",
+      slug: "esporte-e-cidadania",
+      descricao: "O impacto do esporte na formação de crianças e jovens.",
       imagem: "/logoIBJ.png",
     },
   ];
@@ -36,7 +34,6 @@ export default function ArtigosPage() {
           neurociências, esporte, educação e cidadania.
         </p>
 
-        {/* LISTA DE CARDS */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {artigos.map((artigo, index) => (
             <Link
