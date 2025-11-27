@@ -26,16 +26,19 @@ const projetosSubmenu = [
 ];
 
 const links = [
-    { label: "Início", href: "/" },
-    { label: "Quem Somos", href: "/quem-somos" },
-    { label: "Visão", href: "/visao" },
-    { label: "Projetos", href: "#" },
-    { label: "Videos", href: "/videos" },
-    { label: "Fotos", href: "/imagens" },
-    { label: "Contato", href: "/contato" },
-    { label: "Transparência", href: "/transparencia" },
-    { label: "Doações", href: "/doacoes" },
-    { label: "Seja Voluntário", href: "/voluntario" },
+  { label: "Início", href: "/" },
+  { label: "Quem Somos", href: "/quem-somos" },
+  { label: "Visão", href: "/visao" },
+  { label: "Projetos", href: "#" },
+  { label: "Videos", href: "/videos" },
+  { label: "Fotos", href: "/imagens" },
+  { label: "Contato", href: "/contato" },
+  { label: "Transparência", href: "/transparencia" },
+  { label: "Doações", href: "/doacoes" },
+  { label: "Seja Voluntário", href: "/voluntario" },
+
+  // ⭐ NOVA ABA ADICIONADA
+  { label: "artigos", href: "/artigos" },
 ];
 
 export default function Navbar() {
