@@ -11,15 +11,13 @@ export default function ArtigosPage() {
     {
       slug: "psicoembriologia-e-primeira-infancia",
       titulo: "Psicoembriologia e Primeira Infância",
-      descricao:
-        "Como as experiências maternas moldam o desenvolvimento cerebral do bebê.",
+      descricao: "Como as experiências maternas moldam o desenvolvimento do bebê.",
       imagem: "/logoIBJ.png",
     },
     {
       slug: "esporte-e-cidadania",
       titulo: "Esporte e Cidadania",
-      descricao:
-        "O impacto do esporte na formação de crianças e jovens.",
+      descricao: "O impacto do esporte na formação de crianças e jovens.",
       imagem: "/logoIBJ.png",
     },
   ];
@@ -31,18 +29,12 @@ export default function ArtigosPage() {
           Artigos do Instituto Brazil Just
         </h1>
 
-        <p className="text-lg text-gray-700 text-center max-w-3xl mx-auto mb-14">
-          Conteúdos, reflexões e estudos sobre inclusão social, psicologia,
-          neurociências, esporte, educação e cidadania.
-        </p>
-
-        {/* LISTA DE CARDS */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {artigos.map((artigo, index) => (
             <Link
               key={index}
               href={`/artigos/${artigo.slug}`}
-              className="bg-white rounded-2xl shadow-lg p-5 hover:scale-105 hover:shadow-xl transition cursor-pointer block"
+              className="bg-white rounded-2xl shadow-lg p-5 hover:scale-105 hover:shadow-xl transition cursor-pointer"
             >
               <img
                 src={artigo.imagem}
