@@ -38,7 +38,7 @@ const links = [
   { label: "Seja Voluntário", href: "/voluntario" },
 
   // ⭐ NOVA ABA ADICIONADA
-  { label: "artigos", href: "/artigos" },
+  { label: "Artigos", href: "/artigos" },
 ];
 
 export default function Navbar() {
