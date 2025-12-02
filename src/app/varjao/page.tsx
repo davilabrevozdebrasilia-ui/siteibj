@@ -13,6 +13,8 @@ export default function VarjaoPage() {
           >
             <source src="/videos/varjao.mp4" type="video/mp4" />
             Seu navegador não suporta vídeo.
+            <source src="/videos/teste.mp4" type="video/mp4" />
+            Seu navegador não suporta vídeo.
           </video>
         </div>
       </div>
