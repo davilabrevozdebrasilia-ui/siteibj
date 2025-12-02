@@ -18,7 +18,7 @@ export default function ArtigosPage() {
       titulo: "Esporte e Cidadania",
       slug: "esporte-e-cidadania",
       descricao: "O impacto do esporte na formação de crianças e jovens.",
-      imagem: "/logoIBJ.png",
+      imagem: "/PROJETO -  ESPORTE E VIDA (1).png",
     },
   ];
 
