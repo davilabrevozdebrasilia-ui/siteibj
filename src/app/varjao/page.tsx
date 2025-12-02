@@ -22,7 +22,7 @@ export default function VarjaoPage() {
 
         {/* --- VÍDEO 2 --- */}
         <div className="bg-white p-6 rounded-lg shadow mb-10">
-          <h2 className="text-xl font-semibold mb-4">Vídeo 2 – Teste</h2>
+          <h2 className="text-xl font-semibold mb-4">Vídeo 2 – Varjão</h2>
 
           <video
             controls
