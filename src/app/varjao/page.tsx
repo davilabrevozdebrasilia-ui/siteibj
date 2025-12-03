@@ -6,15 +6,7 @@ export default function VarjaoPage() {
     { arquivo: "varjao4.mp4", titulo: "Vídeo 4 – Varjão" },
     { arquivo: "varjao5.mp4", titulo: "Vídeo 5 – Varjão" },
     { arquivo: "varjao6.mp4", titulo: "Vídeo 6 – Varjão" },
-    { arquivo: "varjao7.mp4", titulo: "Vídeo 7 – Varjão" },
-    { arquivo: "varjao.mp4", titulo: "Vídeo 8 – Varjão" },
-    { arquivo: "video9.mp4", titulo: "Vídeo 9 – Varjão" },
-    { arquivo: "video10.mp4", titulo: "Vídeo 10 – Varjão" },
-    { arquivo: "video11.mp4", titulo: "Vídeo 11 – Varjão" },
-    { arquivo: "video12.mp4", titulo: "Vídeo 12 – Varjão" },
-    { arquivo: "video13.mp4", titulo: "Vídeo 13 – Varjão" },
-    { arquivo: "video14.mp4", titulo: "Vídeo 14 – Varjão" },
-    { arquivo: "video15.mp4", titulo: "Vídeo 15 – Varjão" },
+    { arquivo: "varjao7.mp4", titulo: "Vídeo 7 – Varjão" }
   ];
 
   return (
