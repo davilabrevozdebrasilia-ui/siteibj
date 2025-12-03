@@ -6,7 +6,7 @@ export default function ArtigosPage() {
       titulo: "A Importância da Inclusão Social",
       slug: "importancia-da-inclusao-social",
       descricao: "Como projetos sociais transformam vidas e comunidades inteiras.",
-      imagem: "/logoIBJ.png",
+      imagem: "/Inclusao social.jpg",
     },
     {
       titulo: "Psicoembriologia e Primeira Infância",
