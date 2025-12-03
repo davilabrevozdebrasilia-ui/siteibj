@@ -12,7 +12,7 @@ export default function ArtigosPage() {
       titulo: "Psicoembriologia e Primeira Infância",
       slug: "psicoembriologia-e-primeira-infancia",
       descricao: "Como as experiências maternas moldam o desenvolvimento cerebral do bebê.",
-      imagem: "/logoIBJ.png",
+      imagem: "/bebe prematuro.webp",
     },
     {
       titulo: "Esporte e Cidadania",
