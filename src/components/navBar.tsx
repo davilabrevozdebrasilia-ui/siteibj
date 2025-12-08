@@ -39,6 +39,8 @@ const links = [
 
   // ⭐ NOVA ABA ADICIONADA
   { label: "Artigos", href: "/artigos" },
+  { label: "Varjão", href: "/varjao" },
+
 ];
 
 export default function Navbar() {
