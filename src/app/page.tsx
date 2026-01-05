@@ -293,8 +293,8 @@ export default function HomePage() {
         <div className="w-[95%] max-w-[1200px] mx-auto flex flex-col items-center gap-8">
           {/* Imagem centralizada em cima */}
           <img
-            src="/bebe prematuro.webp"
-            alt="Prematuridade"
+            src="/Micrometas.jpg"
+            alt="Micrometas.jpg"
             className="w-full max-w-[700px] h-auto rounded-md shadow-md"
           />
 
