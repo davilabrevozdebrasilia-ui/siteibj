@@ -23,7 +23,7 @@ export default function ArtigosPage() {
   ];
 
   return (
-    <div className="w-full py-20 bg-gray-100">
+    <div className="w-full py-20 bg-gray-200">
       <div className="max-w-5xl mx-auto px-6">
         <h1 className="text-4xl font-bold text-blue-950 mb-10 text-center">
           Artigos do Instituto Brazil Just

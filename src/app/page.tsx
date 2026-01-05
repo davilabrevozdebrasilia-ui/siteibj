@@ -301,37 +301,135 @@ export default function HomePage() {
           {/* Texto ocupa quase a tela toda */}
           <div className="w-full text-left">
             <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-              Prematuridade
+              Micrometas como estratégia de saúde emocional
             </h2>
 <div className="text-gray-800 text-base lg:text-lg text-justify space-y-4">
 
   <p className="font-semibold">
-    Prematuridade: um começo antecipado e seus impactos na vida do bebê e da família sob a luz da Psicoembriologia e das Neurociências
-  </p>
+  Começando o ano bem: micrometas são o caminho — um passo de cada vez, sempre e com constância
+</p>
 
-  <p className="italic">
-    Por Dra. Deijanete Fayad
-  </p>
+<p className="italic">
+  Por Dra. Deijanete Fayad
+</p>
 
-  <p>
-    A prematuridade representa um nascimento que chega antes do tempo biológico ideal, interrompendo processos fundamentais do desenvolvimento cerebral, sensorial e emocional do bebê. Cada dia de gestação preservado equivale a milhares de conexões sinápticas formadas, estruturas refinadas e circuitos neurológicos estabelecidos. Quando o parto ocorre precocemente, o bebê é lançado a um ambiente sensorial agressivo e desorganizado — luzes intensas, ruídos, manuseios constantes — muito diferente do útero, local onde deveria continuar seu amadurecimento harmonioso.
-  </p>
+<p>
+  O início de um novo ano costuma despertar em nós o desejo de recomeçar. Fazemos planos, estabelecemos metas e projetamos mudanças significativas para a nossa vida. No entanto, com o passar dos dias, a rotina retorna, os compromissos se acumulam e, muitas vezes, surge a sensação de frustração por não conseguirmos manter tudo aquilo que planejamos.
+</p>
 
-  <p>
-    As neurociências mostram que um bebê prematuro enfrenta desafios na autorregulação, no manejo do estresse e na formação de vínculos, pois estruturas como o sistema límbico, o corpo caloso e o córtex pré-frontal ainda estão em acelerado processo de formação. Cada estímulo excessivo ou intervenção brusca pode ativar respostas de estresse tóxico, elevando cortisol e interferindo na maturação neural. Por outro lado, práticas de cuidado humanizado, como o método canguru, o toque organizado, o som da voz materna e a presença afetiva dos pais, ajudam a reequilibrar o sistema nervoso imaturo e favorecem a plasticidade cerebral positiva.
-  </p>
+<p>
+  Mas talvez o problema não esteja em nós — e sim na forma como definimos nossas metas.
+</p>
 
-  <p>
-    Sob a perspectiva da psicoembriologia, entende-se que a vida emocional do bebê começa antes do parto, e que experiências intrauterinas — ritmo cardíaco materno, vozes, emoções e segurança uterina — são matrizes fundamentais para a construção da identidade e da segurança emocional. O nascimento prematuro interrompe esse campo de vinculação, criando um “hiato afetivo” que mobiliza profundamente a mãe, o pai e toda a família. Surge um luto silencioso pelo gestar interrompido, misturado a medo, culpa, esperança e vigilância contínua.
-  </p>
+<p>
+  Sob a perspectiva da psicanálise, compreendemos que o sujeito é guiado por sua história emocional, por seus afetos e pelos conteúdos inconscientes que estruturam sua forma de estar no mundo. Quando criamos objetivos grandiosos e rígidos, frequentemente ativamos também sentimentos de cobrança interna, medo de fracassar e mecanismos de defesa que podem resultar na desistência.
+</p>
 
-  <p>
-    A família passa a viver entre monitores, rotinas hospitalares e incertezas. Porém, também é nesse cenário que o vínculo se reinventa. O olhar, o toque, o cheiro e a presença dos pais tornam-se estímulos reguladores que funcionam como extensão do útero, reorganizando o bebê no mundo externo. A neurociência confirma: a presença afetiva dos cuidadores modula o sistema nervoso da criança, reduz o estresse, estabiliza indicadores fisiológicos e fortalece conexões neurais ligadas ao apego seguro.
-  </p>
+<p>
+  Nosso psiquismo tende a resistir às mudanças bruscas. Ele busca o conhecido, o familiar, aquilo que já está estruturado. Por isso, transformar a vida de uma única vez pode se tornar um processo sobrecarregado e emocionalmente desgastante.
+</p>
 
-  <p>
-    Assim, embora a prematuridade apresente desafios significativos, ela também revela a extraordinária capacidade de resiliência do cérebro humano e a força transformadora da relação bebê-família. O cuidado contínuo, sensível e informado pelas neurociências e pela psicoembriologia é capaz de ressignificar esse início antecipado, permitindo que o bebê se desenvolva com segurança, vinculação e esperança. Aqui, cada dia importa — porque cada dia molda o cérebro, a emoção e a história desse pequeno ser.
-  </p>
+<p>
+  É nesse contexto que emerge o conceito de micrometas.
+</p>
+
+<p className="font-semibold">
+  O que são micrometas?
+</p>
+
+<p>
+  Micrometas são pequenos objetivos diários, realistas e possíveis de serem cumpridos. Em vez de exigir de nós transformações radicais, propomos passos curtos, porém constantes.
+</p>
+
+<p>
+  As neurociências demonstram que o cérebro aprende e se adapta melhor por meio da repetição e da consistência. Cada pequena conquista gera uma sensação de recompensa, ativando a liberação de dopamina — neurotransmissor relacionado ao prazer e à motivação. Com isso, fortalecemos gradualmente nossa autoconfiança e construímos novos circuitos neurais associados ao comportamento saudável e ao autocontrole.
+</p>
+
+<p>
+  Assim, pequenas vitórias diárias contribuem para:
+</p>
+
+<p>
+  ✔ desenvolvimento emocional<br />
+  ✔ sensação de competência<br />
+  ✔ fortalecimento da identidade<br />
+  ✔ estabilidade psíquica
+</p>
+
+<p>
+  Ou seja: crescer um pouco todos os dias transforma não apenas os hábitos, mas o modo como o sujeito se percebe no mundo.
+</p>
+
+<p className="font-semibold">
+  Quando psicanálise e neurociência se encontram
+</p>
+
+<p>
+  As micrometas respeitam o tempo singular de cada indivíduo. Respeitam sua história, suas emoções, seus limites e seu desejo. Em vez de impor uma mudança abrupta, convidam à construção contínua.
+</p>
+
+<p>
+  Na psicanálise, esse movimento representa um cuidado consigo mesmo, uma forma de acolher e reconhecer sua própria subjetividade. A constância, ainda que em pequenas ações, fortalece o “eu” e possibilita a experiência interna do “eu posso, eu consigo, eu sou capaz”.
+</p>
+
+<p className="font-semibold">
+  O segredo não está na velocidade — está na direção
+</p>
+
+<p>
+  Começar bem o ano não significa realizar grandes transformações de imediato.
+</p>
+
+<p>
+  Significa cuidar de si com consciência, responsabilidade e paciência.
+</p>
+
+<p>
+  Significa permanecer.
+</p>
+
+<p>
+  Mesmo nos dias difíceis.<br />
+  Mesmo quando a motivação oscila.<br />
+  Mesmo quando o ritmo diminui.
+</p>
+
+<p>
+  Porque o verdadeiro desenvolvimento humano acontece de maneira gradual, interna e contínua.
+</p>
+
+<p>
+  Micrometas representam:
+</p>
+
+<p>
+  • presença<br />
+  • sentido<br />
+  • organização psíquica<br />
+  • autonomia<br />
+  • autorrespeito
+</p>
+
+<p>
+  E, acima de tudo, a escolha diária de não desistir de si.
+</p>
+
+<p>
+  Que este ano seja vivido com profundidade, serenidade e constância.
+</p>
+
+<p>
+  Um passo de cada vez. Sempre.
+</p>
+
+<p>
+  Com amor, ciência e propósito.
+</p>
+
+<p className="italic">
+  Dra. Deijanete Fayad<br />
+  Psicanálise e Neurociências
+</p>
 
 </div>
           </div>
